@@ -13,24 +13,28 @@ IP：cdb-b6fcgmw2.cd.tencentcdb.com
 
 ## AllGroups
 
-群ID (主键)  管理员ID   建群时间  群介绍   群规则  群类型
+群ID (主键)  建群时间  群介绍   群规则  群类型  群头像  群名称
 (群成员)
 
 user 表和 AllGroups需要进行关联， 新加一个表
 
 ## UserWithGroups
 
-id(主键自增)  userId   groupId
+userId   groupId
+
+## GroupManager
+  
+groupId  管理员ID
 
 ## GroupMessages
 
 id(主键自增)  userId  groupId  content  date
 
-#登陆/注册功能
+# 登陆/注册功能
 
-##User
+## User
 
-id(主键自增) username password email tab(用户等级，分普通用户和管理员)
+userId(主键自增) username password email tab(用户等级，分普通用户和管理员)
 其他属性根据其他功能模块添加
 
 # 公开课
