@@ -10,4 +10,12 @@ IP：cdb-b6fcgmw2.cd.tencentcdb.com
 
 # 群聊功能
 ## AllGroups
-群ID (主键)  管理员ID   建群时间
+群ID (主键)  管理员ID   建群时间  群介绍   群规则  群类型
+(群成员)
+
+user 表和 AllGroups需要进行关联， 新加一个表
+## UserWithGroups
+id(主键自增)  userId   groupId
+
+## GroupMessages
+id(主键自增)  userId  groupId  content  date
