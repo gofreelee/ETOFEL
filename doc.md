@@ -1,4 +1,4 @@
-#数据库配置：
+# 数据库配置：
 IP：cdb-b6fcgmw2.cd.tencentcdb.com 
 
 端口：10053
@@ -8,3 +8,6 @@ IP：cdb-b6fcgmw2.cd.tencentcdb.com
 用户名：groupsix 
 密码：chinasoft6
 
+# 群聊功能
+## AllGroups
+群ID (主键)  管理员ID   建群时间
