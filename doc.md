@@ -19,3 +19,8 @@ id(主键自增)  userId   groupId
 
 ## GroupMessages
 id(主键自增)  userId  groupId  content  date
+
+#登陆/注册功能
+##User
+id(主键自增) username password email
+其他属性根据其他功能模块添加
