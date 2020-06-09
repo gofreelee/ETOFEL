@@ -22,5 +22,5 @@ id(主键自增)  userId  groupId  content  date
 
 #登陆/注册功能
 ##User
-id(主键自增) username password email
+id(主键自增) username password email tab(用户等级，分普通用户和管理员)
 其他属性根据其他功能模块添加
