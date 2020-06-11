@@ -12,4 +12,9 @@ public class GroupMemberService {
     public int addMember(GroupMember groupMember){
        return  groupMemberDao.addGroupMember(groupMember);
     }
+
+    public int deleteMember(String gmbUsername){
+        return groupMemberDao.deleteMember(gmbUsername);
+    }
+
 }

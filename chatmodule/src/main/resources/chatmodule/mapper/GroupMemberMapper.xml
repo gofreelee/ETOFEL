@@ -2,7 +2,11 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="chatmodule.mapper.GroupMemberDao">
-    <insert id="addGroupMember">
+    <insert id="addGroupMember" >
         insert into group_member(gmb_username, gmb_grp_id, gmb_type) values (#{gmbUsername}, #{gmbGroupId}, #{gmbType})
     </insert>
+
+    <delete id="deleteMember">
+        delete  from group_member where gmb_username = #{gmbUsername}
+    </delete>
 </mapper>
