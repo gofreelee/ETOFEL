@@ -6,4 +6,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface GroupMemberDao {
     int addGroupMember(GroupMember groupMember);
+    int deleteMember(String gmbUsername);
 }

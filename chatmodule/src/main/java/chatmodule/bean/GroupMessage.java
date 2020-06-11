@@ -1,5 +1,6 @@
 package chatmodule.bean;
 
+import java.sql.Timestamp;
 import java.util.Date;
 
 public class GroupMessage {
@@ -7,9 +8,9 @@ public class GroupMessage {
     private int gmsGrpId;
     private String gmsUsername;
     private String gmsContext;
-    private Date   gmsCreateTime;
+    private Timestamp gmsCreateTime;
 
-    public GroupMessage(int gmsId, int gmsGrpId, String gmsUsername, String gmsContext, Date gmsCreateTime) {
+    public GroupMessage(int gmsId, int gmsGrpId, String gmsUsername, String gmsContext, Timestamp gmsCreateTime) {
         this.gmsId = gmsId;
         this.gmsGrpId = gmsGrpId;
         this.gmsUsername = gmsUsername;
@@ -49,11 +50,11 @@ public class GroupMessage {
         this.gmsContext = gmsContext;
     }
 
-    public Date getGmsCreateTime() {
+    public Timestamp getGmsCreateTime() {
         return gmsCreateTime;
     }
 
-    public void setGmsCreateTime(Date gmsCreateTime) {
+    public void setGmsCreateTime(Timestamp gmsCreateTime) {
         this.gmsCreateTime = gmsCreateTime;
     }
 }
