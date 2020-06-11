@@ -8,12 +8,21 @@
     </insert>
 
 <!--    查找课程-课程详细信息-->
-    <select id="selectCourseDetailInfo"  parameterType="int" resultType="sichuan.umbrella.chenmm.bean.CourseDetail">
+    <select id="selectCourseDetailInfo"  parameterType="int" resultType="sichuan.umbrella.chenmm.bean.CourseDetail" resultMap="CourseDetail">
         select * from course_detail where
-        <if test="cdt_cos_id != null">
+        <if test="cdtCosId != null">
             cdt_cos_id = #{cdtCosId}
         </if>
     </select>
+    <resultMap id="CourseDetail" type="sichuan.umbrella.chenmm.bean.CourseDetail">
+        <id property="cdtCosId" column="cdt_cos_id"/>
+        <result property="cdtTchUsername" column="cdt_tch_username"/>
+        <result property="cdtGrpId" column="cdt_grp_id"/>
+        <result property="cdtPortrait" column="cdt_portrait"/>
+        <result property="cdtPlan" column="cdt_plan"/>
+        <result property="cdtPattern" column="cdt_pattern"/>
+        <result property="cdtGuide" column="cdt_guide"/>
+    </resultMap>
 
 
 </mapper>

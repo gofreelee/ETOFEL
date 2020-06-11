@@ -28,7 +28,7 @@ public class GuopqApplicationTests {
     private WebApplicationContext webApplicationContext;
     private MockMvc mockMvc;
     @Autowired
-    CourseDetailController courseDetailController;
+    private CourseDetailController courseDetailController;
     @Before
     public void setUp() throws Exception {
         //MockMvcBuilders.webAppContextSetup(WebApplicationContext context)：指定WebApplicationContext，将会从该上下文获取相应的控制器并得到相应的MockMvc；

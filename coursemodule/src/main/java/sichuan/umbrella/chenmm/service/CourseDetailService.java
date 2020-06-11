@@ -22,7 +22,7 @@ public class CourseDetailService {
         }
     }
     //   查找课程-课程详细信息
-    public CourseDetail selectCourseDetailInfo(int cdtCosId){
+    public CourseDetail selectCourseDetailInfo(Integer cdtCosId){
         CourseDetail courseDetail = courseDetailMapper.selectCourseDetailInfo(cdtCosId);
 
         return courseDetail;
