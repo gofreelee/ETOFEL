@@ -33,7 +33,7 @@ public class CourseService {
 
     //    发布课程--基本信息
     /*
-    测试一下
+    测试一下 渐渐
      */
     public boolean insertCourseBasicInfo(Course course) {
         courseMapper.insertCourseBasicInfo(course);
