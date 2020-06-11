@@ -9,84 +9,72 @@ IP：cdb-b6fcgmw2.cd.tencentcdb.com
 用户名：groupsix 
 密码：chinasoft6
 
-# 群聊功能
+# 数据库设计
 
-## AllGroups
+## 群聊功能
+
+### AllGroups
 
 群ID (主键)  建群时间  群介绍   群规则  群类型  群头像  群名称
 (群成员)
 
 user 表和 AllGroups需要进行关联， 新加一个表
 
-## UserWithGroups
+### UserWithGroups
 
 userId   groupId
 
-## GroupManager
+### GroupManager
   
 groupId  管理员ID
 
-## GroupMessages
+### GroupMessages
 
 id(主键自增)  userId  groupId  content  date
 
-# 登陆/注册功能
+## 登陆/注册功能
 
-## User
+### User
 
 userId(主键自增) username password email tab(用户等级，分普通用户和管理员)
 其他属性根据其他功能模块添加
 
-# 公开课
+## 公开课
 
 ## OpenCourse
 
 id(主键自增)  ocName(公开课名称) ocSyllabus(课程大纲) ocTeacher(授课教师) studentNum(报名的学生数量) ocDate(课程日期) suitStudent(适合的学生) ocArragement(课程安排) ocPlace(课程地点) ocGuide(公开课听课指导)
 
-## Teacher
+### Teacher
 
 id(主键自增) teacherName(教师的姓名) motto(座右铭) gender(教师的性别) education(教师的学历) recentCourse(教师的最新课程) articleNum(发布文章数量) openCourseNum(公开课数量) welCCNum(福利城堡课程数量) likeNum(教师收到的赞) comment(收到的评价)
 
-## FamousTeacher
+### FamousTeacher
 
 id(主键自增) teacherId(老师的id) briefIntro(老师的推荐语) likeNum(被喜欢的人数)
 
-# 福利城堡
+# 前端接口需求
 
-### 发布的课程信息
+## 主页托福人推荐
 
-**课程ID（主键）**
+一次推荐5篇文章，可按时间排序
 
-课程标题
+需要内容：配图、标题、简介、分类、发布时间
 
-开始日期
+<img src="https://i.loli.net/2020/06/11/3moY4phGCIs6WKb.jpg" width="400"/>
 
-结束日期
+## 主页热门群聊组推荐
 
-上课周期（周一、周二…）
+一次推荐4个热门群聊组，可按加入人数排序
 
-开始时间
+需要内容：小组头像、群聊名、群聊简介、加入人数
 
-结束时间
+<img src="https://i.loli.net/2020/06/11/UcLlTMKrviGJogI.jpg" width="300"/>
 
-适合学员
+## 主页公开课推荐
 
-课程费用
+一次推荐4个公开课，可按时间或报名人数排序
 
-活动分类（公益、特色、名师）
+需要内容：配图、标题、老师、开课时间
 
-课程分类（听力、写作…）
-
-课程阶段（报名阶段、报名结束、课程结束）
-
-课程讲师
-
-课程群
-
-宣传图
-
-活动地点
-
-课程大纲
-
-上课方式
+<img src="https://i.loli.net/2020/06/11/mM4hc8Lo7AI6R3G.jpg" width="300"/>
