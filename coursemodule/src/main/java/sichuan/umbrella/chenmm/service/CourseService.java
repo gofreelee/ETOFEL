@@ -32,6 +32,9 @@ public class CourseService {
     }
 
     //    发布课程--基本信息
+    /*
+    测试一下
+     */
     public boolean insertCourseBasicInfo(Course course) {
         courseMapper.insertCourseBasicInfo(course);
         if (course.noNullValue()) {
