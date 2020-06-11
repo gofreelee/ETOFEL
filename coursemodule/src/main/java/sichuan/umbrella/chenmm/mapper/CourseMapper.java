@@ -19,4 +19,7 @@ public interface CourseMapper {
 //    课程列表页按照时间排序
     List<Course> selectCourseByTime(@Param("cos_start_date") String cosStartDate, @Param("cos_start_time") String cosStartTime);
 
+//    课程列表页按照老师点赞数排序
+    List<Course> selectCourseByLike();
 }
+

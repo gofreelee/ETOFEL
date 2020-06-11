@@ -1,39 +1,57 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="sichuan.umbrella.chenmm.mapper.CourseMapper">
-<!--    免费公益课程，再二次分类（口语、写作……）-->
-    <select id="selectActivityIsPublic" resultType="sichuan.umbrella.chenmm.bean.Course">
+    <!--    免费公益课程，再二次分类（口语、写作……）-->
+    <select id="selectActivityIsPublic" resultMap="Course">
         select * from course where cos_fee=0
         <if test="cos_category != null">
             and cos_category = #{cos_category}
         </if>
     </select>
 
-<!--    名师精品课程（开课老师点赞从多到少），再二次分类（口语、写作……）-->
-    <select id="selectActivityIsFamousTeacher" resultType="sichuan.umbrella.chenmm.bean.Course">
-        select * from course,course_detail,user_like_teacher
-        where cos_id=cdt_cos_id and cdt_tch_username=ult_tch_username
-        order by count(*);
+    <!--    名师精品课程（开课老师点赞从多到少），再二次分类（口语、写作……）-->
+    <select id="selectActivityIsFamousTeacher" resultMap="Course">
+        select * from course where cos_category = #{cos_category} order by (select count(*)
+        from course_detail,user_like_teacher
+        where cos_id = cdt_cos_id and cdt_tch_username = ult_tch_username) desc
     </select>
 
-<!--    热门课程（报名人数从多到少），再二次分类（口语、写作……）-->
-    <select id="selectActivityIsCharacteristic" parameterType="int" resultType="sichuan.umbrella.chenmm.bean.Course">
+    <!--    热门课程（报名人数从多到少），再二次分类（口语、写作……）-->
+    <select id="selectActivityIsCharacteristic" parameterType="int" resultMap="Course">
         select * from course where cos_fee>0
     </select>
 
-<!--    按时间从早到晚给课程排序-->
-    <select id="selectCourseByTime" parameterType="List" resultType="sichuan.umbrella.chenmm.bean.Course">
-        select * from course where order by cos_start_date,cos_start_time
+    <!--    按时间从早到晚给课程排序-->
+    <select id="selectCourseByTime" resultMap="Course">
+        select * from course order by cos_start_date,cos_start_time
+    </select>
+    <resultMap id="Course" type="sichuan.umbrella.chenmm.bean.Course">
+        <id property="cosId" column="cos_id"/>
+        <result property="cosTitle" column="cos_title"/>
+        <result property="cosStartDate" column="cos_start_date"/>
+        <result property="cosEndDate" column="cos_end_date"/>
+        <result property="cosStartTime" column="cos_start_time"/>
+        <result property="cosEndTime" column="cos_end_time"/>
+        <result property="cosStage" column="cos_stage"/>
+        <result property="cosFee" column="cos_fee"/>
+        <result property="cosCategory" column="cos_category"/>
+        <result property="cosStatus" column="cos_status"/>
+    </resultMap>
+
+<!--    按照课程老师的点赞人数从高到低给课程排序-->
+    <select id="selectCourseByLike" resultMap="Course">
+        select * from course order by (select count(*)
+        from course_detail,user_like_teacher
+        where cos_id = cdt_cos_id and cdt_tch_username = ult_tch_username) desc
     </select>
 
-
-<!--    发布课程基本信息-->
+    <!--    发布课程基本信息-->
     <insert id="insertCourseBasicInfo" parameterType="sichuan.umbrella.chenmm.bean.Course">
         insert into course (cos_title, cos_start_date, cos_end_date, cos_start_time, cos_end_time, cos_stage, cos_fee, cos_category, cos_status)
         values (#{course.cosTitle}, #{course.cosStartDate}, #{course.cosEndDate}, #{course.cosStartTime}, #{course.cosEndTime}, #{course.cosStage}, #{course.cosFee}, #{course.cosCategory}, #{course.cosStatus})
     </insert>
 
-<!--    发布课程详细信息-->
+    <!--    发布课程详细信息-->
     <insert id="insertCourseDetailInfo" parameterType="sichuan.umbrella.chenmm.bean.CourseDetail">
         insert into course_detail (cdt_cos_id, cdt_tch_username, cdt_grp_id, cdt_portrait, cdt_plan, cdt_pattern, cdt_guide)
         values (#{courseDetail.cdtCosId},#{courseDetail.cdtTchUsername},#{courseDetail.cdtGrpId},#{courseDetail.cdtPortrait},#{courseDetail.cdtPlan},#{courseDetail.cdtPattern},#{courseDetail.cdtGuide})

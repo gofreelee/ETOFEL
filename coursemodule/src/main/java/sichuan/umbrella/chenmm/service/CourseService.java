@@ -32,21 +32,18 @@ public class CourseService {
     }
 
     //    发布课程--基本信息
-    /*
-    测试一下 渐渐
-     */
     public boolean insertCourseBasicInfo(Course course) {
         courseMapper.insertCourseBasicInfo(course);
-        if (course.noNullValue()) {
-            return true;
-        } else {
-            return false;
-        }
+        return course.noNullValue();
     }
 
     //按时间从早到晚给课程排序
-//    public List<Course> selectCourseByTime(String cosStartDate, String cosStartTime){
-//        List<Course> list=courseMapper.selectCourseByTime(cosStartDate,cosStartTime);
-//
-//    }
+    public List<Course> selectCourseByTime(String cosStartDate, String cosStartTime) {
+        return courseMapper.selectCourseByTime("cosStartDate", "cosStartTime");
+    }
+
+    //    按课程老师的点赞数给课程排序
+    public List<Course> selectCourseByLike() {
+        return courseMapper.selectCourseByLike();
+    }
 }
