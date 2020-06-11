@@ -10,10 +10,7 @@ public class CourseDetailService {
     @Autowired
     private CourseDetailMapper courseDetailMapper;
 
-    @Autowired
-    public void setCourseDetailMapper(CourseDetailMapper courseDetailMapper) {
-        this.courseDetailMapper = courseDetailMapper;
-    }
+
 
     //    发布课程-课程描述
     public boolean insertCourseDetailInfo(CourseDetail courseDetail) {

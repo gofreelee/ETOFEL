@@ -10,24 +10,26 @@ import sichuan.umbrella.chenmm.service.CourseDetailService;
 
 @RestController
 public class CourseDetailController {
+    @Autowired
     private CourseDetailService courseDetailService;
-    private Gson gson;
 
-    @Autowired
-    public void setCourseDetailService(CourseDetailService courseDetailService) {
-        this.courseDetailService = courseDetailService;
-    }
+//    private Gson gson;
 
-    @Autowired
-    public void setGson(Gson gson) {
-        this.gson = gson;
-    }
+//    @Autowired
+//    public void setCourseDetailService(CourseDetailService courseDetailService) {
+//        this.courseDetailService = courseDetailService;
+//    }
+
+//    @Autowired
+//    public void setGson(Gson gson) {
+//        this.gson = gson;
+//    }
 
 //    发布课程描述
     @GetMapping("/releaseCourseDetail")
     public String insertCourseDetailInfo(CourseDetail courseDetail) {
         boolean releaseSuccess = courseDetailService.insertCourseDetailInfo(courseDetail);
-        if (releaseSuccess) return gson.toJson(courseDetail);
+        if (releaseSuccess) return new Gson().toJson(courseDetail);
         else return null;
     }
     //    获取-课程详情
@@ -35,8 +37,9 @@ public class CourseDetailController {
     @GetMapping("/getCourseDetail")
     public CourseDetail selectCourseDetailInfo(@RequestParam("cdtCosId") int cdtCosId){
 
+            System.out.println(courseDetailService == null);
             CourseDetail courseDetail = courseDetailService.selectCourseDetailInfo(cdtCosId);
-            String test = gson.toJson(courseDetail);
+            String test = new Gson().toJson(courseDetail);
             return courseDetail;
 
 
