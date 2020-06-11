@@ -13,17 +13,17 @@ public class CourseDetailController {
     @Autowired
     private CourseDetailService courseDetailService;
 
-//    private Gson gson;
+    private Gson gson;
 
-//    @Autowired
-//    public void setCourseDetailService(CourseDetailService courseDetailService) {
-//        this.courseDetailService = courseDetailService;
-//    }
+    @Autowired
+    public void setCourseDetailService(CourseDetailService courseDetailService) {
+        this.courseDetailService = courseDetailService;
+    }
 
-//    @Autowired
-//    public void setGson(Gson gson) {
-//        this.gson = gson;
-//    }
+    @Autowired
+    public void setGson(Gson gson) {
+        this.gson = gson;
+    }
 
 //    发布课程描述
     @GetMapping("/releaseCourseDetail")
@@ -35,17 +35,9 @@ public class CourseDetailController {
     //    获取-课程详情
 
     @GetMapping("/getCourseDetail")
-    public CourseDetail selectCourseDetailInfo(@RequestParam("cdtCosId") int cdtCosId){
-
+    public String selectCourseDetailInfo(@RequestParam("cdtCosId") int cdtCosId){
             System.out.println(courseDetailService == null);
             CourseDetail courseDetail = courseDetailService.selectCourseDetailInfo(cdtCosId);
-            String test = new Gson().toJson(courseDetail);
-            return courseDetail;
-
-
-
-//        return gson.toJson(courseDetail);
-
-
+            return gson.toJson(courseDetail);
     }
 }

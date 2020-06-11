@@ -47,12 +47,12 @@ public class GuopqApplicationTests {
 
         System.out.println(responseString);
     }
-    @Test
-    public void test01(){
-        CourseDetail courseDetail = courseDetailController.selectCourseDetailInfo(1);
-        System.out.println(courseDetail);
-
-    }
+//    @Test
+//    public void test01(){
+//        CourseDetail courseDetail = courseDetailController.selectCourseDetailInfo(1);
+//        System.out.println(courseDetail);
+//
+//    }
 
 
 
