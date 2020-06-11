@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="chatmodule.mapper.GroupDao">
+    <insert id="createGroup">
+        insert into group(grp_id, grp_name, grp_create_time, grp_description, grp_rule, grp_type, grp_portrait, grp_creator, grp_status) values (#{item.grpId},#{item.grpName}, #{item.grpCreateTime}, #{item.grpDescription}, #{item.grpRule}, #{item.grpType}, #{item.grpPortrait}, #{item.grpCreator}, #{item.grpStatus})
+    </insert>
+
+    <delete id = "deleteGroup">
+        delete from group where grp_id = #{grpId}
+    </delete>
+
+    <update id="modifyGroupInfo">
+        update group set grp_name = #{grpName}, grp_description = #{grpDescription}, grp_rule = #{grpRule}, grp_portrait = #{grpPortrait},
+        grp_status = #{grpStatus} where grp_id = #{grpId}
+    </update>
+</mapper>
