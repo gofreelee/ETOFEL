@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import sichuan.umbrella.chenmm.bean.Course;
+import sichuan.umbrella.chenmm.bean.CourseDetail;
 import sichuan.umbrella.chenmm.service.CourseService;
 
 import java.util.ArrayList;

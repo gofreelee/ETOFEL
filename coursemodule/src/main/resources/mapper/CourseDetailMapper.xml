@@ -7,6 +7,14 @@
         values (#{courseDetail.cdtCosId},#{courseDetail.cdtTchUsername},#{courseDetail.cdtGrpId},#{courseDetail.cdtPortrait},#{courseDetail.cdtPlan},#{courseDetail.cdtPattern},#{courseDetail.cdtGuide})
     </insert>
 
+<!--    查找课程-课程详细信息-->
+    <select id="selectCourseDetailInfo"  parameterType="int" resultType="sichuan.umbrella.chenmm.bean.CourseDetail">
+        select * from course_detail where
+        <if test="cdt_cos_id != null">
+            cdt_cos_id = #{cdtCosId}
+        </if>
+    </select>
+
 
 </mapper>
 

@@ -7,6 +7,7 @@ import sichuan.umbrella.chenmm.mapper.CourseDetailMapper;
 
 @Service
 public class CourseDetailService {
+    @Autowired
     private CourseDetailMapper courseDetailMapper;
 
     @Autowired
@@ -22,5 +23,11 @@ public class CourseDetailService {
         } else {
             return false;
         }
+    }
+    //   查找课程-课程详细信息
+    public CourseDetail selectCourseDetailInfo(int cdtCosId){
+        CourseDetail courseDetail = courseDetailMapper.selectCourseDetailInfo(cdtCosId);
+
+        return courseDetail;
     }
 }

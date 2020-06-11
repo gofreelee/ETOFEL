@@ -1,7 +1,7 @@
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://cdb-b6fcgmw2.cd.tencentcdb.com:10053/TOFEL
+    url: jdbc:mysql://cdb-b6fcgmw2.cd.tencentcdb.com:10053/TOFEL?serverTimezone=Asia/Shanghai
     username: groupsix
     password: chinasoft6
 
