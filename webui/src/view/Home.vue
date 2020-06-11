@@ -71,7 +71,6 @@
 
 <style scoped>
     .el-aside {
-        width: 40%;
         padding: 20px 20px 20px 40px;
     }
 
