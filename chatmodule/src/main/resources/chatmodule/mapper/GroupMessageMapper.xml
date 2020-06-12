@@ -10,4 +10,12 @@
         delete from group_message where gms_id = #{gmsId}
     </delete>
 
+    <select id="calculateMessageNum" resultType="int">
+        select count(*) from group_message where gms_grp_id=#{grpId}
+    </select>
+
+    <select id="selectMessageLimitBy" resultType="chatmodule.bean.GroupMessage">
+        select * from group_message where gms_grp_id = #{grpId}
+         limit #{start}, #{end}
+    </select>
 </mapper>
