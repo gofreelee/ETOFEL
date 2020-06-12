@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="sichuan.umbrella.chenmm.mapper.CourseCommentMapper">
+
+
+    <!--    发布课程详细评论-通过课程详细id指定-->
+    <insert id="insertCourseDetailComment" parameterType="sichuan.umbrella.chenmm.bean.CourseComment">
+        insert into course_comment (ccmt_username, ccmt_cos_detail_id, ccmt_date, ccmt_content)
+        values (#{courseComment.ccmtUsername},#{courseComment.ccmtCosDetailId},#{courseComment.ccmtDate},#{courseComment.ccmtContent})
+    </insert>
+
+<!--    课程详细界面评论获取-通过课程id获取指定课程的全部课程评论-->
+    <select id="selectCourseDetailCommentById" parameterType="int" resultMap="courseComment">
+        select * from course_comment where ccmt_cos_detail_id = #{ccmtCosDetailId}
+    </select>
+    <resultMap id="courseComment" type="sichuan.umbrella.chenmm.bean.CourseComment">
+        <result property="ccmtId" column="ccmt_id"/>
+        <result property="ccmtUsername" column="ccmt_username"/>
+        <result property="ccmtCosDetailId" column="ccmt_cos_detail_id"/>
+        <result property="ccmtDate" column="ccmt_date"/>
+        <result property="ccmtContent" column="ccmt_content"/>
+    </resultMap>
+
+
+
+
+</mapper>

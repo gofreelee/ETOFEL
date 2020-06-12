@@ -24,6 +24,27 @@
         <result property="cdtGuide" column="cdt_guide"/>
     </resultMap>
 
+<!--    查找老师点赞数-根据课程详细的Id来查找该课程详细的教师点赞数-->
+    <select id="selectCourseDetailLikeNum" parameterType="int" resultType="int">
+        select count(*)from course_detail,user_like_teacher
+        where cdt_cos_id = #{cdtCosId} and cdt_tch_username = ult_tch_username
+    </select>
+<!--    查找教师详细资料-根据课程详细的Id来查找该课程详细对应教师的详细资料-->
+    <select id="selectCourseDetailTeacher" parameterType="int" resultType="sichuan.umbrella.chenmm.bean.Teacher" resultMap="Teacher">
+        select * from course_detail,teacher
+        where cdt_cos_id = #{cdtCosId} and cdt_tch_username = tch_username
+    </select>
+    <resultMap id="Teacher" type="sichuan.umbrella.chenmm.bean.Teacher">
+        <id property="tchUsername" column="tch_username"/>
+        <result property="tchPassword" column="tch_password"/>
+        <result property="tchName" column="tch_name"/>
+        <result property="tchGender" column="tch_gender"/>
+        <result property="tchEmail" column="tch_email"/>
+        <result property="tchPhone" column="tch_phone"/>
+        <result property="tchBirthday" column="tch_birthday"/>
+        <result property="tchPortrait" column="tch_portrait"/>
+    </resultMap>
+
 
 </mapper>
 
