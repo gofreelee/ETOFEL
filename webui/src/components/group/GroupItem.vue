@@ -24,7 +24,7 @@
                         群信息
                     </el-row>
                     <el-row>
-                        <el-button type="success">聊天室</el-button>
+                        <el-button type="success" @click="toChatRoom(1)">聊天室</el-button>
                     </el-row>
                 </el-col>
             </el-row>
@@ -48,7 +48,11 @@
         methods: {
             toGroupInformation(group_id) {
                 console.log(group_id);
-                router.push({path: "/group/group-information"})
+                router.push({path: "/group/group-information"});
+            },
+            toChatRoom(group_id) {
+                console.log(group_id);
+                router.push({path: '/group/chat-room'});
             }
         }
     }
