@@ -34,12 +34,27 @@ public class CourseDetailController {
         if (releaseSuccess) return new Gson().toJson(courseDetail);
         else return null;
     }
-    //    获取-课程详情
 
+    /**
+     * 获取课程的详细页面信息
+     * @param cdtCosId：课程详细的id号
+     * @return 返回的是json格式，包含课程详细页的全部信息
+     */
     @GetMapping("/getCourseDetail")
     public String selectCourseDetailInfo(@RequestParam("cdtCosId") int cdtCosId){
 //            System.out.println(courseDetailService == null);
             CourseDetail courseDetail = courseDetailService.selectCourseDetailInfo(cdtCosId);
             return gson.toJson(courseDetail);
+    }
+
+    /**
+     * 获取课程详细页面的教师点赞数量
+     * @param cdtCosId：课程详细的id号
+     * @return 返回的事Json格式，包含课程详细页的教师点赞数量
+     */
+    @GetMapping("/getCourseDetailLikeNum")
+    public String selectCourseDetailLikeNum(@RequestParam("cdtCosId") int cdtCosId){
+        int likeNum = courseDetailService.selectCourseDetailLikeNum(cdtCosId);
+        return gson.toJson(likeNum);
     }
 }

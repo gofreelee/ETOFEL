@@ -24,6 +24,12 @@
         <result property="cdtGuide" column="cdt_guide"/>
     </resultMap>
 
+<!--    查找老师点赞数-根据课程详细的Id来查找该课程详细的教师点赞数-->
+    <select id="selectCourseDetailLikeNum" parameterType="int" resultType="int">
+        select count(*)from course_detail,user_like_teacher
+        where cdt_cos_id = #{cdtCosId} and cdt_tch_username = ult_tch_username
+    </select>
+
 
 </mapper>
 

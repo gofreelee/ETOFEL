@@ -29,6 +29,12 @@ public class CourseDataController {
         this.gson = gson;
     }
 
+    /**
+     * 根据课程资料的id和对应课程的id来查找下载资源的uri
+     * @param cdaId：课程资料本身的id
+     * @param cdaCosId：对应的课程的id
+     * @return 返回json格式，包含Coursedata的全部内容
+     */
     @RequestMapping("/getCourseData")
     public String selectCourseDataById(@RequestParam("cdaId") int cdaId,@RequestParam("cdaCosId") int cdaCosId){
         CourseData courseData = courseDataService.selectCourseDataById(cdaId,cdaCosId);
@@ -40,6 +46,7 @@ public class CourseDataController {
             return gson.toJson(courseData);
         }
     }
+
 
 
 }

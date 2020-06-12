@@ -18,4 +18,13 @@ public interface CourseDetailMapper {
      * @return CourseDetail类型
      */
     CourseDetail selectCourseDetailInfo(@Param("cdtCosId") int cdtCosId);
+
+    /**
+     * 查找课程详细页面的老师点赞数量
+     * @param cdtCosId：课程详细的id
+     * @return
+     */
+    int selectCourseDetailLikeNum(@Param("cdtCosId") int cdtCosId);
+
+
 }
