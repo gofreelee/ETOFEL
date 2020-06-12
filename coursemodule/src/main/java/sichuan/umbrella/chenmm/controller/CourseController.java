@@ -29,7 +29,12 @@ public class CourseController {
         this.gson = gson;
     }
 
-//    选择公益、热门、名师->听力、写作
+    /**
+     * 选择公益、热门、名师->听力、写作
+     * @param type 课程类型（公益、热门、名师）
+     * @param cosCategory 课程分类
+     * @return course list json
+     */
     @GetMapping("/welfareCastle")
     public String courseList(@RequestParam("type")int type, @RequestParam("cosCategory")String cosCategory) {
         List<Course> list = new ArrayList<>();
@@ -68,7 +73,4 @@ public class CourseController {
         List<Course> list=courseService.selectCourseByLike();
         return gson.toJson(list);
     }
-
-
-
 }
