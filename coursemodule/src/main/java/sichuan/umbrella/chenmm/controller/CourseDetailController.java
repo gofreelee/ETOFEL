@@ -32,8 +32,9 @@ public class CourseDetailController {
         if (releaseSuccess) return new Gson().toJson(courseDetail);
         else return null;
     }
-    //    获取-课程详情
 
+
+    //    获取-课程详情
     @GetMapping("/getCourseDetail")
     public String selectCourseDetailInfo(@RequestParam("cdtCosId") int cdtCosId){
             System.out.println(courseDetailService == null);
