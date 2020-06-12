@@ -8,6 +8,7 @@ public class CourseDetail {
     private String cdtPlan;
     private String cdtPattern;
     private String cdtGuide;
+    private String cdtImg;
 
     public CourseDetail() {
     }
@@ -20,7 +21,7 @@ public class CourseDetail {
         }
     }
 
-    public CourseDetail(Integer cdtCosId, String cdtTchUsername, Integer cdtGrpId, String cdtPortrait, String cdtPlan, String cdtPattern, String cdtGuide) {
+    public CourseDetail(Integer cdtCosId, String cdtTchUsername, Integer cdtGrpId, String cdtPortrait, String cdtPlan, String cdtPattern, String cdtGuide,String cdtImg) {
         this.cdtCosId = cdtCosId;
         this.cdtTchUsername = cdtTchUsername;
         this.cdtGrpId = cdtGrpId;
@@ -28,6 +29,15 @@ public class CourseDetail {
         this.cdtPlan = cdtPlan;
         this.cdtPattern = cdtPattern;
         this.cdtGuide = cdtGuide;
+        this.cdtImg = cdtImg;
+    }
+
+    public String getCdtImg() {
+        return cdtImg;
+    }
+
+    public void setCdtImg(String cdtImg) {
+        this.cdtImg = cdtImg;
     }
 
     public Integer getCdtCosId() {
@@ -96,6 +106,7 @@ public class CourseDetail {
                 ", cdtPlan='" + cdtPlan + '\'' +
                 ", cdtPattern='" + cdtPattern + '\'' +
                 ", cdtGuide='" + cdtGuide + '\'' +
+                ", cdtImg='" + cdtImg + '\'' +
                 '}';
     }
 }

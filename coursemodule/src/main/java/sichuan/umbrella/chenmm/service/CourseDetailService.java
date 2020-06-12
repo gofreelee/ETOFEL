@@ -3,6 +3,7 @@ package sichuan.umbrella.chenmm.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import sichuan.umbrella.chenmm.bean.CourseDetail;
+import sichuan.umbrella.chenmm.bean.Teacher;
 import sichuan.umbrella.chenmm.mapper.CourseDetailMapper;
 
 @Service
@@ -41,5 +42,15 @@ public class CourseDetailService {
     public int selectCourseDetailLikeNum(int cdtCosId){
         int likeNum = courseDetailMapper.selectCourseDetailLikeNum(cdtCosId);
         return likeNum;
+    }
+
+    /**
+     * 查找老师信息-根据课程详细的ID来查找课程详细的老师具体资料
+     * @param cdtCosId：课程详细的Id
+     * @return 返回Teacher的实例
+     */
+    public Teacher selectCourseDetailTeacher(int cdtCosId){
+        Teacher teacher = courseDetailMapper.selectCourseDetailTeacher(cdtCosId);
+        return teacher;
     }
 }

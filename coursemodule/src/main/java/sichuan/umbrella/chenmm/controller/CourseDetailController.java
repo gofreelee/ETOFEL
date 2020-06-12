@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import sichuan.umbrella.chenmm.bean.CourseDetail;
+import sichuan.umbrella.chenmm.bean.Teacher;
 import sichuan.umbrella.chenmm.service.CourseDetailService;
 
 @RestController
@@ -50,11 +51,22 @@ public class CourseDetailController {
     /**
      * 获取课程详细页面的教师点赞数量
      * @param cdtCosId：课程详细的id号
-     * @return 返回的事Json格式，包含课程详细页的教师点赞数量
+     * @return 返回的是Json格式，包含课程详细页的教师点赞数量
      */
     @GetMapping("/getCourseDetailLikeNum")
     public String selectCourseDetailLikeNum(@RequestParam("cdtCosId") int cdtCosId){
         int likeNum = courseDetailService.selectCourseDetailLikeNum(cdtCosId);
         return gson.toJson(likeNum);
+    }
+
+    /**
+     * 获取课程详细页面的教师详细信息
+     * @param cdtCosId：课程详细的Id
+     * @return 返回的是Json格式，包含教师详细信息
+     */
+    @GetMapping("/getCourseDetailTeacherInfo")
+    public String selectCourseDetailTeacherInfo(@RequestParam("cdtCosId") int cdtCosId){
+        Teacher teacher = courseDetailService.selectCourseDetailTeacher(cdtCosId);
+        return gson.toJson(teacher);
     }
 }
