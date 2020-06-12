@@ -114,6 +114,7 @@ public class GuopqApplicationTests {
                 .andReturn().getResponse().getContentAsString(); //将相应的数据转换为字符
 
         System.out.println(responseString);
+        System.out.println("success");
     }
 
 //    @Test
