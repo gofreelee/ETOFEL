@@ -36,6 +36,9 @@
                     case 1:
                         router.push({path: '/tofel-article'});
                         break;
+                    case 2:
+                        router.push({path: '/course'});
+                        break;
                     case 3:
                         router.push({path: '/group'})
                 }

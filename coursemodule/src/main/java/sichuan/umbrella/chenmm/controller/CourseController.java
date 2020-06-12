@@ -29,9 +29,9 @@ public class CourseController {
         this.gson = gson;
     }
 
-//    选择公益、热门、名师->听力、写作
+    //    选择公益、热门、名师->听力、写作
     @GetMapping("/welfareCastle")
-    public String courseList(@RequestParam("type")int type, @RequestParam("cosCategory")String cosCategory) {
+    public String courseList(@RequestParam("type") int type, @RequestParam("cosCategory") String cosCategory) {
         List<Course> list = new ArrayList<>();
         switch (type) {
             case 0:
@@ -49,23 +49,24 @@ public class CourseController {
 
     //    发布课程-基本信息
     @GetMapping("/releaseCourse")
-    public String insertCourseBasicInfo(Course course){
-        boolean releaseSuccess=courseService.insertCourseBasicInfo(course);
+    public String insertCourseBasicInfo(Course course) {
+        boolean releaseSuccess = courseService.insertCourseBasicInfo(course);
         if (releaseSuccess) return gson.toJson(course);
         else return null;
     }
 
-//    按照时间从早到晚给课程排序
+    //    按照时间从早到晚给课程排序
     @GetMapping("/sortByTime")
-    public String selectCourseByTime(@RequestParam("cosStartDate") String cosStartDate, @RequestParam("cosStartTime") String cosStartTime){
-        List<Course> list= courseService.selectCourseByTime(cosStartDate,cosStartTime);
+    public String selectCourseByTime(@RequestParam("cosStartDate") String cosStartDate, @RequestParam("cosStartTime") String cosStartTime) {
+        List<Course> list = courseService.selectCourseByTime(cosStartDate, cosStartTime);
         return gson.toJson(list);
     }
 
-//    按照课程老师的点赞数给课程排序
-    @GetMapping("/sortByLike")
-    public String selectCourseByLike(){
-        List<Course> list=courseService.selectCourseByLike();
-        return gson.toJson(list);
+
+    //    计算课程的参加人数
+    @GetMapping("/countCourseJoin")
+    public String countCourseJoin(@RequestParam("ujcCosId") Integer ujcCosId) {
+        int countJoin = courseService.countCourseJoin(ujcCosId);
+        return gson.toJson(countJoin);
     }
 }

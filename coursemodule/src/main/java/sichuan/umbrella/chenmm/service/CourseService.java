@@ -16,7 +16,7 @@ public class CourseService {
         this.courseMapper = courseMapper;
     }
 
-    //课程选择为公益课程
+    //课程选择为公益课程(免费课程)
     public List<Course> selectActivityIsPublic(String cosCategory) {
         return courseMapper.selectActivityIsPublic(cosCategory);
     }
@@ -42,8 +42,8 @@ public class CourseService {
         return courseMapper.selectCourseByTime("cosStartDate", "cosStartTime");
     }
 
-    //    按课程老师的点赞数给课程排序
-    public List<Course> selectCourseByLike() {
-        return courseMapper.selectCourseByLike();
+    //    计算课程的参加人数
+    public int countCourseJoin(Integer ujcCosId) {
+        return courseMapper.countCourseJoin(ujcCosId);
     }
 }

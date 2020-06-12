@@ -14,7 +14,7 @@
                 <el-col :span="1" :offset="1">
                     <i class="el-icon-search"/>
                 </el-col>
-                <el-col :span="20" style="font-size: 1.1rem">
+                <el-col :span="20" style="font-size: 1.1rem" @click.native="toArticleDetail">
                     dfjsdlkfjdfsklghfdskjfdlks
                 </el-col>
             </el-row>
@@ -23,6 +23,8 @@
 </template>
 
 <script>
+    import router from "../../router";
+
     export default {
         name: "ArticleList",
         props: {
@@ -55,6 +57,11 @@
         computed: {
             icon() {
                 return this.iconList[this.type]
+            }
+        },
+        methods: {
+            toArticleDetail() {
+                router.push({path: "/tofel-article/detail"});
             }
         }
     }

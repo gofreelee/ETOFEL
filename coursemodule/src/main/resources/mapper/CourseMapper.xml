@@ -16,9 +16,11 @@
         where cos_id = cdt_cos_id and cdt_tch_username = ult_tch_username) desc
     </select>
 
-    <!--    热门课程（报名人数从多到少），再二次分类（口语、写作……）-->
-    <select id="selectActivityIsCharacteristic" parameterType="int" resultMap="Course">
-        select * from course where cos_fee>0
+    <!--    热门课程（报名参与人数从多到少），再二次分类（口语、写作……）-->
+    <select id="selectActivityIsHot" resultMap="Course">
+        select * from course where cos_category=#{cos_category} order by(select count(*)
+        from user_join_course
+        where cos_id=ujc_cos_id) desc
     </select>
 
     <!--    按时间从早到晚给课程排序-->
@@ -38,13 +40,6 @@
         <result property="cosStatus" column="cos_status"/>
     </resultMap>
 
-<!--    按照课程老师的点赞人数从高到低给课程排序-->
-    <select id="selectCourseByLike" resultMap="Course">
-        select * from course order by (select count(*)
-        from course_detail,user_like_teacher
-        where cos_id = cdt_cos_id and cdt_tch_username = ult_tch_username) desc
-    </select>
-
     <!--    发布课程基本信息-->
     <insert id="insertCourseBasicInfo" parameterType="sichuan.umbrella.chenmm.bean.Course">
         insert into course (cos_title, cos_start_date, cos_end_date, cos_start_time, cos_end_time, cos_stage, cos_fee, cos_category, cos_status)
@@ -56,6 +51,11 @@
         insert into course_detail (cdt_cos_id, cdt_tch_username, cdt_grp_id, cdt_portrait, cdt_plan, cdt_pattern, cdt_guide)
         values (#{courseDetail.cdtCosId},#{courseDetail.cdtTchUsername},#{courseDetail.cdtGrpId},#{courseDetail.cdtPortrait},#{courseDetail.cdtPlan},#{courseDetail.cdtPattern},#{courseDetail.cdtGuide})
     </insert>
+
+    <!--    计算课程的参加人数-->
+    <select id="countCourseJoin" resultType="int" parameterType="Integer">
+        select count(*) from user_join_course where ujc_cos_id=#{user_join_course.ujcCosId}
+    </select>
 </mapper>
 
 
