@@ -7,8 +7,14 @@ import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/user")
@@ -17,6 +23,8 @@ public class UserController {
     UserService userService;
     @Autowired
     Gson gson;
+    private MultipartFile imgFile;
+    private String usr_username;
 
     @GetMapping("/info")
     @ResponseBody
@@ -52,9 +60,38 @@ public class UserController {
         return null;
     }
 
-    @GetMapping("/updatePhoto")
-    public String updatePhoto(){
-        return null;
+    @PostMapping("/updatePhoto")
+    public Map<String, Object> updatePhoto(@RequestParam("imgFile")MultipartFile imgFile,
+                                           @RequestParam("usr_username")String usr_username) throws IOException {
+        this.imgFile = imgFile;
+        this.usr_username = usr_username;
+        if (imgFile== null) {
+            return new HashMap(0);
+        }
+
+        Map map = new HashMap(2);
+
+        String filename = imgFile.getOriginalFilename();
+
+        // 创建临时文件
+        File tempFile = File.createTempFile("tem", null);
+        imgFile.transferTo(tempFile);
+        tempFile.deleteOnExit();
+
+        FileInputStream inputStream = new FileInputStream(tempFile);
+
+        byte[] buffer = new byte[(int)tempFile.length()];
+        inputStream.read(buffer);
+        inputStream.close();
+
+        String base64 = new sun.misc.BASE64Encoder().encode(buffer);
+        base64 = base64.replaceAll("[\\s*\t\n\r]", "");
+
+        userService.updatePhoto(usr_username,base64);
+        map.put("filename", filename);
+        map.put("base64", base64);
+        return map;
+
     }
 
 }

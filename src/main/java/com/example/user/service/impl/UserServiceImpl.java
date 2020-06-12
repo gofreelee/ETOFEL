@@ -25,4 +25,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public void updatePwd(String usr_username,String pwd){userMapper.updatePwd(usr_username,pwd);}
 
+    @Override
+    public void updatePhoto(String usr_username,String usr_portrait){
+        userMapper.updatePhoto(usr_username, usr_portrait);}
 }

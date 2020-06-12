@@ -30,4 +30,9 @@
     <select id="getPhoto"  resultType="string" parameterType="string" >
         select usr_portrait from user where usr_username = #{usr_username}
     </select>
+
+    <!--修改用户头像-->
+    <select id="updatePhoto" >
+        update user set usr_portrait = #{usr_portrait} where usr_username = #{usr_username}
+    </select>
 </mapper>

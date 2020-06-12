@@ -8,6 +8,6 @@ public interface UserService {
 
     void updateUser(User user);
     void updatePwd(String usr_username,String pwd);
-
+    void updatePhoto(String usr_username,String usr_portrait);
 
 }
