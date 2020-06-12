@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="chatmodule.mapper.GroupMessageDao">
+    <insert id="sendMessage" >
+        insert into group_message(gms_grp_id, gms_username, gms_content, gms_create_time) values (#{gmsGrpId}, #{gmsUsername}, #{gmsContext},#{gmsCreateTime})
+    </insert>
+
+    <delete id="deleteMessage">
+        delete from group_message where gms_id = #{gmsId}
+    </delete>
+
+    <select id="calculateMessageNum" resultType="int">
+        select count(*) from group_message where gms_grp_id=#{grpId}
+    </select>
+
+    <select id="selectMessageLimitBy" resultType="chatmodule.bean.GroupMessage">
+        select * from group_message where gms_grp_id = #{grpId}
+         limit #{start}, #{end}
+    </select>
+</mapper>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="chatmodule.mapper.GroupMemberDao">
+    <insert id="addGroupMember" >
+        insert into group_member(gmb_username, gmb_grp_id, gmb_type) values (#{gmbUsername}, #{gmbGroupId}, #{gmbType})
+    </insert>
+
+    <delete id="deleteMember">
+        delete  from group_member where gmb_username = #{gmbUsername}
+    </delete>
+
+    <select id="calculateAllMemberNum" resultType="int">
+        select count(*)from group_member where gmb_grp_id=#{grpId}
+    </select>
+
+    <select id="selectMemberInfo"  resultType="chatmodule.bean.MemberQuery">
+        select gmb_username, usr_portrait, gmb_type from group_member naturl join user where gmb_grp_id = #{grpId} and gmb_username = usr_username
+    </select>
+
+    <select id="selectMemberByType" resultType="chatmodule.bean.MemberQuery">
+        select gmb_username, usr_portrait, gmb_type from group_member naturl join user where gmb_grp_id = #{grpId} and gmb_username = usr_username and gmb_type = #{gmbType}
+    </select>
+</mapper>
