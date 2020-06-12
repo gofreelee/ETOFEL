@@ -3,12 +3,14 @@ package sichuan.umbrella.chenmm.controller;
 import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import sichuan.umbrella.chenmm.bean.CourseDetail;
 import sichuan.umbrella.chenmm.service.CourseDetailService;
 
 @RestController
+@RequestMapping("/courseDetail")
 public class CourseDetailController {
     @Autowired
     private CourseDetailService courseDetailService;
@@ -36,7 +38,7 @@ public class CourseDetailController {
 
     @GetMapping("/getCourseDetail")
     public String selectCourseDetailInfo(@RequestParam("cdtCosId") int cdtCosId){
-            System.out.println(courseDetailService == null);
+//            System.out.println(courseDetailService == null);
             CourseDetail courseDetail = courseDetailService.selectCourseDetailInfo(cdtCosId);
             return gson.toJson(courseDetail);
     }

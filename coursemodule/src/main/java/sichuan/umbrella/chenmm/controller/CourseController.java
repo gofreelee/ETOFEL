@@ -68,4 +68,7 @@ public class CourseController {
         List<Course> list=courseService.selectCourseByLike();
         return gson.toJson(list);
     }
+
+
+
 }

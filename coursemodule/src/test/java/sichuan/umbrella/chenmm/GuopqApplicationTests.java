@@ -38,7 +38,19 @@ public class GuopqApplicationTests {
     //测试访问课程具体界面
     @Test
     public void courseDetailInfo() throws Exception {
-        String responseString = mockMvc.perform(MockMvcRequestBuilders.get("/getCourseDetail?cdtCosId=1") //请求的url,请求的方法是get
+        String responseString = mockMvc.perform(MockMvcRequestBuilders.get("/courseDetail/getCourseDetail?cdtCosId=1") //请求的url,请求的方法是get
+                .contentType(MediaType.APPLICATION_JSON_UTF8) //数据的格式
+                .accept(MediaType.APPLICATION_JSON_UTF8)
+        ).andExpect(MockMvcResultMatchers.status().isOk())  //返回的状态是200
+                .andDo(MockMvcResultHandlers.print()) //打印出请求和相应的内容
+                .andReturn().getResponse().getContentAsString(); //将相应的数据转换为字符
+
+        System.out.println(responseString);
+    }
+    //测试查找课程资料
+    @Test
+    public void selectCourseData() throws Exception {
+        String responseString = mockMvc.perform(MockMvcRequestBuilders.get("/courseData/getCourseData?cdaId=1&cdaCosId=1") //请求的url,请求的方法是get
                 .contentType(MediaType.APPLICATION_JSON_UTF8) //数据的格式
                 .accept(MediaType.APPLICATION_JSON_UTF8)
         ).andExpect(MockMvcResultMatchers.status().isOk())  //返回的状态是200
