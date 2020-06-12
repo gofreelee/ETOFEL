@@ -15,9 +15,14 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.context.WebApplicationContext;
+import sichuan.umbrella.chenmm.bean.CourseComment;
 import sichuan.umbrella.chenmm.bean.CourseDetail;
+import sichuan.umbrella.chenmm.controller.CourseCommentController;
 import sichuan.umbrella.chenmm.controller.CourseController;
 import sichuan.umbrella.chenmm.controller.CourseDetailController;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -29,6 +34,8 @@ public class GuopqApplicationTests {
     private MockMvc mockMvc;
     @Autowired
     private CourseDetailController courseDetailController;
+    @Autowired
+    private CourseCommentController courseCommentController;
     @Before
     public void setUp() throws Exception {
         //MockMvcBuilders.webAppContextSetup(WebApplicationContext context)：指定WebApplicationContext，将会从该上下文获取相应的控制器并得到相应的MockMvc；
@@ -82,6 +89,19 @@ public class GuopqApplicationTests {
                 .andReturn().getResponse().getContentAsString(); //将相应的数据转换为字符
 
         System.out.println(responseString);
+    }
+    //课程详细页添加评论
+    @Test
+    public void insertCourseComment() throws Exception {
+
+        Date date = new Date();//需要new一个Date对象
+        String string ="1999-05-22";//输入想要添加的生日
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd"); //设置日期格式  yyyy-MM-dd-HH-mm-ss这个是完整的
+        date = dateFormat.parse(string);//将字符串转换成date类型数据
+        CourseComment courseComment = new CourseComment("郭沛祺", 1, date, "这个课程还不错，推荐给大家");
+        System.out.println(courseComment+"-----------------");
+        String result = courseCommentController.insertCourseComment(courseComment);
+        System.out.println(result);
     }
 //    @Test
 //    public void test01(){
