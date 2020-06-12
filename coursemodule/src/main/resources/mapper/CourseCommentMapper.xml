@@ -9,6 +9,19 @@
         values (#{courseComment.ccmtUsername},#{courseComment.ccmtCosDetailId},#{courseComment.ccmtDate},#{courseComment.ccmtContent})
     </insert>
 
+<!--    课程详细界面评论获取-通过课程id获取指定课程的全部课程评论-->
+    <select id="selectCourseDetailCommentById" parameterType="int" resultMap="courseComment">
+        select * from course_comment where ccmt_cos_detail_id = #{ccmtCosDetailId}
+    </select>
+    <resultMap id="courseComment" type="sichuan.umbrella.chenmm.bean.CourseComment">
+        <result property="ccmtId" column="ccmt_id"/>
+        <result property="ccmtUsername" column="ccmt_username"/>
+        <result property="ccmtCosDetailId" column="ccmt_cos_detail_id"/>
+        <result property="ccmtDate" column="ccmt_date"/>
+        <result property="ccmtContent" column="ccmt_content"/>
+    </resultMap>
+
+
 
 
 </mapper>

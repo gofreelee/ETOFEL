@@ -9,6 +9,8 @@ import sichuan.umbrella.chenmm.bean.Course;
 import sichuan.umbrella.chenmm.bean.CourseComment;
 import sichuan.umbrella.chenmm.service.CourseCommentService;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/courseComment")
 public class CourseCommentController {
@@ -34,6 +36,12 @@ public class CourseCommentController {
 
         if(insertCourseCommentSucc) return gson.toJson(courseComment);
         else return null;
+    }
+
+    @GetMapping("/getAllCourseComment")
+    public String getAllCourseComment(int ccmtCosDetailId){
+        List<CourseComment> courseComments = courseCommentService.selectAllCourseDetailCommentById(ccmtCosDetailId);
+        return gson.toJson(courseComments);
     }
 
 

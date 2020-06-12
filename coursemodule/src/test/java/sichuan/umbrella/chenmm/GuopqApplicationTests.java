@@ -103,6 +103,19 @@ public class GuopqApplicationTests {
         String result = courseCommentController.insertCourseComment(courseComment);
         System.out.println(result);
     }
+    //测试课程详细的页面的全部评论查找
+    @Test
+    public void selectAllCourseDetailComment() throws Exception {
+        String responseString = mockMvc.perform(MockMvcRequestBuilders.get("/courseComment/getAllCourseComment?ccmtCosDetailId=1") //请求的url,请求的方法是get
+                .contentType(MediaType.APPLICATION_JSON_UTF8) //数据的格式
+                .accept(MediaType.APPLICATION_JSON_UTF8)
+        ).andExpect(MockMvcResultMatchers.status().isOk())  //返回的状态是200
+                .andDo(MockMvcResultHandlers.print()) //打印出请求和相应的内容
+                .andReturn().getResponse().getContentAsString(); //将相应的数据转换为字符
+
+        System.out.println(responseString);
+    }
+
 //    @Test
 //    public void test01(){
 //        CourseDetail courseDetail = courseDetailController.selectCourseDetailInfo(1);
