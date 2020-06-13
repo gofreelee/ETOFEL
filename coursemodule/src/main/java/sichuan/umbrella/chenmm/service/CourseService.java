@@ -64,36 +64,13 @@ public class CourseService {
     }
 
     /**
-     * 管理员功能——按照课程号cos_id将课程状态调整为"停课"
-     * @param cosId
+     * 管理员课程列表页动态查询课程
+     * @param cosTitle 课程名称
+     * @param cosCategory 课程种类：听力、写作……
+     * @param cdtTchUsername 该课的老师
+     * @return 查询的list列表
      */
-    public void closeCourseById(int cosId){
-        courseMapper.updateCourseToClose(cosId);
-    }
-
-    /**
-     * 管理员功能——按照课程号cos_id将课程状态调整为"开课"
-     * @param cosId
-     */
-    public void openCourseById(int cosId){
-        courseMapper.updateCourseToOpen(cosId);
-    }
-
-    /**
-     * 管理员功能——按照课程号cos_id将课程状态调整为"报名"
-     * @param cosId
-     */
-    public void signUpCourseById(int cosId){
-        courseMapper.updateCourseToSignUp(cosId);
-    }
-
-    /**
-     * 根据课程id查找课程信息
-     * @param cosId
-     * @return
-     */
-    public Course selectCourseById(int cosId){
-        Course course = courseMapper.selectCourseById(cosId);
-        return course;
+    public List<Course> selectCourseDynamic(String cosTitle,String cosCategory,String cdtTchUsername){
+        return courseMapper.selectCourseDynamic(cosTitle,cosCategory,cdtTchUsername);
     }
 }

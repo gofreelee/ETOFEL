@@ -33,5 +33,4 @@ public interface CourseDetailMapper {
      * @return 返回Teacher类型的实例
      */
     Teacher selectCourseDetailTeacher(@Param("cdtCosId") int cdtCosId);
-
 }

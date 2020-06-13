@@ -1,0 +1,16 @@
+server:
+  port: 8080
+  adress: 0.0.0.0
+spring:
+  datasource:
+    url: jdbc:mysql://cdb-b6fcgmw2.cd.tencentcdb.com:10053/TOFEL?serverTimezone=UTC
+    hikari:
+      username: groupsix
+      password: chinasoft6
+      driver-class-name: com.mysql.cj.jdbc.Driver
+  http:
+    multipart:
+
+mybatis:
+  mapper-locations: classpath:user/mapper/*.xml
+  type-aliases-package: com.example.user.bean

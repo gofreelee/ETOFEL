@@ -10,10 +10,7 @@ import sichuan.umbrella.chenmm.bean.Course;
 import sichuan.umbrella.chenmm.bean.CourseDetail;
 import sichuan.umbrella.chenmm.service.CourseService;
 
-import java.sql.Time;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -77,46 +74,5 @@ public class CourseController {
     public String selectCourseByTime(@RequestParam("cosStartDate") String cosStartDate, @RequestParam("cosStartTime") String cosStartTime) {
         List<Course> list = courseService.selectCourseByTime(cosStartDate, cosStartTime);
         return gson.toJson(list);
-    }
-
-    /**
-     * 管理员功能——按照课程id关闭课程，调整课程状态为结课
-     * @param cosId：课程的id
-     * @return 返回JSON，为关闭成功提示
-     */
-    @GetMapping("/closeCourse")
-    public String closeCourseById(@RequestParam("cosId") int cosId){
-        courseService.closeCourseById(cosId);
-        String result = "successfully closed course by id:" + cosId;
-        return gson.toJson(result);
-    }
-
-    /**
-     * 管理员功能——按照课程id恢复课程，根据当前日期和目标课程的开课日记做比较，调整课程状态为报名或者开课
-     * @param cosId：课程id
-     * @return Json
-     * @throws Exception
-     */
-    @GetMapping("/recoverCourse")
-    public String recoverCourseById(@RequestParam("cosId") int cosId)throws Exception{
-        //获取想恢复的课程的开课日期
-        Course course = courseService.selectCourseById(cosId);
-        Date courseOpenDate = course.getCosStartDate();
-        //获取当前的日期
-        SimpleDateFormat formatter= new SimpleDateFormat("yyyy-MM-dd");
-        Date nowDate = new Date(System.currentTimeMillis());
-        String nowDateString = formatter.format(nowDate);
-        nowDate = formatter.parse(nowDateString);
-        String result;
-        if(nowDate.compareTo(courseOpenDate) == -1){
-            courseService.signUpCourseById(cosId);
-            result = "课程状态改变成开课";
-            return gson.toJson(result);
-        }
-        else {
-            courseService.openCourseById(cosId);
-            result = "课程状态改变成报名";
-            return gson.toJson(result);
-        }
     }
 }

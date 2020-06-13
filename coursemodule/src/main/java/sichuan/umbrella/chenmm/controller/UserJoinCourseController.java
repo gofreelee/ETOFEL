@@ -1,6 +1,7 @@
 package sichuan.umbrella.chenmm.controller;
 
 import com.google.gson.Gson;
+import org.omg.PortableInterceptor.INACTIVE;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -51,13 +52,15 @@ public class UserJoinCourseController {
 
     /**
      * 当用户成功支付，更新用户支付状态为“已支付”
-     * @return 更新状态是否成功
+     * @param ujcCosId 课程id
+     * @param ujcUsrUsername 用户名
+     * @return json支付是否成功
      */
     @GetMapping("/updateUserStatusToPaid")
-    public String updateUserStatusToPaid() {
+    public String updateUserStatusToPaid(@RequestParam("ujcCosId")Integer ujcCosId,@RequestParam("ujcUsrUsername")String ujcUsrUsername) {
         //调用一个pay支付函数，pay操作成功再更新(pay函数未写)
         // if (pay成功){
-        userJoinCourseService.updateUserStatusToPaid();
+        userJoinCourseService.updateUserStatusToPaid(ujcCosId,ujcUsrUsername);
         return "paySuccess";
         /*}else{
              return "payFalse"
