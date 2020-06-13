@@ -28,7 +28,11 @@ public class CourseDetailController {
         this.gson = gson;
     }
 
-//    发布课程描述
+    /**
+     * 发布课程描述
+     * @param courseDetail CourseDetail类
+     * @return json
+     */
     @GetMapping("/releaseCourseDetail")
     public String insertCourseDetailInfo(CourseDetail courseDetail) {
         boolean releaseSuccess = courseDetailService.insertCourseDetailInfo(courseDetail);

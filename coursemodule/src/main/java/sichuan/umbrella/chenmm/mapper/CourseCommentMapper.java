@@ -17,7 +17,7 @@ public interface CourseCommentMapper {
 
     /**
      * 根据课程详细的id查找对应课程的全部评论
-     * @param courseDetailId：课程详细页的id
+     * @param ccmtCosDetailId：课程详细页的id
      * @return 返回CourseComment的List集合
      */
     List<CourseComment> selectCourseDetailCommentById(@Param("ccmtCosDetailId") int ccmtCosDetailId);

@@ -21,6 +21,8 @@ public interface UserJoinCourseMapper {
 
     /**
      * 当用户成功支付，更新用户支付状态为“已支付”
+     * @param ujcCosId 课程id
+     * @param ujcUsrUsername 用户名
      */
-    void updateUserStatusToPaid();
+    void updateUserStatusToPaid(@Param("ujc_cos_id")Integer ujcCosId,@Param("ujc_usr_username")String ujcUsrUsername);
 }

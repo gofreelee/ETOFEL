@@ -14,7 +14,7 @@
 
     <!--    当用户成功支付，更新用户支付状态为“已支付”-->
     <update id="updateUserStatusToPaid">
-        update user_join_course set ujc_status='已支付' where ujc_status='未支付'
+        update user_join_course set ujc_status='已支付' where ujc_status='未支付' and ujc_cos_id=#{ujc_cos_id} and ujc_usr_username=#{ujc_usr_username}
     </update>
 </mapper>
 
