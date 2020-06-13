@@ -10,7 +10,9 @@ import sichuan.umbrella.chenmm.bean.Course;
 import sichuan.umbrella.chenmm.bean.CourseDetail;
 import sichuan.umbrella.chenmm.service.CourseService;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -75,4 +77,44 @@ public class CourseController {
         List<Course> list = courseService.selectCourseByTime(cosStartDate, cosStartTime);
         return gson.toJson(list);
     }
+    /**
+     * 管理员课程列表页动态查询课程
+     * @param cosTitle 课程名称
+     * @param cosCategory 课程种类：写作、听力……
+     * @param cdtTchUsername 该课教室名字
+     * @return json
+     */
+    @GetMapping("/selectCourseDynamic")
+    public String selectCourseDynamic(String cosTitle, String cosCategory,String cdtTchUsername){
+        List<Course> list=courseService.selectCourseDynamic(cosTitle,cosCategory,cdtTchUsername);
+        return gson.toJson(list);
+    }
+    /**
+     * 管理员功能——按照课程id恢复课程，根据当前日期和目标课程的开课日记做比较，调整课程状态为报名或者开课
+     * @param cosId：课程id
+     * @return Json
+     * @throws Exception
+     */
+    @GetMapping("/recoverCourse")
+    public String recoverCourseById(@RequestParam("cosId") int cosId)throws Exception {
+        //获取想恢复的课程的开课日期
+        Course course = courseService.selectCourseById(cosId);
+        Date courseOpenDate = course.getCosStartDate();
+        //获取当前的日期
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+        Date nowDate = new Date(System.currentTimeMillis());
+        String nowDateString = formatter.format(nowDate);
+        nowDate = formatter.parse(nowDateString);
+        String result;
+        if (nowDate.compareTo(courseOpenDate) == -1) {
+            courseService.signUpCourseById(cosId);
+            result = "课程状态改变成开课";
+            return gson.toJson(result);
+        } else {
+            courseService.openCourseById(cosId);
+            result = "课程状态改变成报名";
+            return gson.toJson(result);
+        }
+    }
+
 }

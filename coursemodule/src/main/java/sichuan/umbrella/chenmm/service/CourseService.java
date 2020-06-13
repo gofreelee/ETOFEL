@@ -73,4 +73,38 @@ public class CourseService {
     public List<Course> selectCourseDynamic(String cosTitle,String cosCategory,String cdtTchUsername){
         return courseMapper.selectCourseDynamic(cosTitle,cosCategory,cdtTchUsername);
     }
+
+    /**
+     * 管理员功能——按照课程号cos_id将课程状态调整为"停课"
+     * @param cosId
+     */
+    public void closeCourseById(int cosId){
+        courseMapper.updateCourseToClose(cosId);
+    }
+
+    /**
+     * 管理员功能——按照课程号cos_id将课程状态调整为"开课"
+     * @param cosId
+     */
+    public void openCourseById(int cosId){
+        courseMapper.updateCourseToOpen(cosId);
+    }
+
+    /**
+     * 管理员功能——按照课程号cos_id将课程状态调整为"报名"
+     * @param cosId
+     */
+    public void signUpCourseById(int cosId){
+        courseMapper.updateCourseToSignUp(cosId);
+    }
+
+    /**
+     * 根据课程id查找课程信息
+     * @param cosId
+     * @return
+     */
+    public Course selectCourseById(int cosId) {
+        Course course = courseMapper.selectCourseById(cosId);
+        return course;
+    }
 }

@@ -59,6 +59,33 @@
             and cdt_tch_username like #{cdt_tch_username}
         </if>
     </select>
+
+    <!--    管理员功能-关闭课程-将课程状态调整为停课-->
+    <update id="updateCourseToClose" parameterType="int">
+        update course set cos_status = '停课' where cos_id = #{cosId}
+</update>
+
+    <!--        管理员功能-恢复课程-根据课程的id，课程状态根据时间比较，调整为开课-->
+    <update id="updateCourseToOpen" parameterType="int">
+        update course set cos_status = '开课'
+        where
+        <if test="cosId != null">
+            cos_id = #{cosId}
+        </if>
+    </update>
+    <!--        管理员功能-恢复课程-根据课程的id，课程状态根据时间比较，调整为报名-->
+    <update id="updateCourseToSignUp" parameterType="int">
+        update course set cos_status = '报名'
+        where
+        <if test="cosId != null">
+            cos_id = #{cosId}
+        </if>
+    </update>
+
+    <!--    根据课程id获取课程信息-->
+    <select id="selectCourseById" parameterType="int" resultMap="Course">
+        select * from course where cos_id = #{cosId}
+</select>
 </mapper>
 
 

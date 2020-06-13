@@ -39,5 +39,29 @@ public interface CourseMapper {
      * @return 查询到的课程列表
      */
     List<Course> selectCourseDynamic(@Param("cos_title")String cosTitle,@Param("cos_category")String cosCategory,@Param("cdt_tch_username")String cdtTchUsername);
+
+    /**
+     * 管理员关闭课程——按照课程的id——cos_id将课程状态更改成"停课"
+     * @param cosId: 课程号cos_id
+     */
+    void updateCourseToClose(@Param("cosId") int cosId);
+
+    /**
+     * 管理员恢复课程至开课——按照课程的id——cos_id将课程状态更改成"开课"
+     * @param cosId：课程号cos_id
+     */
+    void updateCourseToOpen(@Param("cosId") int cosId);
+
+    /**
+     * 管理员恢复课程至开课——按照课程的id——cos_id将课程状态更改成"报名"
+     * @param cosId：课程号cos_id
+     */
+    void updateCourseToSignUp(@Param("cosId") int cosId);
+
+    /**
+     * 按照课程id来查询课程信息
+     * @param cosId：课程id
+     */
+    Course selectCourseById(@Param("cosId") int cosId);
 }
 
