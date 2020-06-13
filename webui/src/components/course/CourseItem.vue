@@ -28,7 +28,7 @@
                 1000人参与
             </el-row>
             <el-row class="course-choice">
-                <el-button type="primary" plain>课程详情</el-button>
+                <el-button type="primary" plain @click="toCourseDetail(1)">课程详情</el-button>
             </el-row>
             <el-row class="course-choice">
                 <el-button type="primary" plain>我要学习</el-button>
@@ -38,11 +38,19 @@
 </template>
 
 <script>
+    import router from "../../router";
+
     export default {
         name: "CourseItem",
         data() {
             return {
                 courseImg: "https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=11232128,2567744034&fm=26&gp=0.jpg"
+            }
+        },
+        methods: {
+            toCourseDetail(course_id) {
+                console.log(course_id);
+                router.push({path: '/course/course-detail'});
             }
         }
     }
