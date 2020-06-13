@@ -75,4 +75,17 @@ public class CourseController {
         List<Course> list = courseService.selectCourseByTime(cosStartDate, cosStartTime);
         return gson.toJson(list);
     }
+
+    /**
+     * 管理员课程列表页动态查询课程
+     * @param cosTitle 课程名称
+     * @param cosCategory 课程种类：写作、听力……
+     * @param cdtTchUsername 该课教室名字
+     * @return json
+     */
+    @GetMapping("/selectCourseDynamic")
+    public String selectCourseDynamic(String cosTitle, String cosCategory,String cdtTchUsername){
+        List<Course> list=courseService.selectCourseDynamic(cosTitle,cosCategory,cdtTchUsername);
+        return gson.toJson(list);
+    }
 }

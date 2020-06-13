@@ -62,4 +62,15 @@ public class CourseService {
     public List<Course> selectCourseByTime(String cosStartDate, String cosStartTime) {
         return courseMapper.selectCourseByTime("cosStartDate", "cosStartTime");
     }
+
+    /**
+     * 管理员课程列表页动态查询课程
+     * @param cosTitle 课程名称
+     * @param cosCategory 课程种类：听力、写作……
+     * @param cdtTchUsername 该课的老师
+     * @return 查询的list列表
+     */
+    public List<Course> selectCourseDynamic(String cosTitle,String cosCategory,String cdtTchUsername){
+        return courseMapper.selectCourseDynamic(cosTitle,cosCategory,cdtTchUsername);
+    }
 }
