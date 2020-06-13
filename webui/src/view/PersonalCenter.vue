@@ -2,60 +2,90 @@
     <el-container style="margin: 40px 15% 40px 15%">
         <el-aside>
             <el-container direction="vertical" class="portrait-title">
-                <el-image :src="portrait" :fit="fill" class="portrait"></el-image>
+                <el-image :src="portrait" fit="fill" class="portrait"></el-image>
                 <el-row class="username">
                     余坚
                 </el-row>
             </el-container>
             <el-container class="aside-menu">
-                <el-main>
-                    <el-row class="menu-normal">
-                        <el-col :span="8" class="menu-icon">
+                <el-main style="padding-left: 0; padding-right: 0">
+                    <el-row v-bind:class="['menu-normal',{'menu-active':selectPage.information}]"
+                            @click.native="changePage('information')">
+                        <el-col :span="9" class="menu-icon">
                             <i class="el-icon-setting"/>
                         </el-col>
-                        <el-col :span="16" class="menu-text">
+                        <el-col :span="15" class="menu-text">
                             个人资料
                         </el-col>
                     </el-row>
-                    <el-row class="menu-normal">
-                        <el-col :span="8" class="menu-icon">
+                    <el-row v-bind:class="['menu-normal',{'menu-active':selectPage.course}]"
+                            @click.native="changePage('course')">
+                        <el-col :span="9" class="menu-icon">
                             <i class="el-icon-notebook-2"/>
                         </el-col>
-                        <el-col :span="16" class="menu-text">
+                        <el-col :span="15" class="menu-text">
                             我的课程
                         </el-col>
                     </el-row>
-                    <el-row class="menu-normal">
-                        <el-col :span="8" class="menu-icon">
+                    <el-row v-bind:class="['menu-normal',{'menu-active':selectPage.group}]"
+                            @click.native="changePage('group')">
+                        <el-col :span="9" class="menu-icon">
                             <i class="el-icon-coordinate"/>
                         </el-col>
-                        <el-col :span="16" class="menu-text">
+                        <el-col :span="15" class="menu-text">
                             我的群组
                         </el-col>
                     </el-row>
-                    <el-row class="menu-normal">
-                        <el-col :span="8" class="menu-icon">
+                    <el-row v-bind:class="['menu-normal',{'menu-active':selectPage.article}]"
+                            @click.native="changePage('article')">
+                        <el-col :span="9" class="menu-icon">
                             <i class="el-icon-reading"/>
                         </el-col>
-                        <el-col :span="16" class="menu-text">
+                        <el-col :span="15" class="menu-text">
                             我的托福人
                         </el-col>
                     </el-row>
                 </el-main>
             </el-container>
         </el-aside>
-        <el-main style="margin-left: 20px">
-
+        <el-main style="margin-left: 20px; padding: 0">
+            <Information v-if="selectPage.information"/>
+            <MyCourse v-if="selectPage.course"/>
+            <MyGroup v-if="selectPage.group"/>
         </el-main>
     </el-container>
 </template>
 
 <script>
+    import Information from "../components/personal/Information";
+    import MyCourse from "../components/personal/MyCourse";
+    import MyGroup from "../components/personal/MyGroup";
+
     export default {
         name: "PersonalCenter",
+        components: {
+            Information,
+            MyCourse,
+            MyGroup
+        },
         data() {
             return {
                 portrait: 'http://img2.imgtn.bdimg.com/it/u=1354268575,1268995723&fm=26&gp=0.jpg',
+                selectPage: {
+                    'information': true,
+                    'course': false,
+                    'group': false,
+                    'article': false
+                }
+            }
+        },
+        methods: {
+            changePage(pageName) {
+                this.selectPage.information = false;
+                this.selectPage.course = false;
+                this.selectPage.group = false;
+                this.selectPage.article = false;
+                this.selectPage[pageName] = true;
             }
         }
     }
@@ -98,5 +128,10 @@
     .menu-normal .menu-icon {
         text-align: center;
         color: #68BF4A;
+    }
+
+    .menu-active {
+        border-left: solid 5px #68BF4A;
+        background-color: rgba(104, 191, 74, 0.2);
     }
 </style>
