@@ -75,4 +75,17 @@ public class CourseController {
         List<Course> list = courseService.selectCourseByTime(cosStartDate, cosStartTime);
         return gson.toJson(list);
     }
+
+    /*查询个人的课程*/
+    @RequestMapping("/selectCourseByUser")
+    public String selectCourseByUser(@RequestParam("usr_username")String usr_username){
+        List<Course> courses = courseService.selectCourseByUser(usr_username);
+        return gson.toJson(courses);
+    }
+    /*查询老师的课程*/
+    @RequestMapping("/selectCourseByTeacher")
+    public String selectCourseByTeacher(@RequestParam("tch_username")String tch_username){
+        List<Course> courses = courseService.selectCourseByTeacher(tch_username);
+        return gson.toJson(courses);
+    }
 }

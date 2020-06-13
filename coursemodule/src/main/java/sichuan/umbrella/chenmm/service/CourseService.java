@@ -62,4 +62,13 @@ public class CourseService {
     public List<Course> selectCourseByTime(String cosStartDate, String cosStartTime) {
         return courseMapper.selectCourseByTime("cosStartDate", "cosStartTime");
     }
+
+    /*查询个人的课程*/
+    public List<Course> selectCourseByUser(String usr_username){
+        return courseMapper.selectCourseByUser(usr_username);
+    }
+    /*查询老师的课程*/
+    public List<Course> selectCourseByTeacher(String tch_username){
+        return courseMapper.selectCourseByTeacher(tch_username);
+    }
 }

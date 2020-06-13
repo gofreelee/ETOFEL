@@ -30,5 +30,8 @@ public interface CourseMapper {
      * @return 排序后的课程列表
      */
     List<Course> selectCourseByTime(@Param("cos_start_date") String cosStartDate, @Param("cos_start_time") String cosStartTime);
+
+    List<Course> selectCourseByUser(@Param("usr_username") String usr_username);
+    List<Course> selectCourseByTeacher(@Param("tch_username") String tch_username);
 }
 
