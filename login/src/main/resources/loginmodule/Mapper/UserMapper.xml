@@ -5,8 +5,8 @@
 <mapper namespace="loginmodule.mapper.UserMapper">
     
     <insert id="addUserByNPE" parameterType="String">
-        INSERT INTO user(usr_username,usr_password,usr_email)
-        VALUES (#{usr_username},#{usr_password},#{usr_email})
+        INSERT INTO user(usr_username,usr_password,usr_gender,usr_email)
+        VALUES (#{usr_username},#{usr_password},"男",#{usr_email})
     </insert>
 
     <select id="selectUserByUNAndPW"  resultType="loginmodule.bean.User">
@@ -15,25 +15,25 @@
                 AND usr_password = #{usr_password}
     </select>
 
-    <select id="selectUsername" parameterType="String" resultType="String">
-        SELECT usr_username FROM user WHERE
+    <select id="selectUsername" parameterType="String" resultType="loginmodule.bean.User">
+        SELECT * FROM user WHERE
                 usr_username = #{usr_username}
     </select>
 
     <select id="selectUserByUNAndState" parameterType="String" resultType="loginmodule.bean.User">
-            SELECT * FROM  user WHERE
+            SELECT * FROM  user
             WHERE usr_state = ${usr_state}
             <if test="usr_username!=null">
-                usr_username = #{usr_username}
+               AND usr_username = #{usr_username}
             </if>
     </select>
 
     <update id="updateStaToNormal" parameterType="String">
-        UPDATE user SET usr_state = "正常" WHERE usr_username = #{usr_username}
+        UPDATE user SET usr_state = 'normal' WHERE usr_username = #{usr_username}
     </update>
 
     <update id="updateStaToFrozen" parameterType="String">
-        UPDATE user SET usr_state = "冻结" WHERE usr_username = #{usr_username}
+        UPDATE user SET usr_state = 'frozen' WHERE usr_username = #{usr_username}
     </update>
 
     <delete id="deleteUser" parameterType="String">

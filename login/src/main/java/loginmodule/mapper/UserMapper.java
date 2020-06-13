@@ -1,24 +1,29 @@
 package loginmodule.mapper;
 
 import loginmodule.bean.User;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Repository
 public interface UserMapper {
 
     //显示用户姓名，用于注册时判断用户是否已存在于user
-    String selectUsername(String usr_username);
+    User selectUsername(String usr_username);
 
     //通过username和password获取用户信息，用于用户登陆
-    User selectUserByUNAndPW(String usr_username, String usr_password);
+    User selectUserByUNAndPW(@Param("usr_username")String usr_username, @Param("usr_password") String usr_password);
 
     //用过username,password和email添加用户，用于用户注册
-    int addUserByNPE(String usr_username,String usr_password,String usr_email);
+    int addUserByNPE(@Param("usr_username") String usr_username, @Param("usr_password")String usr_password,@Param("usr_email") String usr_email);
 
     //通过改变username和state显示用户列表
-    List<User> selectUserByUNAndState(String usr_username, String usr_state);
+    List<User> selectUserByUNAndState(@Param("usr_username")String usr_username, @Param("usr_state") String usr_state);
+
+    //通过改变state显示用户列表，username为空
+
 
     //将选中的用户解冻
     int updateStaToNormal(String usr_username);
