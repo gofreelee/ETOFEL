@@ -34,5 +34,4 @@ public interface CourseDetailMapper {
      */
     Teacher selectCourseDetailTeacher(@Param("cdtCosId") int cdtCosId);
 
-
 }
