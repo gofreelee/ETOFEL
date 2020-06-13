@@ -14,7 +14,7 @@
             </el-row>
         </el-header>
         <el-main style="margin-left: 15%; margin-right: 15%">
-            <el-row class="header-second">
+            <el-row class="header-second" type="flex" align="middle">
                 <el-col :span="2" :offset="1">
                     全部课程
                 </el-col>
@@ -30,12 +30,19 @@
                 <el-col :span="2">
                     全部课程
                 </el-col>
-                <el-col :span="3" :offset="8">
+                <el-col :span="3" :offset="5">
                     <i class="el-icon-arrow-down"/> 按开始时间排序
+                </el-col>
+                <el-col :span="3">
+                    <el-input placeholder="请输入课程名" prefix-icon="el-icon-search"/>
                 </el-col>
             </el-row>
 
-            <CourseItem v-for="item in 10" :key="item"/>
+            <CourseItem v-for="item in 5" :key="item"/>
+
+            <el-row style="text-align: center; margin-top: 40px">
+                <el-pagination background layout="prev, pager, next" :total="1000"></el-pagination>
+            </el-row>
         </el-main>
     </el-container>
 </template>
