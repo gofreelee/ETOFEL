@@ -8,6 +8,9 @@ import ChatRoom from "./view/ChatRoom";
 import ArticleDetail from "./view/ArticleDetail";
 import Course from "./view/Course";
 import CourseDetail from "./view/CourseDetail";
+import Login from "./view/Login";
+import Register from "./view/Register";
+import PersonalCenter from "./view/PersonalCenter";
 
 Vue.use(VueRouter);
 
@@ -36,6 +39,15 @@ const routes = [
     }, {
         path: '/course/course-detail',
         component: CourseDetail
+    }, {
+        path: '/login',
+        component: Login
+    }, {
+        path: '/register',
+        component: Register
+    }, {
+        path: '/personal-center',
+        component: PersonalCenter
     }
 ]
 
