@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="sichuan.umbrella.chenmm.mapper.UserJoinCourseMapper">
+
+    <!--    计算课程的参加人数-->
+    <select id="countCourseJoin" resultType="int" parameterType="Integer">
+        select count(*) from user_join_course where ujc_status='已支付' and ujc_cos_id=#{user_join_course.ujcCosId}
+    </select>
+
+    <!--    用户提交课程订单信息，插入一条未支付数据-->
+    <insert id="insertUserUnpaidOrder">
+        insert into user_join_course (ujc_cos_id, ujc_usr_username, ujc_status) values (#{ujc_cos_id},#{ujc_usr_username},'未支付')
+    </insert>
+
+    <!--    当用户成功支付，更新用户支付状态为“已支付”-->
+    <update id="updateUserStatusToPaid">
+        update user_join_course set ujc_status='已支付' where ujc_status='未支付'
+    </update>
+</mapper>
+
+
