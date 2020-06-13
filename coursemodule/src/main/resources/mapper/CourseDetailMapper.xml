@@ -7,8 +7,9 @@
         values (#{courseDetail.cdtCosId},#{courseDetail.cdtTchUsername},#{courseDetail.cdtGrpId},#{courseDetail.cdtPortrait},#{courseDetail.cdtPlan},#{courseDetail.cdtPattern},#{courseDetail.cdtGuide})
     </insert>
 
-<!--    查找课程-课程详细信息-->
-    <select id="selectCourseDetailInfo"  parameterType="int" resultType="sichuan.umbrella.chenmm.bean.CourseDetail" resultMap="CourseDetail">
+    <!--    查找课程-课程详细信息-->
+    <select id="selectCourseDetailInfo" parameterType="int" resultType="sichuan.umbrella.chenmm.bean.CourseDetail"
+            resultMap="CourseDetail">
         select * from course_detail where
         <if test="cdtCosId != null">
             cdt_cos_id = #{cdtCosId}
@@ -24,13 +25,15 @@
         <result property="cdtGuide" column="cdt_guide"/>
     </resultMap>
 
-<!--    查找老师点赞数-根据课程详细的Id来查找该课程详细的教师点赞数-->
+    <!--    查找老师点赞数-根据课程详细的Id来查找该课程详细的教师点赞数-->
     <select id="selectCourseDetailLikeNum" parameterType="int" resultType="int">
         select count(*)from course_detail,user_like_teacher
         where cdt_cos_id = #{cdtCosId} and cdt_tch_username = ult_tch_username
     </select>
-<!--    查找教师详细资料-根据课程详细的Id来查找该课程详细对应教师的详细资料-->
-    <select id="selectCourseDetailTeacher" parameterType="int" resultType="sichuan.umbrella.chenmm.bean.Teacher" resultMap="Teacher">
+
+    <!--    查找教师详细资料-根据课程详细的Id来查找该课程详细对应教师的详细资料-->
+    <select id="selectCourseDetailTeacher" parameterType="int" resultType="sichuan.umbrella.chenmm.bean.Teacher"
+            resultMap="Teacher">
         select * from course_detail,teacher
         where cdt_cos_id = #{cdtCosId} and cdt_tch_username = tch_username
     </select>

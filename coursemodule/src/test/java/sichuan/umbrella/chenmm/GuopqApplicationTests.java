@@ -17,9 +17,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.context.WebApplicationContext;
 import sichuan.umbrella.chenmm.bean.CourseComment;
 import sichuan.umbrella.chenmm.bean.CourseDetail;
+import sichuan.umbrella.chenmm.bean.UserJoinCourse;
 import sichuan.umbrella.chenmm.controller.CourseCommentController;
 import sichuan.umbrella.chenmm.controller.CourseController;
 import sichuan.umbrella.chenmm.controller.CourseDetailController;
+import sichuan.umbrella.chenmm.controller.UserJoinCourseController;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -36,6 +38,8 @@ public class GuopqApplicationTests {
     private CourseDetailController courseDetailController;
     @Autowired
     private CourseCommentController courseCommentController;
+    @Autowired
+    private UserJoinCourseController userJoinCourseController;
     @Before
     public void setUp() throws Exception {
         //MockMvcBuilders.webAppContextSetup(WebApplicationContext context)：指定WebApplicationContext，将会从该上下文获取相应的控制器并得到相应的MockMvc；
@@ -116,6 +120,31 @@ public class GuopqApplicationTests {
         System.out.println(responseString);
         System.out.println("success");
     }
+    //测试管理员功能——课程状态的关闭
+    @Test
+    public void closeCourseById() throws Exception {
+        String responseString = mockMvc.perform(MockMvcRequestBuilders.get("/course/closeCourse?cosId=1") //请求的url,请求的方法是get
+                .contentType(MediaType.APPLICATION_JSON_UTF8) //数据的格式
+                .accept(MediaType.APPLICATION_JSON_UTF8)
+        ).andExpect(MockMvcResultMatchers.status().isOk())  //返回的状态是200
+                .andDo(MockMvcResultHandlers.print()) //打印出请求和相应的内容
+                .andReturn().getResponse().getContentAsString(); //将相应的数据转换为字符
+        System.out.println(responseString);
+    }
+    //测试管理员功能——课程状态的恢复
+    @Test
+    public void recoverCourseById() throws Exception {
+        String responseString = mockMvc.perform(MockMvcRequestBuilders.get("/course/recoverCourse?cosId=1") //请求的url,请求的方法是get
+                .contentType(MediaType.APPLICATION_JSON_UTF8) //数据的格式
+                .accept(MediaType.APPLICATION_JSON_UTF8)
+        ).andExpect(MockMvcResultMatchers.status().isOk())  //返回的状态是200
+                .andDo(MockMvcResultHandlers.print()) //打印出请求和相应的内容
+                .andReturn().getResponse().getContentAsString(); //将相应的数据转换为字符
+
+        System.out.println(responseString);
+        System.out.println("success");
+    }
+
 
 //    @Test
 //    public void test01(){

@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="sichuan.umbrella.chenmm.mapper.CourseMapper">
@@ -51,6 +52,112 @@
         insert into course_detail (cdt_cos_id, cdt_tch_username, cdt_grp_id, cdt_portrait, cdt_plan, cdt_pattern, cdt_guide)
         values (#{courseDetail.cdtCosId},#{courseDetail.cdtTchUsername},#{courseDetail.cdtGrpId},#{courseDetail.cdtPortrait},#{courseDetail.cdtPlan},#{courseDetail.cdtPattern},#{courseDetail.cdtGuide})
     </insert>
+
+    <!-- 查询个人课程-->
+    <select id="selectCourseByUser" parameterType="String" resultMap="Course">
+        select course.* from course,user_join_course
+        where user_join_course.ujc_usr_username = #{usr_username}
+        and user_join_course.ujc_cos_id = course.cos_id
+    </select>
+    <!-- 查询老师课程-->
+    <select id="selectCourseByTeacher" parameterType="String" resultMap="Course">
+        select course.* from course,course_detail
+        where course_detail.cdt_tch_username = #{tch_username}
+        and course_detail.cdt_cos_id = course.cos_id
+    </select>
 </mapper>
 
 
+=======
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="sichuan.umbrella.chenmm.mapper.CourseMapper">
+    <!--    免费公益课程，再二次分类（口语、写作……）-->
+    <select id="selectActivityIsPublic" resultMap="Course">
+        select * from course where cos_fee=0
+        <if test="cos_category != null">
+            and cos_category = #{cos_category}
+        </if>
+    </select>
+
+    <!--    名师精品课程（开课老师点赞从多到少），再二次分类（口语、写作……）-->
+    <select id="selectActivityIsFamousTeacher" resultMap="Course">
+        select * from course where cos_category = #{cos_category} order by (select count(*)
+        from course_detail,user_like_teacher
+        where cos_id = cdt_cos_id and cdt_tch_username = ult_tch_username) desc
+    </select>
+
+    <!--    热门课程（报名参与人数从多到少），再二次分类（口语、写作……）-->
+    <select id="selectActivityIsHot" resultMap="Course">
+        select * from course where cos_category=#{cos_category} order by(select count(*)
+        from user_join_course
+        where cos_id=ujc_cos_id) desc
+    </select>
+
+    <!--    按时间从早到晚给课程排序-->
+    <select id="selectCourseByTime" resultMap="Course">
+        select * from course order by cos_start_date,cos_start_time
+    </select>
+    <resultMap id="Course" type="sichuan.umbrella.chenmm.bean.Course">
+        <id property="cosId" column="cos_id"/>
+        <result property="cosTitle" column="cos_title"/>
+        <result property="cosStartDate" column="cos_start_date"/>
+        <result property="cosEndDate" column="cos_end_date"/>
+        <result property="cosStartTime" column="cos_start_time"/>
+        <result property="cosEndTime" column="cos_end_time"/>
+        <result property="cosStage" column="cos_stage"/>
+        <result property="cosFee" column="cos_fee"/>
+        <result property="cosCategory" column="cos_category"/>
+        <result property="cosStatus" column="cos_status"/>
+    </resultMap>
+
+    <!--    发布课程基本信息-->
+    <insert id="insertCourseBasicInfo" parameterType="sichuan.umbrella.chenmm.bean.Course">
+        insert into course (cos_title, cos_start_date, cos_end_date, cos_start_time, cos_end_time, cos_stage, cos_fee, cos_category, cos_status)
+        values (#{course.cosTitle}, #{course.cosStartDate}, #{course.cosEndDate}, #{course.cosStartTime}, #{course.cosEndTime}, #{course.cosStage}, #{course.cosFee}, #{course.cosCategory}, #{course.cosStatus})
+    </insert>
+
+    <!--管理员课程列表页动态查询课程-->
+    <select id="selectCourseDynamic" resultMap="Course">
+        select * from course,course_detail where cos_id=cdt_cos_id
+        <if test="cos_title != null">
+            and cos_title like #{cos_title}
+        </if>
+        <if test="cos_category != null">
+            and cos_category=#{cos_category}
+        </if>
+        <if test="cdt_tch_username != null">
+            and cdt_tch_username like #{cdt_tch_username}
+        </if>
+    </select>
+
+    <!--    管理员功能-关闭课程-将课程状态调整为停课-->
+    <update id="updateCourseToClose" parameterType="int">
+        update course set cos_status = '停课' where cos_id = #{cosId}
+</update>
+
+    <!--        管理员功能-恢复课程-根据课程的id，课程状态根据时间比较，调整为开课-->
+    <update id="updateCourseToOpen" parameterType="int">
+        update course set cos_status = '开课'
+        where
+        <if test="cosId != null">
+            cos_id = #{cosId}
+        </if>
+    </update>
+    <!--        管理员功能-恢复课程-根据课程的id，课程状态根据时间比较，调整为报名-->
+    <update id="updateCourseToSignUp" parameterType="int">
+        update course set cos_status = '报名'
+        where
+        <if test="cosId != null">
+            cos_id = #{cosId}
+        </if>
+    </update>
+
+    <!--    根据课程id获取课程信息-->
+    <select id="selectCourseById" parameterType="int" resultMap="Course">
+        select * from course where cos_id = #{cosId}
+</select>
+</mapper>
+
+
+>>>>>>> 7867d3d8b1b402b7af7ac7df7e15a491069de3c7

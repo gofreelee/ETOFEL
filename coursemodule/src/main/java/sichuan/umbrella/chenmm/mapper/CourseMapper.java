@@ -1,3 +1,4 @@
+
 package sichuan.umbrella.chenmm.mapper;
 
 import org.apache.ibatis.annotations.Param;
@@ -30,5 +31,38 @@ public interface CourseMapper {
      * @return 排序后的课程列表
      */
     List<Course> selectCourseByTime(@Param("cos_start_date") String cosStartDate, @Param("cos_start_time") String cosStartTime);
+
+    /**
+     * 管理员课程列表页动态查询课程
+     * @param cosTitle 课程名称
+     * @param cosCategory 课程种类：写作、听力……
+     * @param cdtTchUsername 该课的老师
+     * @return 查询到的课程列表
+     */
+    List<Course> selectCourseDynamic(@Param("cos_title")String cosTitle,@Param("cos_category")String cosCategory,@Param("cdt_tch_username")String cdtTchUsername);
+
+    /**
+     * 管理员关闭课程——按照课程的id——cos_id将课程状态更改成"停课"
+     * @param cosId: 课程号cos_id
+     */
+    void updateCourseToClose(@Param("cosId") int cosId);
+
+    /**
+     * 管理员恢复课程至开课——按照课程的id——cos_id将课程状态更改成"开课"
+     * @param cosId：课程号cos_id
+     */
+    void updateCourseToOpen(@Param("cosId") int cosId);
+
+    /**
+     * 管理员恢复课程至开课——按照课程的id——cos_id将课程状态更改成"报名"
+     * @param cosId：课程号cos_id
+     */
+    void updateCourseToSignUp(@Param("cosId") int cosId);
+
+    /**
+     * 按照课程id来查询课程信息
+     * @param cosId：课程id
+     */
+    Course selectCourseById(@Param("cosId") int cosId);
 }
 
