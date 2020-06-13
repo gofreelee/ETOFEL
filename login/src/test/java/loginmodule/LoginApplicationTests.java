@@ -11,6 +11,8 @@ class LoginApplicationTests {
 
 	@Autowired
 	LoginService loginService;
+
+	@Autowired
 	UserManageService userManageService;
 
 	@Test

@@ -4,7 +4,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="loginmodule.mapper.AdministerMapper">
 
-    <select id="selectAdministerByUNAndPW" parameterType="string" resultType="loginmodule.bean.Administer">
+    <select id="selectAdministerByUNAndPW" parameterType="String" resultType="loginmodule.bean.Administer">
         SELECT * FROM administer WHERE
                 ad_username = #{ad_username}
                 AND ad_password = #{ad_password}

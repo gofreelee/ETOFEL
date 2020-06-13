@@ -17,7 +17,11 @@ import java.io.IOException;
 public class LoginService {
     @Autowired
     UserMapper userMapper;
+
+    @Autowired
     TeacherMapper teacherMapper;
+
+    @Autowired
     AdministerMapper administerMapper;
 
     private static final long serialVersionUID = -3185301474503659058L;
@@ -28,7 +32,7 @@ public class LoginService {
 
     //登陆，通过username、password获得一个user的信息
     public User selectUserByUNAndPW(String usr_username, String usr_password){
-        return userMapper.selectByUNAndPW(usr_username,usr_password);
+        return userMapper.selectUserByUNAndPW(usr_username,usr_password);
     }
 
     //登陆，通过username、password获得一个teacher的信息
@@ -56,7 +60,7 @@ public class LoginService {
 
     //注册验证，判断用户是否已存在于teacher表中
     public boolean NoExistInTeacher(String username){
-        if(teacherMapper.selectUsername(username)== username){
+        if(teacherMapper.selectTeacherUsername(username)== username){
             return false;
         }
         else return true;

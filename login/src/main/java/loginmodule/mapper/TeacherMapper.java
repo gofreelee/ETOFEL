@@ -6,7 +6,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface TeacherMapper {
 
-    String selectUsername(String usr_username);
+    String selectTeacherUsername(String usr_username);
 
     Teacher selectByUNAndPW(String tch_username,String tch_password);
 }

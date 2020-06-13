@@ -12,7 +12,7 @@ public interface UserMapper {
     String selectUsername(String usr_username);
 
     //通过username和password获取用户信息，用于用户登陆
-    User selectByUNAndPW(String usr_username, String usr_password);
+    User selectUserByUNAndPW(String usr_username, String usr_password);
 
     //用过username,password和email添加用户，用于用户注册
     int addUserByNPE(String usr_username,String usr_password,String usr_email);
