@@ -35,11 +35,12 @@ public class TeacherLoginController {
      * @return 登陆的老师json
      */
     @GetMapping("/tlogin")
-   public String teacher(@RequestParam("username") String username, @RequestParam("password") String password){
-        Teacher teacher;
-       // if(loginService.Verification(veri)){
+   public String teacher(@RequestParam("username") String username, @RequestParam("password") String password,@RequestParam(NECaptchaVerifier.REQ_VALIDATE)String veri){
+        Teacher teacher = new Teacher();
+       if(loginService.Verification(veri)){
              teacher = loginService.selectTeacherByUNAndPW(username, password);
-       // }
-        return gson.toJson(teacher);
+             return gson.toJson(teacher);
+       }
+        else return null;
     }
 }

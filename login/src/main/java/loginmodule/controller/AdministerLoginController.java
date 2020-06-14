@@ -35,12 +35,13 @@ public class AdministerLoginController {
      * @return 登陆的管理员json
      */
     @GetMapping("/alogin")
-    public  String administer(@RequestParam("username") String username,@RequestParam("password") String password){
-        Administer administer;
-       // if(loginService.Verification(veri)) {
+    public  String administer(@RequestParam("username") String username,@RequestParam("password") String password,@RequestParam(NECaptchaVerifier.REQ_VALIDATE)String veri){
+        Administer administer = new Administer();
+        if(loginService.Verification(veri)) {
             administer = loginService.selectAdministerByUNAndPW(username, password);
-      //  }
-        return gson.toJson(administer);
+            return gson.toJson(administer);
+        }
+        else return null;
     }
 
 }
