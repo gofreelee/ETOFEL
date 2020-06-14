@@ -10,8 +10,8 @@ import java.util.List;
 @Repository
 public interface UserMapper {
 
-    //显示用户姓名，用于注册时判断用户是否已存在于user
-    User selectUsername(String usr_username);
+    //通过用户名获取用户信息
+    User selectUserByUsername(String usr_username);
 
     //通过username和password获取用户信息，用于用户登陆
     User selectUserByUNAndPW(@Param("usr_username")String usr_username, @Param("usr_password") String usr_password);

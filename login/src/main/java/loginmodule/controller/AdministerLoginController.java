@@ -3,6 +3,7 @@ package loginmodule.controller;
 import com.google.gson.Gson;
 import loginmodule.bean.Administer;
 import loginmodule.service.LoginService;
+import loginmodule.service.NECaptchaVerifier;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.gson.GsonAutoConfiguration;
 import org.springframework.stereotype.Controller;
@@ -30,11 +31,15 @@ public class AdministerLoginController {
      * 管理员登陆
      * @param username 用户名
      * @param password 密码
+     * NECaptchaVerifier.REQ_VALIDATE = 'NECaptchaValidate'
      * @return 登陆的管理员json
      */
     @GetMapping("/alogin")
     public  String administer(@RequestParam("username") String username,@RequestParam("password") String password){
-        Administer administer = loginService.selectAdministerByUNAndPW(username,password);
+        Administer administer;
+       // if(loginService.Verification(veri)) {
+            administer = loginService.selectAdministerByUNAndPW(username, password);
+      //  }
         return gson.toJson(administer);
     }
 

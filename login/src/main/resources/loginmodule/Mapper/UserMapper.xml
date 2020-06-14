@@ -15,14 +15,14 @@
                 AND usr_password = #{usr_password}
     </select>
 
-    <select id="selectUsername" parameterType="String" resultType="loginmodule.bean.User">
+    <select id="selectUserByUsername" parameterType="String" resultType="loginmodule.bean.User">
         SELECT * FROM user WHERE
                 usr_username = #{usr_username}
     </select>
 
     <select id="selectUserByUNAndState" parameterType="String" resultType="loginmodule.bean.User">
             SELECT * FROM  user
-            WHERE usr_state = ${usr_state}
+            WHERE usr_state = #{usr_state}
             <if test="usr_username!=null">
                AND usr_username = #{usr_username}
             </if>

@@ -3,6 +3,7 @@ package loginmodule.controller;
 import com.google.gson.Gson;
 import loginmodule.bean.Teacher;
 import loginmodule.service.LoginService;
+import loginmodule.service.NECaptchaVerifier;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.context.annotation.ComponentScan;
@@ -30,11 +31,15 @@ public class TeacherLoginController {
      * 老师登陆
      * @param username 用户名
      * @param password 密码
+     * NECaptchaVerifier.REQ_VALIDATE = 'NECaptchaValidate'
      * @return 登陆的老师json
      */
     @GetMapping("/tlogin")
    public String teacher(@RequestParam("username") String username, @RequestParam("password") String password){
-        Teacher teacher = loginService.selectTeacherByUNAndPW(username, password);
+        Teacher teacher;
+       // if(loginService.Verification(veri)){
+             teacher = loginService.selectTeacherByUNAndPW(username, password);
+       // }
         return gson.toJson(teacher);
     }
 }

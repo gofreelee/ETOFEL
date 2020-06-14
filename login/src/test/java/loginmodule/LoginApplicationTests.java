@@ -48,9 +48,11 @@ class LoginApplicationTests {
 	void testUserListCrud(){
 		String username = "admin";
 		String state = "'normal'";
+		String username_test_delete = "test";
 		System.out.println("selectUserListWithStateAndUsername:"+userManageService.selectUserByUNAndState(username,state));
 		System.out.print("selectUserListWithState:"+userManageService.selectUserByUNAndState(null,state));
 		System.out.println("setStateToNormal:"+userManageService.updateStaToNormal(username));
 		System.out.println("setStateToFrozen:"+userManageService.updateStaToFrozen(username));
+		System.out.println("deleteuser:"+userManageService.deleteUser(username));
 	}
 }

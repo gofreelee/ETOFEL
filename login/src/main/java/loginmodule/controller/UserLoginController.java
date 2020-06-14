@@ -3,6 +3,7 @@ package loginmodule.controller;
 import com.google.gson.Gson;
 import loginmodule.bean.User;
 import loginmodule.service.LoginService;
+import loginmodule.service.NECaptchaVerifier;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.context.annotation.ComponentScan;
@@ -30,11 +31,15 @@ public class UserLoginController {
      * 用户登陆
      * @param username 用户名
      * @param password  密码
+     * NECaptchaVerifier.REQ_VALIDATE = 'NECaptchaValidate'
      * @return  登陆的用户json
      */
    @GetMapping("/ulogin")
     public String user(@RequestParam("username") String username, @RequestParam("password") String password){
-       User user = loginService.selectUserByUNAndPW(username, password);
+       User user;
+      // if(loginService.Verification(veri)) {
+           user = loginService.selectUserByUNAndPW(username, password);
+      // }
        return  gson.toJson(user);
    }
 
@@ -43,14 +48,16 @@ public class UserLoginController {
      * @param username 用户名
      * @param password 密码
      * @param email 邮箱
+     * NECaptchaVerifier.REQ_VALIDATE = 'NECaptchaValidate'
      * @return 注册的新用户json
      */
    @GetMapping("/register")
     public String newuser(@RequestParam("username") String username, @RequestParam("password") String password,@RequestParam("email") String email){
 
+       User user;
        if(loginService.NoExistInUser(username)&&loginService.NoExistInTeacher(username)){
            loginService.addUserByNPE(username, password, email);
-           User user = loginService.selectUserByUNAndPW(username,password);
+           user = loginService.selectUserByUNAndPW(username,password);
            return gson.toJson(user);
        }
        else return null;

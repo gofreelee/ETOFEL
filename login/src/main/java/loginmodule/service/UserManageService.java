@@ -5,7 +5,6 @@ import loginmodule.mapper.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /*
@@ -20,6 +19,11 @@ public class UserManageService {
     //通过用户名和状态显示用户列表
     public List<User> selectUserByUNAndState(String usr_username, String usr_state){
         return userMapper.selectUserByUNAndState(usr_username, usr_state);
+    }
+
+    //通过用户名查询用户（用于显示修改状态后的用户）
+    public User selectUserByUsername(String usr_username){
+        return userMapper.selectUserByUsername(usr_username);
     }
 
     //解冻选中用户
