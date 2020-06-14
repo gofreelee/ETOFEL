@@ -52,6 +52,7 @@
             <Information v-if="selectPage.information"/>
             <MyCourse v-if="selectPage.course"/>
             <MyGroup v-if="selectPage.group"/>
+            <MyArticle v-if="selectPage.article"/>
         </el-main>
     </el-container>
 </template>
@@ -60,13 +61,15 @@
     import Information from "../components/personal/Information";
     import MyCourse from "../components/personal/MyCourse";
     import MyGroup from "../components/personal/MyGroup";
+    import MyArticle from "../components/personal/MyArticle";
 
     export default {
         name: "PersonalCenter",
         components: {
             Information,
             MyCourse,
-            MyGroup
+            MyGroup,
+            MyArticle
         },
         data() {
             return {
