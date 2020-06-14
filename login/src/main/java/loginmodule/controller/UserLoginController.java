@@ -35,12 +35,13 @@ public class UserLoginController {
      * @return  登陆的用户json
      */
    @GetMapping("/ulogin")
-    public String user(@RequestParam("username") String username, @RequestParam("password") String password){
-       User user;
-      // if(loginService.Verification(veri)) {
+    public String user(@RequestParam("username") String username, @RequestParam("password") String password,@RequestParam(NECaptchaVerifier.REQ_VALIDATE)String veri){
+       User user = new User();
+       if(loginService.Verification(veri)) {
            user = loginService.selectUserByUNAndPW(username, password);
-      // }
-       return  gson.toJson(user);
+           return  gson.toJson(user);
+       }
+       else return null;
    }
 
     /**
@@ -52,10 +53,10 @@ public class UserLoginController {
      * @return 注册的新用户json
      */
    @GetMapping("/register")
-    public String newuser(@RequestParam("username") String username, @RequestParam("password") String password,@RequestParam("email") String email){
+    public String newuser(@RequestParam("username") String username, @RequestParam("password") String password,@RequestParam("email") String email,@RequestParam(NECaptchaVerifier.REQ_VALIDATE)String veri){
 
        User user;
-       if(loginService.NoExistInUser(username)&&loginService.NoExistInTeacher(username)){
+       if(loginService.NoExistInUser(username)&&loginService.NoExistInTeacher(username)&&loginService.Verification(veri)){
            loginService.addUserByNPE(username, password, email);
            user = loginService.selectUserByUNAndPW(username,password);
            return gson.toJson(user);

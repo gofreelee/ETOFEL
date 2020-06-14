@@ -21,9 +21,9 @@ public class LoginService {
     AdministerMapper administerMapper;
 
     private static final long serialVersionUID = -3185301474503659058L;
-    private static final String captchaId = "YOUR_CAPTCHA_ID"; // 验证码id
-    private static final String secretId = "YOUR_SECRET_ID"; // 密钥对id
-    private static final String secretKey = "YOUR_SECRET_KEY"; // 密钥对key
+    private static final String captchaId = "591565d17493431aa0b31cea856c4c92"; // 验证码id
+    private static final String secretId = "2be5af62b150c5ab4980e2e00a20c735"; // 密钥对id
+    private static final String secretKey = "d1b4099e76efae120f496fe0a6fa8cd2"; // 密钥对key
     private final NECaptchaVerifier verifier = new NECaptchaVerifier(captchaId, new NESecretPair(secretId, secretKey));
 
     //登陆，通过username、password获得一个user的信息

@@ -19,7 +19,7 @@
 <script src="//cstaticdun.126.net/load.min.js"></script>
 <script> // 验证码组件初始化
       initNECaptcha({
-          captchaId: 'YOUR_CAPTCHA_ID',
+          captchaId: '591565d17493431aa0b31cea856c4c92',
           element: '#captcha_div',
           mode: 'embed', // 如果要用触发式，这里改为float即可
           width: '320px',
