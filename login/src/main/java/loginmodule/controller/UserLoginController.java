@@ -32,16 +32,16 @@ public class UserLoginController {
 
     private final Logger logger = LoggerFactory.getLogger(UserLoginController.class);
 
+    // token与验证码的键值对
     private static ConcurrentHashMap<String, String> verifyCodeMap = new ConcurrentHashMap<>();
-
-    //private ConcurrentHashMap
 
     /**
      * 用户登陆
      *
      * @param username 用户名
      * @param password 密码
-     *                 NECaptchaVerifier.REQ_VALIDATE = 'NECaptchaValidate'
+     * @param verifyCode 验证码
+     * @param token 前端token，需要与请求验证码时的一致
      * @return 登陆的用户json
      */
     @GetMapping("/ulogin")
@@ -74,6 +74,14 @@ public class UserLoginController {
         } else return null;
     }
 
+    /**
+     * 请求随机验证码
+     *
+     * @param width  图片宽度
+     * @param height 图片长度
+     * @param token  前端随机生成的token
+     * @return 验证码base64
+     */
     @GetMapping("/verify-code")
     public String verifyCode(@RequestParam("width") int width, @RequestParam("height") int height, @RequestParam("token") String token) {
         VerifyCode verifyCode = new VerifyCode();
