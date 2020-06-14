@@ -13,7 +13,8 @@
     "vue-router": "^3.3.2",
     "element-ui": "^2.13.2",
     "element-theme-chalk": "^2.13.2",
-    "font-awesome": "^4.7.0"
+    "font-awesome": "^4.7.0",
+    "axios": "^0.19.2"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "~4.4.0",

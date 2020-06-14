@@ -21,19 +21,19 @@ class LoginApplicationTests {
 
 	@Test
 	void testUserCrud(){
-		String username = "clearlove";
-		String password = "123456";
+		String username = "suruicheng";
+		String password = "123456789";
 		String email = "111@qq.com";
-		System.out.println("addUser:"+loginService.addUserByNPE(username,password,email));
+		//System.out.println("addUser:"+loginService.addUserByNPE(username,password,email));
 		System.out.println("selectuser:"+loginService.selectUserByUNAndPW(username,password));
-		System.out.println("NoExistInUser:"+loginService.NoExistInUser(username));
-		System.out.println("NoExistInTeacher:"+loginService.NoExistInTeacher(username));
+		//System.out.println("NoExistInUser:"+loginService.NoExistInUser(username));
+		//System.out.println("NoExistInTeacher:"+loginService.NoExistInTeacher(username));
 	}
 
 	@Test
 	void testTeacherCrud(){
-		String username = "English";
-		String password = "123456";
+		String username = "suruicheng";
+		String password = "123456789";
 		System.out.println("selectteacher:"+loginService.selectTeacherByUNAndPW(username,password));
 	}
 
