@@ -1,12 +1,13 @@
 package loginmodule.mapper;
 
 import loginmodule.bean.Teacher;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 @Repository
 public interface TeacherMapper {
 
-    String selectTeacherUsername(String usr_username);
+    Teacher selectTeacherUsername(String usr_username);
 
-    Teacher selectByUNAndPW(String tch_username,String tch_password);
+    Teacher selectByUNAndPW(@Param("tch_username") String tch_username, @Param("tch_password") String tch_password);
 }

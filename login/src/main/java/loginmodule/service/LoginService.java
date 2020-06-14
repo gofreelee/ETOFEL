@@ -52,7 +52,8 @@ public class LoginService {
 
     //注册验证，判断注册用户是否已存在于user表中
     public boolean NoExistInUser(String username){
-        if(userMapper.selectUsername(username)== username){
+        User user = userMapper.selectUsername(username);
+        if(user!=null){
             return false;
         }
         else return true;
@@ -60,7 +61,8 @@ public class LoginService {
 
     //注册验证，判断用户是否已存在于teacher表中
     public boolean NoExistInTeacher(String username){
-        if(teacherMapper.selectTeacherUsername(username)== username){
+        Teacher teacher = teacherMapper.selectTeacherUsername(username);
+        if(teacher!=null){
             return false;
         }
         else return true;

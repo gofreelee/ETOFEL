@@ -1,47 +1,59 @@
 package loginmodule.controller;
 
+import com.google.gson.Gson;
 import loginmodule.bean.User;
 import loginmodule.service.LoginService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@Controller
-@ComponentScan(basePackages = "loginmodule.service.LoginService")
+@RestController
 @RequestMapping("/user")
 public class UserLoginController {
 
     @Autowired
     LoginService loginService;
 
-    /*
-        user登陆
+    @Autowired
+    Gson gson;
+
+    /**
+     * 用户登陆
+     * @param username 用户名
+     * @param password  密码
+     * @return  登陆的用户json
      */
-   @RequestMapping("/uLogin")
-    public User ulogin(HttpServletRequest request,HttpServletResponse response) throws IOException {
-       String usr_username = request.getParameter("username");
-       String usr_password = request.getParameter("password");
-       User user = loginService.selectUserByUNAndPW(usr_username,usr_password);
-       loginService.Verification(request, response);
-       return user;
+   @GetMapping("/ulogin")
+    public String user(@RequestParam("username") String username, @RequestParam("password") String password){
+       User user = loginService.selectUserByUNAndPW(username, password);
+       return  gson.toJson(user);
    }
 
-   /*
-        注册
-    */
-    @RequestMapping("/register")
-    public int register(HttpServletRequest request,HttpServletResponse response) throws IOException {
-        String usr_username = request.getParameter("username");
-        String usr_password = request.getParameter("password");
-        String usr_email = request.getParameter("email");
-        loginService.Verification(request, response);
-        return loginService.addUserByNPE(usr_username,usr_password,usr_email);
+    /**
+     * 用户注册
+     * @param username 用户名
+     * @param password 密码
+     * @param email 邮箱
+     * @return 注册的新用户json
+     */
+   @GetMapping("/register")
+    public String newuser(@RequestParam("username") String username, @RequestParam("password") String password,@RequestParam("email") String email){
 
-    }
+       if(loginService.NoExistInUser(username)&&loginService.NoExistInTeacher(username)){
+           loginService.addUserByNPE(username, password, email);
+           User user = loginService.selectUserByUNAndPW(username,password);
+           return gson.toJson(user);
+       }
+       else return null;
+   }
+
 }

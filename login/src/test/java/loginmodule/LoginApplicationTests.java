@@ -26,7 +26,7 @@ class LoginApplicationTests {
 		String email = "111@qq.com";
 		System.out.println("addUser:"+loginService.addUserByNPE(username,password,email));
 		System.out.println("selectuser:"+loginService.selectUserByUNAndPW(username,password));
-		System.out.print("NoExistInUser:"+loginService.NoExistInUser(username));
+		System.out.println("NoExistInUser:"+loginService.NoExistInUser(username));
 		System.out.println("NoExistInTeacher:"+loginService.NoExistInTeacher(username));
 	}
 
@@ -47,7 +47,7 @@ class LoginApplicationTests {
 	@Test
 	void testUserListCrud(){
 		String username = "admin";
-		String state = "正常";
+		String state = "'normal'";
 		System.out.println("selectUserListWithStateAndUsername:"+userManageService.selectUserByUNAndState(username,state));
 		System.out.print("selectUserListWithState:"+userManageService.selectUserByUNAndState(null,state));
 		System.out.println("setStateToNormal:"+userManageService.updateStaToNormal(username));

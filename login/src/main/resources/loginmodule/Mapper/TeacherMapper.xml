@@ -10,8 +10,8 @@
                 AND tch_password = #{tch_password}
     </select>
 
-    <select id="selectTeacherUsername" parameterType="String" resultType="String">
-        SELECT tch_username FROM teacher WHERE
+    <select id="selectTeacherUsername" parameterType="String" resultType="loginmodule.bean.Teacher">
+        SELECT * FROM teacher WHERE
                 tch_username = #{tch_username}
     </select>
 
