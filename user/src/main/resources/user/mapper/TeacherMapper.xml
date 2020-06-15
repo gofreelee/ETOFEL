@@ -10,21 +10,21 @@
 
 
     <!--修改用户信息-->
-    <select id="updateTeacher" parameterType="map">
+    <update id="updateTeacher" parameterType="map">
         update teacher set tch_email = #{tch_email},tch_birthday = #{tch_birthday}
         ,tch_gender = #{tch_gender},tch_phone = #{tch_phone},tch_name = #{tch_name},
         tch_education = #{tch_education},tch_description = #{tch_description}
         where tch_username = #{tch_username}
-    </select>
+    </update>
 
     <!--修改用户密码-->
-    <select id="updatePwd" >
+    <update id="updatePwd" >
         update teacher set tch_password = #{pwd} where tch_username = #{tch_username}
-    </select>
+    </update>
 
 
     <!--修改用户头像-->
-    <select id="updatePhoto" >
+    <update id="updatePhoto" >
         update teacher set tch_portrait = #{tch_portrait} where tch_username = #{tch_username}
-    </select>
+    </update>
 </mapper>

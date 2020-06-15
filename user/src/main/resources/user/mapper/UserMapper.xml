@@ -8,23 +8,18 @@
 		select * from user where usr_username = #{usr_username}
 	</select>
 
-    <!--插入用户-->
-    <select id="insertUser">
-        insert into user (usr_username,usr_password,usr_gender,usr_email)
-		values('643036264','123456789','男','2256622536@qq.com')
-    </select>
 
     <!--修改用户信息-->
-    <select id="updateUser" parameterType="map">
+    <update id="updateUser" parameterType="map">
         update user set usr_email = #{usr_email},usr_birthday = #{usr_birthday}
         ,usr_gender = #{usr_gender},usr_sign = #{usr_sign},usr_phone = #{usr_phone}
         where usr_username = #{usr_username}
-    </select>
+    </update>
 
     <!--修改用户密码-->
-    <select id="updatePwd" >
+    <update id="updatePwd" >
         update user set usr_password = #{pwd} where usr_username = #{usr_username}
-    </select>
+    </update>
 
     <!--获取用户头像地址-->
     <select id="getPhoto"  resultType="string" parameterType="string" >
@@ -32,7 +27,7 @@
     </select>
 
     <!--修改用户头像-->
-    <select id="updatePhoto" >
+    <update id="updatePhoto" >
         update user set usr_portrait = #{usr_portrait} where usr_username = #{usr_username}
-    </select>
+    </update>
 </mapper>
