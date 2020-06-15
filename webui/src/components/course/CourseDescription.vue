@@ -5,25 +5,19 @@
                 课程安排
             </el-row>
             <el-row class="context">
-                jfdklfjsdlkfjdslk
-            </el-row>
-            <el-row class="title">
-                课程时间
-            </el-row>
-            <el-row class="context">
-                jfdklfjsdlkfjdslk
+                {{courseDetail.cdtPlan}}
             </el-row>
             <el-row class="title">
                 上课方式
             </el-row>
             <el-row class="context">
-                jfdklfjsdlkfjdslk
+                {{courseDetail.cdtPattern}}
             </el-row>
             <el-row class="title">
                 听课指南
             </el-row>
             <el-row class="context">
-                jfdklfjsdlkfjdslk
+                {{courseDetail.cdtGuide}}
             </el-row>
         </el-main>
     </el-container>
@@ -31,7 +25,10 @@
 
 <script>
     export default {
-        name: "CourseDescription"
+        name: "CourseDescription",
+        props: {
+            courseDetail: Object
+        }
     }
 </script>
 

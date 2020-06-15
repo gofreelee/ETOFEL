@@ -18,7 +18,18 @@ public class CourseService {
     }
 
     /**
+     * 根据类型查课
+     *
+     * @param cosCategory 听力、阅读
+     * @return 列表
+     */
+    public List<Course> selectCourseByCategory(String cosCategory) {
+        return courseMapper.selectCourseByCategory(cosCategory);
+    }
+
+    /**
      * 课程选择为公益课程(免费课程)
+     *
      * @param cosCategory 课程类型：听力、写作……
      * @return 满足选项的课程列表
      */
@@ -28,6 +39,7 @@ public class CourseService {
 
     /**
      * 课程选择为热门课程
+     *
      * @param cosCategory 课程种类
      * @return 满足选项的课程列表
      */
@@ -37,6 +49,7 @@ public class CourseService {
 
     /**
      * 课程选择为名师精品课程
+     *
      * @param cosCategory 课程种类
      * @return 满足选项的课程列表
      */
@@ -46,6 +59,7 @@ public class CourseService {
 
     /**
      * 发布课程--基本信息
+     *
      * @param course 课程类
      * @return boolean类型
      */
@@ -56,6 +70,7 @@ public class CourseService {
 
     /**
      * 按时间从早到晚给课程排序
+     *
      * @param cosStartDate 开始日期2020-06-13
      * @param cosStartTime 开始时间10:30
      * @return 排序后的课程列表
@@ -66,46 +81,50 @@ public class CourseService {
 
     /**
      * 管理员课程列表页动态查询课程
-     * @param cosTitle 课程名称
-     * @param cosCategory 课程种类：听力、写作……
+     *
+     * @param cosTitle       课程名称
+     * @param cosCategory    课程种类：听力、写作……
      * @param cdtTchUsername 该课的老师
      * @return 查询的list列表
      */
-    public List<Course> selectCourseDynamic(String cosTitle,String cosCategory,String cdtTchUsername){
-        return courseMapper.selectCourseDynamic(cosTitle,cosCategory,cdtTchUsername);
+    public List<Course> selectCourseDynamic(String cosTitle, String cosCategory, String cdtTchUsername) {
+        return courseMapper.selectCourseDynamic(cosTitle, cosCategory, cdtTchUsername);
     }
 
     /**
      * 管理员功能——按照课程号cos_id将课程状态调整为"停课"
-     * @param cosId
+     *
+     * @param cosId 课程id
      */
-    public void closeCourseById(int cosId){
+    public void closeCourseById(int cosId) {
         courseMapper.updateCourseToClose(cosId);
     }
 
     /**
      * 管理员功能——按照课程号cos_id将课程状态调整为"开课"
-     * @param cosId
+     *
+     * @param cosId 课程id
      */
-    public void openCourseById(int cosId){
+    public void openCourseById(int cosId) {
         courseMapper.updateCourseToOpen(cosId);
     }
 
     /**
      * 管理员功能——按照课程号cos_id将课程状态调整为"报名"
-     * @param cosId
+     *
+     * @param cosId 课程id
      */
-    public void signUpCourseById(int cosId){
+    public void signUpCourseById(int cosId) {
         courseMapper.updateCourseToSignUp(cosId);
     }
 
     /**
      * 根据课程id查找课程信息
-     * @param cosId
-     * @return
+     *
+     * @param cosId 课程id
+     * @return 课程实体类
      */
-    public Course selectCourseById(int cosId) {
-        Course course = courseMapper.selectCourseById(cosId);
-        return course;
+    public Course selectCourseById(Integer cosId) {
+        return courseMapper.selectCourseById(cosId);
     }
 }

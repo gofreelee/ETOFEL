@@ -7,6 +7,20 @@ module.exports = {
                 pathRewrite: {
                     '^/login': ''
                 }
+            },
+            '/course': {
+                target: 'http://localhost:8088/course/',
+                changeOrigin: true,
+                pathRewrite: {
+                    '^/course': ''
+                }
+            },
+            '/user': {
+                target: 'http://localhost:8087/user/',
+                changeOrigin: true,
+                pathRewrite: {
+                    '^/user': ''
+                }
             }
         },
         port: 80

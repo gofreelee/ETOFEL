@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="sichuan.umbrella.chenmm.mapper.CourseDetailMapper">
+    <cache/>
     <!--    发布课程详细信息-->
     <insert id="insertCourseDetailInfo" parameterType="sichuan.umbrella.chenmm.bean.CourseDetail">
         insert into course_detail (cdt_cos_id, cdt_tch_username, cdt_grp_id, cdt_portrait, cdt_plan, cdt_pattern, cdt_guide)

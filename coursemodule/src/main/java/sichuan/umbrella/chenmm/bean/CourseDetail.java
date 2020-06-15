@@ -1,6 +1,8 @@
 package sichuan.umbrella.chenmm.bean;
 
-public class CourseDetail {
+import java.io.Serializable;
+
+public class CourseDetail implements Serializable {
     private Integer cdtCosId;
     private String cdtTchUsername;
     private Integer cdtGrpId;
@@ -13,15 +15,11 @@ public class CourseDetail {
     public CourseDetail() {
     }
 
-    public boolean someValueNotNull(){
-        if (getCdtCosId()==null||getCdtTchUsername()==null||getCdtGrpId()==null){
-            return false;
-        }else {
-            return true;
-        }
+    public boolean someValueNotNull() {
+        return getCdtCosId() != null && getCdtTchUsername() != null && getCdtGrpId() != null;
     }
 
-    public CourseDetail(Integer cdtCosId, String cdtTchUsername, Integer cdtGrpId, String cdtPortrait, String cdtPlan, String cdtPattern, String cdtGuide,String cdtImg) {
+    public CourseDetail(Integer cdtCosId, String cdtTchUsername, Integer cdtGrpId, String cdtPortrait, String cdtPlan, String cdtPattern, String cdtGuide, String cdtImg) {
         this.cdtCosId = cdtCosId;
         this.cdtTchUsername = cdtTchUsername;
         this.cdtGrpId = cdtGrpId;

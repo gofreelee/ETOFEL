@@ -2,33 +2,22 @@
     <el-container direction="vertical">
         <el-container>
             <el-aside>
-                <el-image :src="teacherPortrait" fit="fill" style="width: 100%"></el-image>
+                <img :src="teacher.tch_portrait" style="width: 100%"/>
             </el-aside>
             <el-main style="margin-left: 20px">
                 <el-row style="font-size: 1.4rem">
-                    讲师姓名：余坚
+                    讲师姓名: {{teacher.tch_name}}
                 </el-row>
                 <el-row style="margin-top: 15px; margin-bottom: 15px;">
-                    邮箱：余坚
+                    邮箱: {{teacher.tch_email}}
                 </el-row>
                 <el-row style="margin-top: 15px; margin-bottom: 15px;">
-                    性别：男
+                    性别: {{teacher.tch_gender}}
                     <el-divider direction="vertical"></el-divider>
-                    学历：博士
-                </el-row>
-                <el-row style="margin-top: 15px; margin-bottom: 15px;">
-                    <el-col :span="4">
-                        发表文章：3
-                    </el-col>
-                    <el-col :span="4">
-                        主讲课程：3
-                    </el-col>
-                    <el-col :span="4">
-                        关注人数：3
-                    </el-col>
+                    学历: {{teacher.tch_education}}
                 </el-row>
                 <el-row>
-                    教师简介
+                    {{teacher.tch_description}}
                 </el-row>
             </el-main>
         </el-container>
@@ -74,13 +63,16 @@
 
     export default {
         name: "TeacherDescription",
+        props: {
+            teacher: Object
+        },
         components: {
             GroupChatBox
         },
         data() {
             return {
                 activeTabName: 'articles',
-                teacherPortrait: 'http://img0.imgtn.bdimg.com/it/u=1803056350,344909414&fm=11&gp=0.jpg'
+                comment: ''
             }
         }
     }

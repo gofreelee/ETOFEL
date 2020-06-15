@@ -1,3 +1,8 @@
+server:
+  port: 8088
+  servlet:
+    context-path: /course
+
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver

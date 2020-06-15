@@ -1,9 +1,10 @@
 package sichuan.umbrella.chenmm.bean;
 
+import java.io.Serializable;
 import java.sql.Date;
 import java.sql.Time;
 
-public class Course {
+public class Course implements Serializable {
     private Integer cosId;
     private String cosTitle;
     private Date cosStartDate;
@@ -112,13 +113,9 @@ public class Course {
     }
 
     public boolean noNullValue() {
-        if (getCosCategory() == null || getCosEndDate() == null || getCosEndTime() == null
-                || getCosFee() == null || getCosStage() == null || getCosStartDate() == null
-                || getCosStartTime() == null || getCosStatus() == null || getCosTitle() == null) {
-            return false;
-        } else {
-            return true;
-        }
+        return getCosCategory() != null && getCosEndDate() != null && getCosEndTime() != null
+                && getCosFee() != null && getCosStage() != null && getCosStartDate() != null
+                && getCosStartTime() != null && getCosStatus() != null && getCosTitle() != null;
     }
 
     @Override
