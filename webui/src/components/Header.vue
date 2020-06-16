@@ -38,6 +38,18 @@
             },
             toPersonalCenter() {
                 if (this.username !== '请登录') router.push({path: '/personal-center'})
+            },
+            loginEasy(username, password) {
+                let url = '/login/user/ulogin?username=' + username + "&password=" + password;
+                this.$axios.get(url).then(res => {
+                    if (res.data.information == null) {
+                        alert('登录失败');
+                    } else {
+                        Vue.prototype.$user = res.data.information;
+                        bus.$emit('loginSuccess');
+                        router.push({path: '/'})
+                    }
+                })
             }
         },
         mounted() {
@@ -45,6 +57,10 @@
                 this.login = true;
                 this.username = Vue.prototype.$user.usr_username;
             })
+
+            let username = sessionStorage.getItem("username");
+            let password = sessionStorage.getItem("password");
+            if (username !== null) this.loginEasy(username, password);
         }
     }
 </script>

@@ -10,9 +10,8 @@ axios.defaults.withCredentials = true
 Vue.config.productionTip = false
 Vue.use(ElementUI)
 Vue.prototype.$axios = axios;
-Vue.prototype.$login = false;
 
 new Vue({
-  router,
-  render: h => h(App),
+    router,
+    render: h => h(App),
 }).$mount('#app')

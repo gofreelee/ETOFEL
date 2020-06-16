@@ -1,9 +1,11 @@
 package loginmodule.controller;
 
+import com.alibaba.fastjson.JSONObject;
 import com.google.gson.Gson;
 import loginmodule.bean.User;
 import loginmodule.service.LoginService;
 import loginmodule.service.NECaptchaVerifier;
+import loginmodule.utils.TokenProcessor;
 import loginmodule.utils.VerifyCode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -32,27 +34,23 @@ public class UserLoginController {
 
     private final Logger logger = LoggerFactory.getLogger(UserLoginController.class);
 
-    // token与验证码的键值对
-    private static ConcurrentHashMap<String, String> verifyCodeMap = new ConcurrentHashMap<>();
-
     /**
      * 用户登陆
      *
      * @param username 用户名
      * @param password 密码
-     * @param verifyCode 验证码
-     * @param token 前端token，需要与请求验证码时的一致
      * @return 登陆的用户json
      */
     @GetMapping("/ulogin")
-    public String user(@RequestParam("username") String username, @RequestParam("password") String password,
-                       @RequestParam("verifyCode") String verifyCode, @RequestParam("token") String token) {
-        User user = null;
-        logger.info(token + "请求登录");
-        if (!verifyCode.equals(verifyCodeMap.get(token))) return gson.toJson(user);
-        user = loginService.selectUserByUNAndPW(username, password);
-        System.out.println(gson.toJson(user));
-        return gson.toJson(user);
+    public String user(@RequestParam("username") String username, @RequestParam("password") String password) {
+        logger.info(gson.toJson(username) + "请求登录");
+
+        JSONObject loginJson = new JSONObject();
+        User user = loginService.selectUserByUNAndPW(username, password);
+        loginJson.put("type", "user");
+        loginJson.put("information", user);
+
+        return loginJson.toJSONString();
     }
 
     /**
@@ -79,18 +77,17 @@ public class UserLoginController {
      *
      * @param width  图片宽度
      * @param height 图片长度
-     * @param token  前端随机生成的token
      * @return 验证码base64
      */
     @GetMapping("/verify-code")
-    public String verifyCode(@RequestParam("width") int width, @RequestParam("height") int height, @RequestParam("token") String token) {
+    public String verifyCode(@RequestParam("width") int width, @RequestParam("height") int height) {
+        JSONObject response = new JSONObject();
         VerifyCode verifyCode = new VerifyCode();
         verifyCode.setWidth(width);
         verifyCode.setHeight(height);
-        String base64 = verifyCode.getBase64();
-        logger.info("token:" + token + " 获取验证码");
-        verifyCodeMap.put(token, verifyCode.getText());
-        return base64;
+        response.put("img", verifyCode.getBase64());
+        response.put("text", verifyCode.getText());
+        return response.toJSONString();
     }
 
 }

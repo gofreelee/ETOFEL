@@ -66,6 +66,7 @@
             return {
                 loginType: 'user',
                 verifyImg: '',
+                verifyText: '',
                 username: '',
                 password: '',
                 verifyCode: '',
@@ -76,41 +77,39 @@
             toRegister() {
                 router.push({path: '/register'})
             },
-            createToken() {
-                let chars = 'ABCDEFGHJKMNPQRSTWXYZabcdefhijkmnprstwxyz2345678';
-                let maxPos = chars.length;
-                let token = '';
-                for (let i = 0; i < 32; i++) {
-                    token += chars.charAt(Math.floor(Math.random() * maxPos));
-                }
-                return token;
-            },
             getVerifyCode() {
                 let element = document.getElementById('verify-code');
                 let height = window.getComputedStyle(element).height;
                 height = Math.floor(parseFloat(height.substring(0, height.length - 2)));
                 let width = window.getComputedStyle(element).width;
                 width = Math.floor(parseFloat(width.substring(0, width.length - 2)));
-                let url = '/login/user/verify-code?width=' + width + "&height=" + height + "&token=" + this.token;
+                let url = '/login/user/verify-code?width=' + width + "&height=" + height;
                 this.$axios.get(url).then(res => {
-                    this.verifyImg = 'data:image/jpeg;base64,' + res.data;
+                    this.verifyImg = 'data:image/jpeg;base64,' + res.data.img;
+                    this.verifyText = res.data.text;
                 })
             },
             login() {
-                let url = '/login/user/ulogin?username=' + this.username + "&password=" + this.password + "&verifyCode=" + this.verifyCode + "&token=" + this.token;
+                if (this.verifyCode !== this.verifyText) {
+                    alert("验证码输入错误");
+                    return;
+                }
+
+                let url = '/login/user/ulogin?username=' + this.username + "&password=" + this.password;
                 this.$axios.get(url).then(res => {
-                    if (res.data == null) {
+                    if (res.data.information == null) {
                         alert('登录失败');
                     } else {
-                        Vue.prototype.$user = res.data;
-                        Vue.prototype.$login = true;
+                        Vue.prototype.$user = res.data.information;
+                        sessionStorage.setItem("username", res.data.information.usr_username);
+                        sessionStorage.setItem("password", res.data.information.usr_password);
                         bus.$emit('loginSuccess');
+                        router.push({path: '/'})
                     }
                 })
             }
         },
         mounted() {
-            this.token = this.createToken();
             this.getVerifyCode();
         }
     }

@@ -18,6 +18,12 @@
             Header,
             MenuUser,
             Footer
+        },
+        methods: {
+
+        },
+        mounted() {
+
         }
     }
 </script>
