@@ -112,7 +112,6 @@
                 });
             },
             pageChange(currentPage) {
-                console.log(currentPage)
                 this.currentPage = currentPage;
             }
         },

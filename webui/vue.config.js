@@ -21,6 +21,13 @@ module.exports = {
                 pathRewrite: {
                     '^/user': ''
                 }
+            },
+            '/group': {
+                target: 'http://localhost:8777/group/',
+                changeOrigin: true,
+                pathRewrite: {
+                    '^/group': ''
+                }
             }
         },
         port: 80

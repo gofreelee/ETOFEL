@@ -95,7 +95,12 @@
                     return;
                 }
 
-                let url = '/login/user/ulogin?username=' + this.username + "&password=" + this.password;
+                let url;
+                if (this.loginType === 'user') {
+                    url = '/login/user/ulogin?username=' + this.username + "&password=" + this.password
+                } else {
+                    url = '/login/teacher/tlogin?username=' + this.username + "&password=" + this.password
+                }
                 this.$axios.get(url).then(res => {
                     if (res.data.information == null) {
                         alert('登录失败');
