@@ -3,14 +3,12 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="loginmodule.mapper.UserMapper">
-
-    
     <insert id="addUserByNPE" parameterType="String">
         INSERT INTO user(usr_username,usr_password,usr_gender,usr_email)
         VALUES (#{usr_username},#{usr_password},"男",#{usr_email})
     </insert>
 
-    <select id="selectUserByUNAndPW"  resultType="loginmodule.bean.User">
+    <select id="selectUserByUNAndPW" resultType="loginmodule.bean.User">
         SELECT * FROM user WHERE
                 usr_username = #{usr_username}
                 AND usr_password = #{usr_password}
@@ -22,11 +20,11 @@
     </select>
 
     <select id="selectUserByUNAndState" parameterType="String" resultType="loginmodule.bean.User">
-            SELECT * FROM  user
-            WHERE usr_state = #{usr_state}
-            <if test="usr_username!=null">
-               AND usr_username = #{usr_username}
-            </if>
+        SELECT * FROM user
+        WHERE usr_state = #{usr_state}
+        <if test="usr_username!=null">
+            AND usr_username = #{usr_username}
+        </if>
     </select>
 
     <update id="updateStaToNormal" parameterType="String">
@@ -41,4 +39,4 @@
         DELETE FROM user WHERE usr_username = #{usr_username}
     </delete>
 
-    </mapper>
+</mapper>

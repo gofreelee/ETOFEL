@@ -3,10 +3,11 @@ package com.example.user.bean;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import java.io.Serializable;
 import java.util.Date;
 
 
-public class User {
+public class User implements Serializable {
     private String usr_username;
     private String usr_password;
     private String usr_nickname;

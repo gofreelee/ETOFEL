@@ -1,8 +1,8 @@
 package loginmodule.bean;
-;
+import java.io.Serializable;
 import java.util.Date;
 
-public class User{
+public class User implements Serializable {
 
     private String usr_username;
     private String usr_password;
@@ -32,7 +32,6 @@ public class User{
     }
 
     public String getUsr_nickname() {
-        usr_nickname = "用户"+ usr_username;
         return usr_nickname;
     }
 

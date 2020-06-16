@@ -15,5 +15,5 @@ public interface UserMapper {
     //修改用户密码
     void updatePwd(@Param("usr_username") String usr_username, @Param("pwd") String pwd);
     //上传用户头像
-    String updatePhoto(@Param("usr_username") String usr_username,@Param("usr_portrait") String usr_portrait);
+    void updatePhoto(@Param("usr_username") String usr_username,@Param("usr_portrait") String usr_portrait);
 }

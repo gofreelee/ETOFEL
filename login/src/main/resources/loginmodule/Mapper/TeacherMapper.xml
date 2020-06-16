@@ -3,8 +3,9 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="loginmodule.mapper.TeacherMapper">
+    <cache/>
 
-    <select id="selectByUNAndPW"  resultType="loginmodule.bean.Teacher">
+    <select id="selectByUNAndPW" resultType="loginmodule.bean.Teacher">
         SELECT * FROM teacher WHERE
                 tch_username = #{tch_username}
                 AND tch_password = #{tch_password}
@@ -15,4 +16,4 @@
                 tch_username = #{tch_username}
     </select>
 
-    </mapper>
+</mapper>

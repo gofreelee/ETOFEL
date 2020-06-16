@@ -2,9 +2,9 @@
     <el-container style="margin: 40px 15% 40px 15%">
         <el-aside>
             <el-container direction="vertical" class="portrait-title">
-                <el-image :src="portrait" fit="fill" class="portrait"></el-image>
+                <img :src="information.usr_portrait" fit="fill" class="portrait" alt="用户头像"/>
                 <el-row class="username">
-                    余坚
+                    {{information.usr_nickname}}
                 </el-row>
             </el-container>
             <el-container class="aside-menu">
@@ -62,6 +62,7 @@
     import MyCourse from "../components/personal/MyCourse";
     import MyGroup from "../components/personal/MyGroup";
     import MyArticle from "../components/personal/MyArticle";
+    import Vue from "vue";
 
     export default {
         name: "PersonalCenter",
@@ -73,6 +74,7 @@
         },
         data() {
             return {
+                information: '',
                 portrait: 'http://img2.imgtn.bdimg.com/it/u=1354268575,1268995723&fm=26&gp=0.jpg',
                 selectPage: {
                     'information': true,
@@ -90,6 +92,9 @@
                 this.selectPage.article = false;
                 this.selectPage[pageName] = true;
             }
+        },
+        mounted() {
+            this.information = Vue.prototype.$user;
         }
     }
 </script>

@@ -16,7 +16,7 @@
                 <el-input prefix-icon="el-icon-user" placeholder="请输入用户名" v-model="username"/>
             </el-row>
             <el-row style="margin: 30px 20px 20px 0">
-                <el-input prefix-icon="el-icon-lock" placeholder="请输入用户名" v-model="password" show-password/>
+                <el-input prefix-icon="el-icon-lock" placeholder="请输入密码" v-model="password" show-password/>
             </el-row>
             <el-row style="margin: 30px 20px 20px 0">
                 <el-col :span="12" ref="verifyCode" id="verify-code">
