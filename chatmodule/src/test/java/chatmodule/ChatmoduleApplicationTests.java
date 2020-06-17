@@ -28,35 +28,36 @@ class ChatmoduleApplicationTests {
     @Autowired
     GroupMessageService groupMessageService;
     @Autowired
-    GroupMemberDao  groupMemberDao;
+    GroupMemberDao groupMemberDao;
+
     @Test
     void contextLoads() {
     }
 
     @Test
     void testGroupInsert() throws ParseException {
-        Timestamp  ts=new Timestamp(new Date().getTime());
+        Timestamp ts = new Timestamp(new Date().getTime());
         System.out.println(ts.toString());
-        Group group = new Group(1,"dev群",ts.toString(),"dev","dev","dev","dev","dev","dev");
+        Group group = new Group(1, "dev群", ts, "dev", "dev", "dev", "dev", "dev", "dev");
         groupService.createGroup(group);
     }
 
     @Test
-    void testGroupDelete(){
+    void testGroupDelete() {
         groupService.deleteGroup(1);
     }
 
     @Test
-    void testGroupUpdate(){
-        Timestamp  ts=new Timestamp(new Date().getTime());
-        Group group = new Group(2,"dev群",ts.toString(),"dev","dev","dev","dev","dev","dev");
+    void testGroupUpdate() {
+        Timestamp ts = new Timestamp(new Date().getTime());
+        Group group = new Group(2, "dev群", ts, "dev", "dev", "dev", "dev", "dev", "dev");
         group.setGrpName("update");
         groupService.modifyGroupInfo(group);
     }
 
     @Test
-    void testGroupMemberAdd(){
-        GroupMember groupMember = new GroupMember("lzc",2,"manager");
+    void testGroupMemberAdd() {
+        GroupMember groupMember = new GroupMember("lzc", 2, "manager");
         groupMemberService.addMember(groupMember);
         groupMember.setGmbUsername("yj");
         groupMember.setGmbType("member");
@@ -64,55 +65,55 @@ class ChatmoduleApplicationTests {
     }
 
     @Test
-    void testGroupMember(){
+    void testGroupMember() {
         groupMemberService.deleteMember("lzc");
     }
 
     @Test
-    void testGroupMessage(){
-        Timestamp  ts=new Timestamp(new Date().getTime());
-        GroupMessage message = new GroupMessage(1,2,"lzc","测试群聊",ts);
+    void testGroupMessage() {
+        Timestamp ts = new Timestamp(new Date().getTime());
+        GroupMessage message = new GroupMessage(1, 2, "lzc", "测试群聊", ts);
         groupMessageService.addOneMessage(message);
     }
 
     @Test
-    void testGroupMessageRemove(){
+    void testGroupMessageRemove() {
         groupMessageService.removeMessage(1);
     }
 
     @Test
-    void testGroupSearch(){
+    void testGroupSearch() {
         List<Group> groupList = groupService.searchByGroupNameLike("dev");
 
-        for(Group group: groupList){
+        for (Group group : groupList) {
             System.out.println(group.toString());
         }
     }
 
 
     @Test
-    void testGroupMemberCounts(){
+    void testGroupMemberCounts() {
         System.out.println(groupMemberDao.calculateAllMemberNum(1));
     }
 
     @Test
-    void testQueryGroupInfo(){
+    void testQueryGroupInfo() {
         GroupInfoQuery groupInfoQuery = groupMemberService.queryGroupInfo(2);
         System.out.println(groupInfoQuery.toString());
 
     }
 
     @Test
-    void testMessageSend(){
-        GroupMessage message = new GroupMessage(1,2,"苏苏苏"," = groupService.searchByGroupNameLike(\"dev\");\n" +
+    void testMessageSend() {
+        GroupMessage message = new GroupMessage(1, 2, "苏苏苏", " = groupService.searchByGroupNameLike(\"dev\");\n" +
                 "\n" +
                 "        for(Group group: groupList){\n" +
-                "            System.out.println(group.toString());",new Timestamp(new Date().getTime()));
+                "            System.out.println(group.toString());", new Timestamp(new Date().getTime()));
         groupMessageService.addOneMessage(message);
     }
 
     @Test
-    void testCalculateNum(){
+    void testCalculateNum() {
         System.out.println(groupMessageService.calculateMessageNum(2));
     }
 

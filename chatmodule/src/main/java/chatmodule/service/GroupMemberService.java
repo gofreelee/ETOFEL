@@ -29,7 +29,7 @@ public class GroupMemberService {
         return groupMemberDao.deleteMember(gmbUsername);
     }
 
-    public GroupInfoQuery queryGroupInfo(int grpId){
+    public GroupInfoQuery queryGroupInfo(long grpId){
         GroupInfoQuery groupInfoQuery = new GroupInfoQuery();
         Group group = groupDao.selectByGrpID(grpId);
         int membersNum = groupMemberDao.calculateAllMemberNum(grpId);
@@ -48,7 +48,7 @@ public class GroupMemberService {
         return groupInfoQuery;
     }
 
-    public List<MemberQuery> queryGroupByType(int grpId, String gmpType){
+    public List<MemberQuery> queryGroupByType(long grpId, String gmpType){
         return groupMemberDao.selectMemberByType(grpId, gmpType);
     }
 

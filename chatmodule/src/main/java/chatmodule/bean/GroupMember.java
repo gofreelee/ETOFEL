@@ -2,10 +2,10 @@ package chatmodule.bean;
 
 public class GroupMember {
     private String gmbUsername;
-    private int    gmbGroupId;
+    private long    gmbGroupId;
     private String gmbType;
 
-    public GroupMember(String gmbUsername, int gmbGroupId, String gmbType) {
+    public GroupMember(String gmbUsername, long gmbGroupId, String gmbType) {
         this.gmbUsername = gmbUsername;
         this.gmbGroupId = gmbGroupId;
         this.gmbType = gmbType;
@@ -19,11 +19,11 @@ public class GroupMember {
         this.gmbUsername = gmbUsername;
     }
 
-    public int getGmbGroupId() {
+    public long getGmbGroupId() {
         return gmbGroupId;
     }
 
-    public void setGmbGroupId(int gmbGroupId) {
+    public void setGmbGroupId(long gmbGroupId) {
         this.gmbGroupId = gmbGroupId;
     }
 

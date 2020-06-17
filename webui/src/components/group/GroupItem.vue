@@ -17,14 +17,11 @@
                     </el-row>
                 </el-col>
                 <el-col :lg="4" style="text-align: center">
-                    <el-row style="padding: 10px 0 10px 0">
+                    <el-row style="padding: 10px 0 20px 0">
                         {{groupMembers}}已入群
                     </el-row>
-                    <el-row style="cursor: pointer; padding-bottom: 10px" @click.native="toGroupInformation(1)">
-                        群信息
-                    </el-row>
                     <el-row>
-                        <el-button type="success" @click="toChatRoom(1)">聊天室</el-button>
+                        <el-button type="success" @click="toGroupInformation(1)">群信息</el-button>
                     </el-row>
                 </el-col>
             </el-row>
@@ -45,18 +42,12 @@
         },
         data() {
             return {
-                url: 'https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg',
                 groupMembers: 0
             }
         },
         methods: {
-            toGroupInformation(group_id) {
-                console.log(group_id);
-                router.push({path: "/group/group-information"});
-            },
-            toChatRoom(group_id) {
-                console.log(group_id);
-                router.push({path: '/group/chat-room'});
+            toGroupInformation() {
+                router.push({path: "/group/group-information", query: {group_id: this.group.grpId}});
             },
             getGroupMemberNumber() {
                 let config = {

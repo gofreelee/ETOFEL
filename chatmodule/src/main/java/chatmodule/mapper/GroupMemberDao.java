@@ -10,7 +10,7 @@ import java.util.List;
 public interface GroupMemberDao {
     int addGroupMember(GroupMember groupMember);
     int deleteMember(String gmbUsername);
-    int calculateAllMemberNum(int grpId);
-    List<MemberQuery> selectMemberInfo(int grpId);
-    List<MemberQuery> selectMemberByType(int grpId, String gmbType);
+    int calculateAllMemberNum(long grpId);
+    List<MemberQuery> selectMemberInfo(long grpId);
+    List<MemberQuery> selectMemberByType(long grpId, String gmbType);
 }

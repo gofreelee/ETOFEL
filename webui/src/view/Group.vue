@@ -88,7 +88,9 @@
                     url: '/group/group/searchGroupByType?groupType=' + this.typeNames[this.typeSelect],
                 };
                 this.$axios(config).then(res => {
+                    console.log(res);
                     this.groupList = res.data;
+                    console.log(this.groupList);
                 }).catch(function (error) {
                     console.log(error);
                 });
@@ -97,7 +99,6 @@
                 let config = {
                     method: 'post',
                     url: '/group/group/searchGroupByName?groupName=' + this.groupName,
-                    headers: {}
                 };
                 this.$axios(config).then(res => {
                     this.groupList = res.data;

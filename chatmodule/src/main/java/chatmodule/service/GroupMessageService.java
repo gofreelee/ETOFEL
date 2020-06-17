@@ -20,11 +20,11 @@ public class GroupMessageService {
         return groupMessageDao.deleteMessage(gmsId);
     }
 
-    public int calculateMessageNum(int grpId){
+    public int calculateMessageNum(long grpId){
         return groupMessageDao.calculateMessageNum(grpId);
     }
 
-    public List<GroupMessage> selectMessageLimitBy(int grpId, int start, int end){
+    public List<GroupMessage> selectMessageLimitBy(long grpId, int start, int end){
         return groupMessageDao.selectMessageLimitBy(grpId, start, end);
     }
 }

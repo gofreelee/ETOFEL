@@ -10,6 +10,7 @@ spring:
       username: groupsix
       password: chinasoft6
       driver-class-name: com.mysql.cj.jdbc.Driver
+      max-lifetime: 30000
   http:
     multipart:
 
