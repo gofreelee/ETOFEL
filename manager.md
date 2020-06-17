@@ -1,22 +1,22 @@
 # 管理员部分的接口需求
 
-##系统管理-用户列表接口
-###显示用户列表
+## 1.系统管理-用户列表接口
+### 显示用户列表
 url:/loginmodule/userlist/userlist
 需要用户名、用户状态，数据库表中未设置用户等级这一属性
 
 ![](C:\Users\dell\Desktop\1.PNG)
-###冻结用户
+### 冻结用户
 url:/loginmodule/userlist/updateUserToFrozen
 需要选中用户的用户名
 
 ![](C:\Users\dell\Desktop\2.PNG)
-###解冻用户
+### 解冻用户
 url:/loginmodule/userlist/updateUserToNormal
 需要选中用户的用户名
 
 ![](C:\Users\dell\Desktop\3.PNG)
-###删除用户
+### 删除用户
 url:/loginmodule/userlist/deleteUser
 需要选中用户的用户名
 
@@ -127,6 +127,33 @@ url:/loginmodule/userlist/deleteUser
 #### 参数： cosId（int）恢复课程的id
 #### 返回值：提示字符串。提示更改的状态（报名或停课）
 
-
-
-
+## 3. 管理员文章/评论接口
+【目前模块端口号未更新，为8089，更新后本行删除】
+【数据库相关的表基本是空的，添加足够记录后会删除此行】
+### 添加文章接口
+url:http://localhost:8086/tofel-article/createArticle
+参数:@RequestParam("artImgUpload") MultipartFile file, Article article
+返回值:处理后的article的Json (gson.toJson(article))
+备注:内部有防null，可以不上传图片
+### 删除文章接口
+url:http://localhost:8086/tofel-article/remove/{artId}
+参数:@PathVariable("artId") String artId
+返回值:"redirect:/"
+备注:只做了根据主键的删除
+### 查找文章（Id）
+url:http://localhost:8086/tofel-article/getArtInfo/{artId}
+参数:@PathVariable("artId") String artId
+返回值:gson.toJson(article) 查找到的文章的Json
+### 查找文章（Type）
+url:http://localhost:8086/tofel-article/classArticle/{artType}
+参数:@PathVariable(value = "artType", required = false) String artType
+返回值:gson.toJson(articleList) 查找到的文章列表的Json
+备注:文章内容做了截取，200字符以上的部分不会被传过去，后续会跟“......”，200字符以内的不会修改。
+### 查找文章图片（Id）
+url:http://localhost:8086/tofel-article/getArtImg/{artId}
+参数:@PathVariable("artId") String artId
+返回值:gson.toJson(artImg) 查找到的文章的图片的Json
+备注：如果为null会返回数据库中主键值为-1的article的图片
+#### 其他备注：
+article update相关的接口都没做
+comment可以不用管理员操作
