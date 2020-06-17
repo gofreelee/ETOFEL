@@ -6,14 +6,14 @@
         <el-main>
             <el-row type="flex" justify="space-between" align="middle">
                 <el-col style="font-weight: bold; font-size: 1.4rem" :span="12">
-                    夏天吹过的小妹妹
+                    {{nickname}}
                 </el-col>
                 <el-col :span="8" style="text-align: right">
-                    创建时间 2020-6-12 10:00
+                    创建时间 {{message.gmsCreateTime}}
                 </el-col>
             </el-row>
             <el-row class="chat-content">
-                香港股市近日连续多日均见升幅，前日恒指更一度升穿28000点，而无线前日宣布为配合港股热潮，将于下周一深宵黄金时段(即21日凌晨12时15分)重播由郑少秋、刘青云、郭蔼明、周慧敏及刘松仁主演的《大时代》，即令大批股民喊惊及呼吁别放!言犹在耳，股民最不想发生的“丁蟹效应”似乎已应验，恒指昨日收市跌454点，报收27561点，八日连升之势停止，令不少有买股票的艺人赔钱!
+                {{message.gmsContext}}
             </el-row>
             <el-divider></el-divider>
         </el-main>
@@ -23,10 +23,32 @@
 <script>
     export default {
         name: "GroupChatBox",
+        props: {
+            message: Object
+        },
         data() {
             return {
-                portrait: "http://up.enterdesk.com/edpic/fb/53/a6/fb53a628568bd0de99608fa5537be845.jpg"
+                portrait: "",
+                nickname: ''
             }
+        },
+        methods: {
+            getUser() {
+                let config = {
+                    method: 'get',
+                    url: '/user/user/info?usr_username=' + this.message.gmsUsername,
+                };
+
+                this.$axios(config).then(res => {
+                    this.nickname = res.data.usr_nickname;
+                    this.portrait = res.data.usr_portrait;
+                }).catch(function (error) {
+                    console.log(error);
+                });
+            }
+        },
+        mounted() {
+            this.getUser();
         }
     }
 </script>

@@ -1,12 +1,14 @@
 package chatmodule.controller;
 
-import chatmodule.bean.GroupInfoQuery;
-import chatmodule.bean.GroupMessage;
-import chatmodule.bean.MemberQuery;
+import chatmodule.bean.*;
 import chatmodule.service.GroupMemberService;
 import chatmodule.service.GroupMessageService;
 import chatmodule.service.GroupService;
-import chatmodule.bean.Group;
+import chatmodule.util.GroupJsonSerializer;
+import chatmodule.util.SnowflakeIdWorker;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonElement;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +30,20 @@ public class GroupController {
     @Autowired
     GroupMessageService groupMessageService;
 
-    private Logger logger = LoggerFactory.getLogger(GroupController.class);
+    private Gson gson;
+
+    @Autowired
+    public void setGson() {
+        this.gson = new GsonBuilder().registerTypeAdapter(Group.class, new GroupJsonSerializer()).create();
+    }
+
+    private final Logger logger = LoggerFactory.getLogger(GroupController.class);
+
+    @GetMapping("/selectByGrpID")
+    public Group selectByGrpID(int grpId) {
+        logger.info("查询group_id=" + grpId);
+        return groupService.selectByGrpID(grpId);
+    }
 
     /**
      * 根据名称搜索群
@@ -49,11 +64,11 @@ public class GroupController {
      * @return json
      */
     @RequestMapping("/searchGroupByType")
-    public List<Group> searchGroupByType(HttpServletRequest request) {
+    public String searchGroupByType(HttpServletRequest request) {
         String groupType = request.getParameter("groupType");
         if (groupType.equals("全部")) groupType = null;
-        System.out.println(groupType);
-        return groupService.searchByGroupType(groupType);
+        logger.info("查询群类型：" + groupType);
+        return gson.toJson(groupService.searchByGroupType(groupType));
     }
 
     /**
@@ -63,14 +78,25 @@ public class GroupController {
      * @return 群人数
      */
     @GetMapping("/countMembers")
-    public int countGroupMembers(int grpId) {
+    public int countGroupMembers(long grpId) {
         logger.info("群id" + grpId + "查询群人数");
         return groupService.countGroupMembers(grpId);
     }
 
+    @GetMapping("/groupJoined")
+    public String getGroupJoined(@RequestParam("gmsUsername") String gmsUsername) {
+        return gson.toJson(groupService.selectWhoJoin(gmsUsername, "member"));
+    }
+
+    @GetMapping("/groupManaged")
+    public String getGroupManaged(@RequestParam("gmsUsername") String gmsUsername) {
+        return gson.toJson(groupService.selectWhoJoin(gmsUsername, "manager"));
+    }
+
     @RequestMapping("/searchGroupInfo")
     public GroupInfoQuery searchGroupInfo(HttpServletRequest request) {
-        int grpId = Integer.parseInt(request.getParameter("grpId"));
+        long grpId = Long.parseLong(request.getParameter("grpId"));
+        logger.error("searchGroupInfo" + grpId);
         return groupMemberService.queryGroupInfo(grpId);
     }
 
@@ -83,23 +109,51 @@ public class GroupController {
     }
 
     @RequestMapping(value = "/sendMessage", method = RequestMethod.POST)
-    public int sendMessage(@RequestBody GroupMessage message) {
+    public int sendMessage(@RequestParam("gmsGrpId") long gmsGrpId,
+                           @RequestParam("gmsUsername") String gmsUsername,
+                           @RequestParam("gmsContext") String gmsContext) {
+        GroupMessage message = new GroupMessage();
+        message.setGmsGrpId(gmsGrpId);
+        message.setGmsUsername(gmsUsername);
+        message.setGmsContext(gmsContext);
         message.setGmsCreateTime(new Timestamp(new Date().getTime()));
         return groupMessageService.addOneMessage(message);
     }
 
     @RequestMapping(value = "/getMessageNum")
     public int getMessageNum(HttpServletRequest request) {
-        int grpId = Integer.parseInt(request.getParameter("grpId"));
+        long grpId = Long.parseLong(request.getParameter("grpId"));
         return groupMessageService.calculateMessageNum(grpId);
     }
 
-    @RequestMapping(value = "getMessage")
-    public List<GroupMessage> getMessage(HttpServletRequest request) {
-        int grpId = Integer.parseInt(request.getParameter("grpId"));
+    @RequestMapping(value = "/getMessage")
+    public String getMessage(HttpServletRequest request) {
+        long grpId = Long.parseLong(request.getParameter("grpId"));
         int index = Integer.parseInt(request.getParameter("index"));
-        return groupMessageService.selectMessageLimitBy(grpId, index, index + 10);
+        return gson.toJson(groupMessageService.selectMessageLimitBy(grpId, index, index + 6));
     }
 
-
+    /**
+     * 创建一个新的群
+     *
+     * @param grpType
+     * @param grpName
+     * @param grpDescription
+     * @param grpRule
+     * @param grpPortrait
+     * @param grpCreator
+     * @return 1表示创建成功 其余为创建失败
+     */
+    @PostMapping("/createGroup")
+    public int createGroup(@RequestParam("grpType") String grpType,
+                           @RequestParam("grpName") String grpName,
+                           @RequestParam("grpDescription") String grpDescription,
+                           @RequestParam("grpRule") String grpRule,
+                           @RequestParam("grpPortrait") String grpPortrait,
+                           @RequestParam("grpCreator") String grpCreator) {
+        long id = SnowflakeIdWorker.getInstance().nextId();
+        Group group = new Group(id, grpName, new Timestamp(new Date().getTime()), grpDescription, grpRule, grpType, grpPortrait, grpCreator, "正常");
+        GroupMember groupMember = new GroupMember(grpCreator, id, "manager");
+        return groupService.createGroup(group) & groupMemberService.addMember(groupMember);
+    }
 }

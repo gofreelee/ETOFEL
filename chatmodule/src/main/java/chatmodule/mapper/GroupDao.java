@@ -10,7 +10,7 @@ import java.util.List;
 public interface GroupDao {
     int createGroup(@Param("item") Group group);
 
-    int deleteGroup(int groupId);
+    int deleteGroup(long groupId);
 
     int modifyGroupInfo(Group group);
 
@@ -18,7 +18,9 @@ public interface GroupDao {
 
     List<Group> selectByType(@Param("groupType") String groupType);
 
-    Group selectByGrpID(int grpId);
+    Group selectByGrpID(long grpId);
 
-    int countGroupMembers(int grpId);
+    int countGroupMembers(long grpId);
+
+    List<Group> selectWhoJoin(@Param("gmbUsername") String gmbUsername, @Param("gmbType") String gmbType);
 }

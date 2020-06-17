@@ -1,8 +1,7 @@
 package chatmodule.service;
 
-import chatmodule.mapper.GroupDao;
 import chatmodule.bean.Group;
-import org.apache.ibatis.annotations.Param;
+import chatmodule.mapper.GroupDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,12 +13,10 @@ public class GroupService {
     GroupDao groupDao;
 
     public int createGroup(Group group) {
-        System.out.println(group.toString());
-        System.out.println(groupDao == null);
         return groupDao.createGroup(group);
     }
 
-    public int deleteGroup(int grpId) {
+    public int deleteGroup(long grpId) {
         return groupDao.deleteGroup(grpId);
     }
 
@@ -36,7 +33,15 @@ public class GroupService {
         return groupDao.selectByType(groupType);
     }
 
-    public int countGroupMembers(int grpId) {
+    public int countGroupMembers(long grpId) {
         return groupDao.countGroupMembers(grpId);
+    }
+
+    public Group selectByGrpID(long grpId) {
+        return groupDao.selectByGrpID(grpId);
+    }
+
+    public List<Group> selectWhoJoin(String gmbUsername, String gmbType) {
+        return groupDao.selectWhoJoin(gmbUsername, gmbType);
     }
 }

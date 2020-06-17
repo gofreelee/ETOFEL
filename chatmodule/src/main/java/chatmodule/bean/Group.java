@@ -4,17 +4,20 @@ import java.sql.Timestamp;
 import java.util.Date;
 
 public class Group {
-    private  int grpId;
-    private  String  grpName;
-    private  String grpCreateTime;
-    private  String  grpDescription;
-    private  String  grpRule;
-    private  String  grpType;
-    private  String  grpPortrait;
-    private  String  grpCreator;
-    private  String  grpStatus;
+    private long grpId;
+    private String grpName;
+    private Timestamp grpCreateTime;
+    private String grpDescription;
+    private String grpRule;
+    private String grpType;
+    private String grpPortrait;
+    private String grpCreator;
+    private String grpStatus;
 
-    public Group(int grpId, String grpName, String grpCreateTime, String grpDescription, String grpRule, String grpType, String grpPortrait, String grpCreator, String grpStatus) {
+    public Group() {
+    }
+
+    public Group(long grpId, String grpName, Timestamp grpCreateTime, String grpDescription, String grpRule, String grpType, String grpPortrait, String grpCreator, String grpStatus) {
         this.grpId = grpId;
         this.grpName = grpName;
         this.grpCreateTime = grpCreateTime;
@@ -26,11 +29,11 @@ public class Group {
         this.grpStatus = grpStatus;
     }
 
-    public int getGrpId() {
+    public long getGrpId() {
         return grpId;
     }
 
-    public void setGrpId(int grpId) {
+    public void setGrpId(long grpId) {
         this.grpId = grpId;
     }
 
@@ -42,11 +45,11 @@ public class Group {
         this.grpName = grpName;
     }
 
-    public String getGrpCreateTime() {
+    public Timestamp getGrpCreateTime() {
         return grpCreateTime;
     }
 
-    public void setGrpCreateTime(String grpCreateTime) {
+    public void setGrpCreateTime(Timestamp grpCreateTime) {
         this.grpCreateTime = grpCreateTime;
     }
 
