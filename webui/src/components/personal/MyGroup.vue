@@ -4,17 +4,27 @@
             <el-tabs v-model="activeTab" type="card">
 
                 <el-tab-pane label="我加入的群" name="join">
-                    <GroupItem v-for="item in 5" :key="item" :is-admin="false"/>
+                    <el-row v-for="item in joinList" :key="item.grpId">
+                        <GroupItem :is-admin="false" :group="item"/>
+                    </el-row>
                     <el-row style="text-align: right">
-                        <el-pagination background layout="prev, pager, next" :total="1000"></el-pagination>
+                        <el-pagination background layout="prev, pager, next"
+                                       :total="groupJoinedList.length"
+                                       :page-size="5"
+                                       @current-change="joinPageChange"/>
                     </el-row>
                 </el-tab-pane>
 
 
                 <el-tab-pane label="我管理的群" name="admin">
-                    <GroupItem v-for="item in 5" :key="item" :is-admin="true"/>
+                    <el-row v-for="item in manageList" :key="item.grpId">
+                        <GroupItem :is-admin="true" :group="item"/>
+                    </el-row>
                     <el-row style="text-align: right">
-                        <el-pagination background layout="prev, pager, next" :total="1000"></el-pagination>
+                        <el-pagination background layout="prev, pager, next"
+                                       :total="groupManageList.length"
+                                       :page-size="5"
+                                       @current-change="managePageChange"/>
                     </el-row>
                 </el-tab-pane>
 
@@ -29,9 +39,9 @@
                                 </el-col>
                                 <el-col :span="18" :push="1">
                                     <el-select v-model="groupType" placeholder="群类别">
-                                        <el-option label="名师课堂群" value="course"></el-option>
-                                        <el-option label="同城群" value="city"></el-option>
-                                        <el-option label="结伴考试群" value="team"></el-option>
+                                        <el-option label="名师课堂群" value="名师课堂群"></el-option>
+                                        <el-option label="同城群" value="同城群"></el-option>
+                                        <el-option label="结伴备考群" value="结伴备考群"></el-option>
                                     </el-select>
                                 </el-col>
                             </el-row>
@@ -83,16 +93,15 @@
 
                             <el-row type="flex" align="middle" class="info">
                                 <el-col :span="3" :push="4">
-                                    <el-button type="success" style="width: 100%">确定</el-button>
+                                    <el-button type="success" style="width: 100%" @click="createGroup">确定</el-button>
                                 </el-col>
                                 <el-col :span="3" :push="5">
-                                    <el-button type="warning" style="width: 100%">重置</el-button>
+                                    <el-button type="warning" style="width: 100%" @click="clearGroup">重置</el-button>
                                 </el-col>
                             </el-row>
                         </el-main>
                     </el-container>
                 </el-tab-pane>
-
             </el-tabs>
         </el-main>
     </el-container>
@@ -106,14 +115,29 @@
         components: {
             GroupItem
         },
+        computed: {
+            joinList() {
+                let index = this.joinedPage - 1;
+                return this.groupJoinedList.slice(index * 5, index * 5 + 5);
+            },
+            manageList() {
+                let index = this.managePage - 1;
+                return this.groupManageList.slice(index * 5, index * 5 + 5);
+            }
+        },
         data() {
             return {
                 activeTab: 'join',
-                groupType: 'course',
+                groupType: '名师课堂群',
                 groupName: '',
                 imageUrl: '',
                 groupDescription: '',
-                groupRule: ''
+                groupRule: '',
+
+                groupJoinedList: [],
+                joinedPage: 1,
+                groupManageList: [],
+                managePage: 1
             }
         },
         methods: {
@@ -130,8 +154,81 @@
                 if (!isLt2M) {
                     this.$message.error('上传头像图片大小不能超过 2MB!');
                 }
+
+                let self = this;
+                let fileReader = new FileReader();
+                fileReader.readAsDataURL(file);
+                fileReader.onload = function (e) {
+                    self.imageUrl = e.target.result;
+                }
+
                 return isJPG && isLt2M;
+            },
+            getManageGroup() {
+                let config = {
+                    method: 'get',
+                    url: '/group/group/groupManaged?gmsUsername=' + sessionStorage.getItem("username"),
+                };
+
+                this.$axios(config).then(res => {
+                    this.groupManageList = res.data;
+                }).catch(function (error) {
+                    console.log(error);
+                });
+            },
+            getJoinGroup() {
+                let config = {
+                    method: 'get',
+                    url: '/group/group/groupJoined?gmsUsername=' + sessionStorage.getItem("username"),
+                };
+
+                this.$axios(config).then(res => {
+                    this.groupJoinedList = res.data;
+                }).catch(function (error) {
+                    console.log(error);
+                });
+            },
+            joinPageChange(currentPage) {
+                this.joinedPage = currentPage;
+            },
+            managePageChange(currentPage) {
+                this.managePage = currentPage;
+            },
+            createGroup() {
+                let data = new FormData();
+                data.append('grpType', this.groupType);
+                data.append('grpName', this.groupName);
+                data.append('grpDescription', this.groupDescription);
+                data.append('grpRule', this.groupRule);
+                data.append('grpPortrait', this.imageUrl);
+                data.append('grpCreator', sessionStorage.getItem("username"));
+
+                let config = {
+                    method: 'post',
+                    url: '/group/group/createGroup',
+                    data: data
+                };
+
+                this.$axios(config).then(res => {
+                    if (res.data === 1) {
+                        alert("成功创建群");
+                        this.getManageGroup();
+                        this.clearGroup();
+                    }
+                }).catch(function (error) {
+                    console.log(error);
+                });
+            },
+            clearGroup() {
+                this.groupName = '';
+                this.groupDescription = '';
+                this.groupRule = '';
+                this.imageUrl = null;
             }
+        },
+        mounted() {
+            this.getJoinGroup();
+            this.getManageGroup();
         }
     }
 </script>

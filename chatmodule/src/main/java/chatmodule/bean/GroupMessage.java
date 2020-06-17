@@ -5,10 +5,13 @@ import java.util.Date;
 
 public class GroupMessage {
     private int gmsId;
-    private int gmsGrpId;
+    private long gmsGrpId;
     private String gmsUsername;
     private String gmsContext;
     private Timestamp gmsCreateTime;
+
+    public GroupMessage() {
+    }
 
     public GroupMessage(int gmsId, int gmsGrpId, String gmsUsername, String gmsContext, Timestamp gmsCreateTime) {
         this.gmsId = gmsId;
@@ -26,11 +29,11 @@ public class GroupMessage {
         this.gmsId = gmsId;
     }
 
-    public int getGmsGrpId() {
+    public long getGmsGrpId() {
         return gmsGrpId;
     }
 
-    public void setGmsGrpId(int gmsGrpId) {
+    public void setGmsGrpId(long gmsGrpId) {
         this.gmsGrpId = gmsGrpId;
     }
 

@@ -3,8 +3,11 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="chatmodule.mapper.GroupDao">
 
-    <insert id="createGroup" parameterType="chatmodule.bean.Group">
-        insert into `group` (grp_name, grp_create_time, grp_description, grp_rule, grp_type, grp_portrait, grp_creator, grp_status) values (#{item.grpName}, #{item.grpCreateTime}, #{item.grpDescription}, #{item.grpRule}, #{item.grpType}, #{item.grpPortrait}, #{item.grpCreator}, #{item.grpStatus})
+    <insert id="createGroup">
+        insert into `group`
+        (grp_id, grp_name, grp_create_time, grp_description, grp_rule, grp_type, grp_portrait, grp_creator, grp_status)
+        values
+        (#{item.grpId},#{item.grpName}, #{item.grpCreateTime}, #{item.grpDescription}, #{item.grpRule}, #{item.grpType}, #{item.grpPortrait}, #{item.grpCreator}, #{item.grpStatus})
     </insert>
 
     <delete id="deleteGroup">
@@ -20,18 +23,36 @@
         select * from `group` where grp_name like  #{groupName}
     </select>
 
-    <select id="selectByType" resultType="chatmodule.bean.Group">
+    <select id="selectByType" resultMap="Group">
         select * from `group`
         <if test="groupType != null">
             where grp_type = #{groupType}
         </if>
     </select>
 
-    <select id="selectByGrpID" resultType="chatmodule.bean.Group">
+    <select id="selectByGrpID" resultMap="Group">
         select * from `group` where grp_id = #{grpId}
     </select>
 
     <select id="countGroupMembers" resultType="Integer">
         select count(*) from group_member where gmb_grp_id = #{grpId}
     </select>
+
+    <select id="selectWhoJoin" resultMap="Group">
+        select * from `group`, group_member where grp_id = gmb_grp_id
+        and gmb_username = #{gmbUsername}
+        and gmb_type = #{gmbType}
+    </select>
+
+    <resultMap id="Group" type="chatmodule.bean.Group">
+        <id property="grpId" column="grp_id"/>
+        <result property="grpName" column="grp_name"/>
+        <result property="grpCreateTime" column="grp_create_time"/>
+        <result property="grpDescription" column="grp_description"/>
+        <result property="grpRule" column="grp_rule"/>
+        <result property="grpType" column="grp_type"/>
+        <result property="grpPortrait" column="grp_portrait"/>
+        <result property="grpCreator" column="grp_creator"/>
+        <result property="grpStatus" column="grp_status"/>
+    </resultMap>
 </mapper>
