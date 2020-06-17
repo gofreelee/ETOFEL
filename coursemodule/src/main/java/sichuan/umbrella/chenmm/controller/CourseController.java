@@ -130,4 +130,10 @@ public class CourseController {
         }
     }
 
+    @GetMapping("/closeCourse")
+    public void closeCourseById(@RequestParam("cosId") int cosId){
+        courseService.closeCourseById(cosId);
+    }
+
+
 }

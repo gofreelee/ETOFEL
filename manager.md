@@ -116,5 +116,17 @@ url:/loginmodule/userlist/deleteUser
         "cosStage":"周二",
         "cosStatus":"报名中"
     }
-]
+]    
+## 管理员课程管理接口
+### 功能：关闭课程
+####url：http://localhost:8088/course/closeCourse
+#### 参数： cosId（int）关闭课程的id
+#### 返回值：void
+### 功能：恢复课程
+####url：http://localhost:8088/course/recoverCourse
+#### 参数： cosId（int）恢复课程的id
+#### 返回值：提示字符串。提示更改的状态（报名或停课）
+
+
+
 
