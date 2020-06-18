@@ -27,4 +27,5 @@ public interface CommentDao{
     @Delete("delete from article_comment where cmt_id=#{param1}")
     void deleteByCmtId(String cmtId);
 
+
 }

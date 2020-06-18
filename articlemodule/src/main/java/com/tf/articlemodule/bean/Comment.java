@@ -1,16 +1,18 @@
 package com.tf.articlemodule.bean;
 
+import java.sql.Timestamp;
+
 public class Comment {
 
   private String cmt_id;
   private String cmt_username;
   private String cmt_art_id;
-  private String cmt_date_time;
+  private Timestamp cmt_date_time;
   private String cmt_content;
 
   public Comment() {}
 
-  public Comment(String cmt_id, String cmtUserNo, String cmt_art_id, String cmt_date_time, String cmt_content) {
+  public Comment(String cmt_id, String cmtUserNo, String cmt_art_id, Timestamp cmt_date_time, String cmt_content) {
     this.cmt_id = cmt_id;
     this.cmt_username = cmtUserNo;
     this.cmt_art_id = cmt_art_id;
@@ -42,11 +44,11 @@ public class Comment {
     this.cmt_art_id = cmt_art_id;
   }
 
-  public String getCmt_date_time() {
+  public Timestamp getCmt_date_time() {
     return cmt_date_time;
   }
 
-  public void setCmt_date_time(String cmt_date_time) {
+  public void setCmt_date_time(Timestamp cmt_date_time) {
     this.cmt_date_time = cmt_date_time;
   }
 

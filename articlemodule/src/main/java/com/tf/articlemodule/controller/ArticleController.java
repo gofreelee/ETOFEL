@@ -23,18 +23,34 @@ public class ArticleController {
   @Autowired
   private Gson gson;
 
-  @RequestMapping(value = "/createArticle")
-  public String create(
-          @RequestParam("artImgUpload") MultipartFile file, Article article)
-          throws Exception {
+
+
+//  private String art_id;
+//  private String art_username;
+//  private String art_title;
+//  private String art_date_time;
+//  private String art_img;
+//  private String art_text;
+//  private String art_type;
+  @RequestMapping(value = "/createArticle", method = RequestMethod.POST)
+  public void create(@RequestParam("artUsername") String artUsername,
+                       @RequestParam("artTitle") String artTitle,
+                       @RequestParam("artImg") String artImg,
+                       @RequestParam("artText") String artText,
+                       @RequestParam("artType") String artType) {
     SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-    article.setArt_date_time(df.format(new Date()));
-    if (file != null) {
-      System.out.println("file is not null");
-      article.setArt_img(file.getBytes());
-    }
+    Article article = new Article();
+    article.setArt_date_time(new Date());
+    article.setArt_img(artImg);
+    article.setArt_text(artText);
+    article.setArt_type(artType);
+    article.setArt_username(artUsername);
+    article.setArt_title(artTitle);
+//    if (file != null) {
+//      System.out.println("file is not null");
+//      article.setArt_img(file.getBytes());
+//    }
     articleService.addArticle(article);
-    return gson.toJson(article);
   }
 
   @RequestMapping("classArticle/{artType}")
@@ -86,7 +102,7 @@ public class ArticleController {
   @RequestMapping("/getArtImg/{artId}")
   public String getArtImg(@PathVariable(value = "artId") String artId)
           throws Exception {
-    byte[] artImg = null;
+    String artImg = null;
     try {
       artImg = articleService.getArticle(artId).getArt_img();
     } catch (Exception e) { }

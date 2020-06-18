@@ -24,4 +24,8 @@ public class ArticleService {
   public void removeArticle(String artId) { articleDao.deleteByArtId(artId);  }
 
   public List<Article> selectByArtType(String artType) { return articleDao.selectByArtType(artType);  }
+
+  public void modifyArticle(Article article){
+        articleDao.modifyArticle(article);
+  }
 }

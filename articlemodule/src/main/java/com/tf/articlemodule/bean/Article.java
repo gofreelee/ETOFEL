@@ -1,14 +1,15 @@
 package com.tf.articlemodule.bean;
 
 import java.util.Arrays;
+import java.util.Date;
 
 public class Article {
 
   private String art_id;
   private String art_username;
   private String art_title;
-  private String art_date_time;
-  private byte[] art_img;
+  private Date art_date_time;
+  private String art_img;
   private String art_text;
   private String art_type;
 
@@ -18,8 +19,8 @@ public class Article {
       String art_id,
       String art_username,
       String art_title,
-      String art_date_time,
-      byte[] art_img,
+      Date art_date_time,
+      String art_img,
       String art_text,
       String art_type) {
     this.art_id = art_id;
@@ -63,19 +64,19 @@ public class Article {
     this.art_type = art_type;
   }
 
-  public String getArt_date_time() {
+  public Date getArt_date_time() {
     return art_date_time;
   }
 
-  public void setArt_date_time(String art_date_time) {
+  public void setArt_date_time(Date art_date_time) {
     this.art_date_time = art_date_time;
   }
 
-  public byte[] getArt_img() {
+  public String getArt_img() {
     return art_img;
   }
 
-  public void setArt_img(byte[] art_img) {
+  public void setArt_img(String art_img) {
     this.art_img = art_img;
   }
 
@@ -94,7 +95,7 @@ public class Article {
             ", art_username='" + art_username + '\'' +
             ", art_title='" + art_title + '\'' +
             ", art_date_time='" + art_date_time + '\'' +
-            ", art_img=" + Arrays.toString(art_img) +
+            ", art_img=" + art_img +
             ", art_text='" + art_text + '\'' +
             ", art_type='" + art_type + '\'' +
             '}';
