@@ -31,18 +31,18 @@
                 width="160">
             </el-table-column>
             <el-table-column
-                prop=""
+                prop="gmsContext"
                 label="描述"
                 width="190">
             </el-table-column>
             <el-table-column
-                prop=""
+                prop="gmsCreateTime"
                 label="创建日期"
                 width="150"
                 >
             </el-table-column>
             <el-table-column
-                prop=""
+                prop="gmsUsername"
                 label="创建人"
                 width="130"
                 >
@@ -78,7 +78,7 @@ export default {
         }
     },
     mounted() {
-        
+        this.getDataSource()
     },
     methods: {
         // 表格 action 监听（checkbox 选择）
@@ -86,9 +86,24 @@ export default {
             console.log(value)
         },
         // 获取 table 数据
+        getDataSource() {
+            let url =  `/group/getMessage`
+            this.$axios.get(url, {
+                params: {
+                    grpId: "",
+                    index: ""
+                }
+            }).then(res => {
+                console.log("群组数据获取成功", res)
+                // do something
+
+            }).catch(err => {
+                console.log("群组数据获取失败", err)
+            })
+        },
         // 查询
         onSearch() {
-
+            // let url = ``
         },
         // 关闭
         _close() {
