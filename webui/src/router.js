@@ -19,8 +19,8 @@ const UserManager = () => import('view/userManager.vue')
 const ManagerTofelArticle = () => import('view/managerTofelArticle.vue')
 const ManagerGroup = () => import('view/managerGroup.vue')
 const OpenCourse = () => import('view/openCourse.vue')
-const WelfareCastle = () => import('view/welfareCastle.vue')
-
+// const WelfareCastle = () => import('view/welfareCastle.vue')
+ 
 
 Vue.use(VueRouter);
 
@@ -92,11 +92,11 @@ const routes = [
     {
         path: '/manager-open-course',
         component: OpenCourse
-    },
-    {
-        path: '/manager-welfare-castle',
-        component: WelfareCastle
     }
+    // {
+    //     path: '/manager-welfare-castle',
+    //     component: WelfareCastle
+    // }
 ]
 
 export default new VueRouter({
