@@ -10,12 +10,15 @@
                 </el-col>
             </el-row>
             <hr/>
-            <el-row v-for="item in 4" :key="item" type="flex" align="middle" style="line-height: 40px" :gutter="25">
+            <el-row v-for="item in articles" :key="item.art_id"
+                    type="flex" align="middle" style="line-height: 40px"
+                    :gutter="25">
                 <el-col :span="1" :offset="1">
                     <i class="el-icon-search"/>
                 </el-col>
-                <el-col :span="20" style="font-size: 1.1rem" @click.native="toArticleDetail">
-                    dfjsdlkfjdfsklghfdskjfdlks
+                <el-col :span="20" style="font-size: 1.1rem; cursor: pointer"
+                        @click.native="toArticleDetail(item.art_id)">
+                    {{item.art_title}}
                 </el-col>
             </el-row>
         </el-main>
@@ -28,29 +31,28 @@
     export default {
         name: "ArticleList",
         props: {
-            type: String
+            type: String,
+            articles: Array
         },
         data() {
             return {
                 iconList: {
-                    "Listening": "el-icon-headset",
-                    "Speaking": "el-icon-phone-outline",
-                    "Reading": "el-icon-reading",
-                    "Writing": "el-icon-edit-outline",
+                    "Listen": "el-icon-headset",
+                    "Speak": "el-icon-phone-outline",
+                    "Read": "el-icon-reading",
+                    "Write": "el-icon-edit-outline",
                     "Vocabulary": "el-icon-notebook-1",
                     "Information": "el-icon-chat-line-square",
                     "Activity": "el-icon-basketball",
                     "Prediction": "el-icon-trophy"
                 },
                 ChineseNameList: {
-                    "Listening": "听力",
-                    "Speaking": "口语",
-                    "Reading": "阅读",
-                    "Writing": "写作",
+                    "Listen": "听力",
+                    "Speak": "口语",
+                    "Read": "阅读",
+                    "Write": "写作",
                     "Vocabulary": "词汇",
                     "Information": "资讯",
-                    "Activity": "活动",
-                    "Prediction": "机经"
                 }
             }
         },
@@ -60,8 +62,8 @@
             }
         },
         methods: {
-            toArticleDetail() {
-                router.push({path: "/tofel-article/detail"});
+            toArticleDetail(art_id) {
+                router.push({path: "/tofel-article/detail", query: {art_id: art_id}});
             }
         }
     }

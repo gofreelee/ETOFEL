@@ -76,5 +76,7 @@ public interface CourseMapper {
      * @param cosId：课程id
      */
     Course selectCourseById(@Param("cosId") Integer cosId);
+
+    List<Integer> selectAllCourseId();
 }
 

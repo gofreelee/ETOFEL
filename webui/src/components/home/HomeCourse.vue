@@ -2,24 +2,33 @@
     <el-container>
         <el-aside style="width: 100px; height: 100px; overflow: hidden">
             <div class="date">
-                十二月<br>
-                28
+                {{course.cosStartDate}}
             </div>
         </el-aside>
         <el-main style="padding: 10px">
-            <el-row style="font-size: 1.2rem">
-                标题
+            <el-row style="font-size: 1.2rem; cursor: pointer" @click.native="toCourseDetail">
+                {{course.cosTitle}}
             </el-row>
             <el-row style="margin-top: 10px">
-                老师：地方是的
+                老师：{{course.cdtTchUsername}}
             </el-row>
         </el-main>
     </el-container>
 </template>
 
 <script>
+    import router from "../../router";
+
     export default {
-        name: "HomeCourse"
+        name: "HomeCourse",
+        props: {
+            course: Object
+        },
+        methods: {
+            toCourseDetail() {
+                router.push({path: '/course/course-detail', query: {course_id: this.course.cosId}});
+            }
+        }
     }
 </script>
 

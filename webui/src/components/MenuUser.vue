@@ -53,7 +53,6 @@
         },
         methods: {
             switchView(id) {
-                if (this.selectId === id) return;
                 this.selectId = id;
                 switch (id) {
                     case 0:
