@@ -23,4 +23,6 @@ public interface GroupDao {
     int countGroupMembers(long grpId);
 
     List<Group> selectWhoJoin(@Param("gmbUsername") String gmbUsername, @Param("gmbType") String gmbType);
+
+    List<Long> selectAllGroupId();
 }

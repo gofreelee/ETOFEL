@@ -3,34 +3,26 @@
         <el-main>
             <el-row type="flex" justify="space-around">
                 <el-col :span="12">
-                    <ArticleList type="Listening"/>
+                    <ArticleList type="Listen" :articles="listen"/>
                 </el-col>
                 <el-col :span="12">
-                    <ArticleList type="Speaking"/>
-                </el-col>
-            </el-row>
-            <el-row type="flex" justify="space-around">
-                <el-col :span="12">
-                    <ArticleList type="Listening"/>
-                </el-col>
-                <el-col :span="12">
-                    <ArticleList type="Speaking"/>
+                    <ArticleList type="Speak" :articles="speak"/>
                 </el-col>
             </el-row>
             <el-row type="flex" justify="space-around">
                 <el-col :span="12">
-                    <ArticleList type="Listening"/>
+                    <ArticleList type="Read" :articles="read"/>
                 </el-col>
                 <el-col :span="12">
-                    <ArticleList type="Speaking"/>
+                    <ArticleList type="Write" :articles="write"/>
                 </el-col>
             </el-row>
             <el-row type="flex" justify="space-around">
                 <el-col :span="12">
-                    <ArticleList type="Listening"/>
+                    <ArticleList type="Vocabulary" :articles="vocabulary"/>
                 </el-col>
                 <el-col :span="12">
-                    <ArticleList type="Speaking"/>
+                    <ArticleList type="Information" :articles="information"/>
                 </el-col>
             </el-row>
         </el-main>
@@ -41,10 +33,12 @@
                     热门小组
                 </el-col>
                 <el-col :span="6">
-                    <el-button type="text" icon="el-icon-refresh">换一批</el-button>
+                    <el-button type="text" icon="el-icon-refresh" @click="groupCommend">换一批</el-button>
                 </el-col>
             </el-row>
-            <HomeGroup v-for="item in 4" :key="item"/>
+            <el-row v-for="item in groups" :key="item.grpId">
+                <HomeGroup :group="item"/>
+            </el-row>
         </el-aside>
     </el-container>
 </template>
@@ -58,6 +52,52 @@
         components: {
             HomeGroup,
             ArticleList
+        },
+        data() {
+            return {
+                read: [],
+                write: [],
+                speak: [],
+                listen: [],
+                vocabulary: [],
+                information: [],
+                groups: []
+            }
+        },
+        methods: {
+            articles() {
+                let config = {
+                    method: 'get',
+                    url: '/article/tofel-article/startpage',
+                };
+
+                this.$axios(config).then(res => {
+                    this.read = res.data.Read;
+                    this.write = res.data.Write;
+                    this.speak = res.data.Speak;
+                    this.listen = res.data.Listen;
+                    this.vocabulary = res.data.Vocabulary;
+                    this.information = res.data.Information;
+                }).catch(function (error) {
+                    console.log(error);
+                });
+            },
+            groupCommend() {
+                let config = {
+                    method: 'get',
+                    url: '/group/group/randomGroup?need=4',
+                };
+
+                this.$axios(config).then(res => {
+                    this.groups = res.data;
+                }).catch(function (error) {
+                    console.log(error);
+                });
+            },
+        },
+        mounted() {
+            this.articles();
+            this.groupCommend();
         }
     }
 </script>

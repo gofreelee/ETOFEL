@@ -28,8 +28,24 @@ module.exports = {
                 pathRewrite: {
                     '^/group': ''
                 }
+            },
+            '/article': {
+                target: 'http://localhost:8086/articlemodule/',
+                changeOrigin: true,
+                pathRewrite: {
+                    '^/article': ''
+                }
             }
         },
         port: 80
-    }
+    },
+    configureWebpack: {
+        resolve: {
+            alias: {
+            'assets': '@/assets',
+            'components': '@/components',
+            'view': '@/view',
+            }
+        }
+      }
 };

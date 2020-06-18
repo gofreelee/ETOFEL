@@ -100,4 +100,5 @@ public class Article {
             ", art_type='" + art_type + '\'' +
             '}';
   }
+
 }

@@ -8,6 +8,7 @@ import sichuan.umbrella.chenmm.bean.CourseWithTeacher;
 import sichuan.umbrella.chenmm.mapper.CourseMapper;
 
 import java.util.List;
+import java.util.Random;
 
 @Service
 public class CourseService {
@@ -129,7 +130,27 @@ public class CourseService {
         return courseMapper.selectCourseById(cosId);
     }
 
+<<<<<<< HEAD
     public List<CourseWithTeacher> selectAllCourseInfo(){
         return courseMapper.selectAllCourseInfo();
+=======
+    /**
+     * 随机选取need个课程的id进行推荐
+     *
+     * @param need 需要的数量
+     * @return id列表
+     */
+    public List<Integer> randomCourseId(int need) {
+        List<Integer> ids = courseMapper.selectAllCourseId();
+        Random random = new Random();
+        int range = random.nextInt(ids.size());
+        for (int i = range; i > 0; i--) {
+            int index = random.nextInt(i);
+            int k = ids.get(index);
+            ids.set(index, ids.get(i));
+            ids.set(i, k);
+        }
+        return ids.subList(0, need);
+>>>>>>> 93e1615bf28c5551a383ffcf32b5b5ecb7ca17be
     }
 }
