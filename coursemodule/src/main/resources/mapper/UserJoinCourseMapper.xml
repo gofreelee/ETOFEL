@@ -7,5 +7,49 @@
         values (#{userJoinCourse.ujcCosId},#{userJoinCourse.ujcUsrUsername},'未支付')
     </insert>
 
+    <!--    计算课程的参加人数-->
+    <select id="countCourseJoin" resultType="int" parameterType="Integer">
+        select count(*) from user_join_course where ujc_status='已支付' and ujc_cos_id=#{user_join_course.ujcCosId}
+    </select>
 
+    <!--    用户提交课程订单信息，插入一条未支付数据-->
+    <insert id="insertUserUnpaidOrder">
+        insert into user_join_course (ujc_cos_id, ujc_usr_username, ujc_status) values (#{ujc_cos_id},#{ujc_usr_username},'未支付')
+    </insert>
+
+    <!--    当用户成功支付，更新用户支付状态为“已支付”-->
+    <update id="updateUserStatusToPaid">
+        update user_join_course set ujc_status='已支付' where ujc_status='未支付' and ujc_cos_id=#{ujc_cos_id} and ujc_usr_username=#{ujc_usr_username}
+    </update>
+
+
+    <select id="getJoinedCourse" resultMap="Course">
+        select  * from user_join_course, course where
+        ujc_cos_id = cos_id
+        and ujc_usr_username = #{ujc_usr_username}
+    </select>
+
+    <resultMap id="Course" type="sichuan.umbrella.chenmm.bean.Course">
+        <id property="cosId" column="cos_id"/>
+        <result property="cosTitle" column="cos_title"/>
+        <result property="cosStartDate" column="cos_start_date"/>
+        <result property="cosEndDate" column="cos_end_date"/>
+        <result property="cosStartTime" column="cos_start_time"/>
+        <result property="cosEndTime" column="cos_end_time"/>
+        <result property="cosStage" column="cos_stage"/>
+        <result property="cosFee" column="cos_fee"/>
+        <result property="cosCategory" column="cos_category"/>
+        <result property="cosStatus" column="cos_status"/>
+    </resultMap>
+
+    <select id="getJoinedStatus" resultMap="UserJoinCourse">
+        select * from user_join_course where
+        ujc_cos_id = #{ujc_cos_id}
+        and ujc_usr_username = #{ujc_usr_username}
+    </select>
+    <resultMap id="UserJoinCourse" type="sichuan.umbrella.chenmm.bean.UserJoinCourse">
+        <result property="ujcCosId" column="ujc_cos_id"/>
+        <result property="ujcUsrUsername" column="ujc_usr_username"/>
+        <result property="ujcStatus" column="ujc_status"/>
+    </resultMap>
 </mapper>

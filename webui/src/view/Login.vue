@@ -97,9 +97,11 @@
 
                 let url;
                 if (this.loginType === 'user') {
-                    url = '/login/user/ulogin?username=' + this.username + "&password=" + this.password
+                    url = '/login/user/ulogin?username=' + this.username + "&password=" + this.password;
+                    sessionStorage.setItem("identity", "user");
                 } else {
-                    url = '/login/teacher/tlogin?username=' + this.username + "&password=" + this.password
+                    url = '/login/teacher/tlogin?username=' + this.username + "&password=" + this.password;
+                    sessionStorage.setItem("identity", "teacher");
                 }
                 this.$axios.get(url).then(res => {
                     if (res.data.information == null) {
