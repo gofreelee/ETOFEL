@@ -31,11 +31,11 @@
                 <p v-bind:style="color(4)" @click="managerSwitchView(4)">群组聊天</p>
             </el-col>
             <el-col :span="2">
-                <p v-bind:style="color(5)" @click="managerSwitchView(5)">公开课</p>
+                <p v-bind:style="color(5)" @click="managerSwitchView(5)">学习课程</p>
             </el-col>
-            <el-col :span="2">
+            <!-- <el-col :span="2">
                 <p v-bind:style="color(6)" @click="managerSwitchView(6)">福利城堡</p>
-            </el-col>
+            </el-col> -->
         </el-row>
     </div>
 </template>
