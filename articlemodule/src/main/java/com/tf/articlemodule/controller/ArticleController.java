@@ -156,6 +156,12 @@ public class ArticleController {
         return gson.toJson(articleService.selectByArtUsername(artUsername));
     }
 
+    @GetMapping("/likeArticle")
+    public String selectLike(@RequestParam("ulaUsername") String ulaUsername) {
+        logger.info("likeArticle" + ulaUsername);
+        return gson.toJson(articleService.selectLike(ulaUsername));
+    }
+
     //  @RequestMapping("nextArticlePage")
 //  public String nextArticlePage(
 //          @RequestParam(value = "pageNo", required = false, defaultValue = "1") String pageNoStr) {

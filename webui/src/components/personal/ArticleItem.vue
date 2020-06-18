@@ -1,7 +1,7 @@
 <template>
     <el-container class="box">
         <el-aside style="padding: 20px 0 20px 0">
-            <img :src="article.art_img" style="object-fit: fill; width: 100%"/>
+            <img :src="article.art_img" style="object-fit: fill; width: 100%; height: 180px"/>
         </el-aside>
         <el-main>
             <el-row type="flex" align="middle">
@@ -16,10 +16,10 @@
                 {{article.art_text.substring(0,100) + " ......"}}
             </el-row>
             <el-row type="flex" align="middle">
-                <el-col :span="6">
+                <el-col :span="7">
                     所属分类：{{article.art_type}}
                 </el-col>
-                <el-col :span="12">
+                <el-col :span="11">
                     发布日期：{{article.art_date}}
                 </el-col>
                 <el-col :span="4" v-if="isMine">
@@ -46,10 +46,10 @@
             getNickName() {
                 let config = {
                     method: 'get',
-                    url: '/user/user/info?usr_username=suruicheng',
+                    url: '/user/user/info?usr_username=' + this.article.art_username,
                 };
                 this.$axios(config).then(res => {
-                    this.nickname = res.data;
+                    this.nickname = res.data.usr_nickname;
                 }).catch(function (error) {
                     console.log(error);
                 });

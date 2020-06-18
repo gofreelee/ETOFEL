@@ -30,5 +30,6 @@ public interface ArticleDao {
     @Select("select * from article where art_username = #{artUsername}")
     List<Article> selectByArtUsername(@Param("artUsername") String artUsername);
 
-    //List<Article> selectLike(@Param("")String )
+    @Select("select * from article,user_like_article where art_id = ula_art_id and ula_username = #{ulaUsername}")
+    List<Article> selectLike(@Param("ulaUsername") String ulaUsername);
 }

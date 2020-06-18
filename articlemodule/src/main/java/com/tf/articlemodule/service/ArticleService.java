@@ -42,4 +42,8 @@ public class ArticleService {
     public List<Article> selectByArtUsername(String artUsername) {
         return articleDao.selectByArtUsername(artUsername);
     }
+
+    public List<Article> selectLike(@Param("ulaUsername") String ulaUsername) {
+        return articleDao.selectLike(ulaUsername);
+    }
 }
