@@ -2,15 +2,20 @@ package chatmodule.service;
 
 import chatmodule.bean.Group;
 import chatmodule.mapper.GroupDao;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Random;
 
 @Service
 public class GroupService {
     @Autowired
     GroupDao groupDao;
+
+    private Logger logger = LoggerFactory.getLogger(GroupService.class);
 
     public int createGroup(Group group) {
         return groupDao.createGroup(group);
@@ -43,5 +48,19 @@ public class GroupService {
 
     public List<Group> selectWhoJoin(String gmbUsername, String gmbType) {
         return groupDao.selectWhoJoin(gmbUsername, gmbType);
+    }
+
+    public List<Long> randomGroupIds(int need) {
+        List<Long> list = groupDao.selectAllGroupId();
+        Random random = new Random();
+        int range = random.nextInt(list.size());
+        for (int i = range; i > 0; i--) {
+            int index = random.nextInt(i);
+            Long k = list.get(index);
+            list.set(index, list.get(i));
+            list.set(i, k);
+        }
+        logger.info(list.toString());
+        return list.subList(0, need);
     }
 }

@@ -55,4 +55,8 @@
         <result property="grpCreator" column="grp_creator"/>
         <result property="grpStatus" column="grp_status"/>
     </resultMap>
+
+    <select id="selectAllGroupId" resultType="Long">
+        select grp_id from `group`
+    </select>
 </mapper>

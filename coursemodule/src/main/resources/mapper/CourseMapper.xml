@@ -114,4 +114,8 @@
     <select id="selectCourseById" parameterType="int" resultMap="Course">
         select * from course where cos_id = #{cosId}
     </select>
+
+    <select id="selectAllCourseId" resultType="Integer">
+        select cos_id from course
+    </select>
 </mapper>

@@ -1,7 +1,7 @@
 <template>
     <el-container>
-        <el-aside style="width: 40%">
-            <img :src="article.art_img" alt="logo"/>
+        <el-aside style="width: 40%; padding-top: 20px">
+            <img :src="article.art_img" alt="logo" style="height: 200px; object-fit: fill"/>
         </el-aside>
         <el-main>
             <el-row>
@@ -10,7 +10,7 @@
                 </el-col>
             </el-row>
             <el-row class="description">
-                {{article.art_text.substring(0,50) + "......"}}
+                {{article.art_text.substring(0,60) + "......"}}
             </el-row>
             <el-row>
                 <el-col :span="12">

@@ -64,10 +64,12 @@
                     最新公开课
                 </el-col>
                 <el-col :span="6">
-                    <el-button type="text" icon="el-icon-refresh">换一批</el-button>
+                    <el-button type="text" icon="el-icon-refresh" @click="courseCommend">换一批</el-button>
                 </el-col>
             </el-row>
-            <HomeCourse v-for="item in 4" :key="item"/>
+            <el-row v-for="item in courses" :key="item.cosId">
+                <HomeCourse :course="item"/>
+            </el-row>
 
             <!--名师推荐-->
             <el-row type="flex" align="middle" style="font-size: 1.3rem; margin-top: 40px">
@@ -106,7 +108,8 @@
                 comment: '',
                 article: '',
                 comments: [],
-                currentPage: 1
+                currentPage: 1,
+                courses: []
             }
         },
         methods: {
@@ -169,11 +172,25 @@
                 }).catch(function (error) {
                     console.log(error);
                 });
+            },
+            courseCommend() {
+                let config = {
+                    method: 'get',
+                    url: '/course/course/courseRecommend?need=4',
+                };
+
+                this.$axios(config).then(res => {
+                    this.courses = res.data;
+                }).catch(function (error) {
+                    console.log(error);
+                });
+
             }
         },
         mounted() {
             this.getArticleDetail();
             this.getComments();
+            this.courseCommend();
         }
     }
 </script>

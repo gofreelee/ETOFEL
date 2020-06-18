@@ -16,7 +16,8 @@
                 <el-col :span="1" :offset="1">
                     <i class="el-icon-search"/>
                 </el-col>
-                <el-col :span="20" style="font-size: 1.1rem" @click.native="toArticleDetail(item.art_id)">
+                <el-col :span="20" style="font-size: 1.1rem; cursor: pointer"
+                        @click.native="toArticleDetail(item.art_id)">
                     {{item.art_title}}
                 </el-col>
             </el-row>

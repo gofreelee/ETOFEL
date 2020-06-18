@@ -6,23 +6,23 @@
                     <ArticleList type="Listen" :articles="listen"/>
                 </el-col>
                 <el-col :span="12">
-                    <ArticleList type="Speak"/>
+                    <ArticleList type="Speak" :articles="speak"/>
                 </el-col>
             </el-row>
             <el-row type="flex" justify="space-around">
                 <el-col :span="12">
-                    <ArticleList type="Read"/>
+                    <ArticleList type="Read" :articles="read"/>
                 </el-col>
                 <el-col :span="12">
-                    <ArticleList type="Write"/>
+                    <ArticleList type="Write" :articles="write"/>
                 </el-col>
             </el-row>
             <el-row type="flex" justify="space-around">
                 <el-col :span="12">
-                    <ArticleList type="Vocabulary"/>
+                    <ArticleList type="Vocabulary" :articles="vocabulary"/>
                 </el-col>
                 <el-col :span="12">
-                    <ArticleList type="Information"/>
+                    <ArticleList type="Information" :articles="information"/>
                 </el-col>
             </el-row>
         </el-main>
@@ -33,10 +33,12 @@
                     热门小组
                 </el-col>
                 <el-col :span="6">
-                    <el-button type="text" icon="el-icon-refresh">换一批</el-button>
+                    <el-button type="text" icon="el-icon-refresh" @click="groupCommend">换一批</el-button>
                 </el-col>
             </el-row>
-            <HomeGroup v-for="item in 4" :key="item"/>
+            <el-row v-for="item in groups" :key="item.grpId">
+                <HomeGroup :group="item"/>
+            </el-row>
         </el-aside>
     </el-container>
 </template>
@@ -58,7 +60,8 @@
                 speak: [],
                 listen: [],
                 vocabulary: [],
-                information: []
+                information: [],
+                groups: []
             }
         },
         methods: {
@@ -78,10 +81,23 @@
                 }).catch(function (error) {
                     console.log(error);
                 });
-            }
+            },
+            groupCommend() {
+                let config = {
+                    method: 'get',
+                    url: '/group/group/randomGroup?need=4',
+                };
+
+                this.$axios(config).then(res => {
+                    this.groups = res.data;
+                }).catch(function (error) {
+                    console.log(error);
+                });
+            },
         },
         mounted() {
             this.articles();
+            this.groupCommend();
         }
     }
 </script>

@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import java.sql.Timestamp;
 import java.util.Date;
+import java.util.LinkedList;
 import java.util.List;
 
 @RestController
@@ -43,6 +44,16 @@ public class GroupController {
     public Group selectByGrpID(int grpId) {
         logger.info("查询group_id=" + grpId);
         return groupService.selectByGrpID(grpId);
+    }
+
+    @GetMapping("/randomGroup")
+    public String randomGroupIds(@RequestParam("need") int need) {
+        List<Long> list = groupService.randomGroupIds(need);
+        List<Group> groups = new LinkedList<>();
+        for (Long aLong : list) {
+            groups.add(groupService.selectByGrpID(aLong));
+        }
+        return gson.toJson(groups);
     }
 
     /**
@@ -136,12 +147,12 @@ public class GroupController {
     /**
      * 创建一个新的群
      *
-     * @param grpType
-     * @param grpName
-     * @param grpDescription
-     * @param grpRule
-     * @param grpPortrait
-     * @param grpCreator
+     * @param grpType 群类型
+     * @param grpName 群名称
+     * @param grpDescription 群描述
+     * @param grpRule 群规则
+     * @param grpPortrait 群头像
+     * @param grpCreator 创建人
      * @return 1表示创建成功 其余为创建失败
      */
     @PostMapping("/createGroup")

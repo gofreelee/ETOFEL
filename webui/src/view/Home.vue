@@ -20,6 +20,7 @@
                 <HomeIssue :article="item"/>
             </el-row>
         </el-main>
+
         <el-aside style="width: 35%">
             <!--签到-->
             <el-row>
@@ -37,10 +38,12 @@
                     热门小组
                 </el-col>
                 <el-col :span="6">
-                    <el-button type="text" icon="el-icon-refresh">换一批</el-button>
+                    <el-button type="text" icon="el-icon-refresh" @click="groupCommend">换一批</el-button>
                 </el-col>
             </el-row>
-            <HomeGroup v-for="item in 4" :key="item"/>
+            <el-row v-for="item in groups" :key="item">
+                <HomeGroup :group="item"/>
+            </el-row>
 
             <!--最新公开课-->
             <el-row type="flex" align="middle" style="font-size: 1.3rem; margin-top: 40px">
@@ -48,10 +51,12 @@
                     最新公开课
                 </el-col>
                 <el-col :span="6">
-                    <el-button type="text" icon="el-icon-refresh">换一批</el-button>
+                    <el-button type="text" icon="el-icon-refresh" @click="courseCommend">换一批</el-button>
                 </el-col>
             </el-row>
-            <HomeCourse v-for="item in 4" :key="item"/>
+            <el-row v-for="item in courses" :key="item.cosId">
+                <HomeCourse :course="item"/>
+            </el-row>
         </el-aside>
     </el-container>
 </template>
@@ -72,7 +77,9 @@
             return {
                 imgUrls: ["https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=3989732581,3676180283&fm=26&gp=0.jpg",
                     "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1592474268779&di=8d0b3720b8f08cd47bfdde14db69eef0&imgtype=0&src=http%3A%2F%2Fphoto.16pic.com%2F00%2F11%2F93%2F16pic_1193108_b.jpg"],
-                articles: []
+                articles: [],
+                groups: [],
+                courses: []
             }
         },
         methods: {
@@ -87,10 +94,37 @@
                 }).catch(function (error) {
                     console.log(error);
                 });
+            },
+            groupCommend() {
+                let config = {
+                    method: 'get',
+                    url: '/group/group/randomGroup?need=4',
+                };
+
+                this.$axios(config).then(res => {
+                    this.groups = res.data;
+                }).catch(function (error) {
+                    console.log(error);
+                });
+            },
+            courseCommend() {
+                let config = {
+                    method: 'get',
+                    url: '/course/course/courseRecommend?need=4',
+                };
+
+                this.$axios(config).then(res => {
+                    this.courses = res.data;
+                }).catch(function (error) {
+                    console.log(error);
+                });
+
             }
         },
         mounted() {
             this.articleCommend();
+            this.groupCommend();
+            this.courseCommend();
         }
     }
 </script>

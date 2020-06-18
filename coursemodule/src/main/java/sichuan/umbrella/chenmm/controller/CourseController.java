@@ -2,6 +2,8 @@
 package sichuan.umbrella.chenmm.controller;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -9,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import sichuan.umbrella.chenmm.bean.Course;
 import sichuan.umbrella.chenmm.bean.CourseDetail;
+import sichuan.umbrella.chenmm.service.CourseDetailService;
 import sichuan.umbrella.chenmm.service.CourseService;
 
 import java.text.ParseException;
@@ -21,11 +24,17 @@ import java.util.List;
 @RequestMapping("/course")
 public class CourseController {
     private CourseService courseService;
+    private CourseDetailService courseDetailService;
     private Gson gson;
 
     @Autowired
     public void setCourseService(CourseService courseService) {
         this.courseService = courseService;
+    }
+
+    @Autowired
+    public void setCourseDetailService(CourseDetailService courseDetailService) {
+        this.courseDetailService = courseDetailService;
     }
 
     @Autowired
@@ -36,6 +45,24 @@ public class CourseController {
     @GetMapping("/getCourseByCosId")
     public String courseById(@RequestParam("cosId") Integer cosId) {
         return gson.toJson(courseService.selectCourseById(cosId));
+    }
+
+    @GetMapping("/courseRecommend")
+    public String courseRecommend(@RequestParam("need") int need) {
+        JsonArray array = new JsonArray();
+        List<Integer> ids = courseService.randomCourseId(need);
+        SimpleDateFormat format = new SimpleDateFormat("MM-dd");
+        for (Integer id : ids) {
+            Course course = courseService.selectCourseById(id);
+            CourseDetail courseDetail = courseDetailService.selectCourseDetailInfo(id);
+            JsonObject object = new JsonObject();
+            object.addProperty("cosId", course.getCosId());
+            object.addProperty("cosTitle", course.getCosTitle());
+            object.addProperty("cdtTchUsername", courseDetail.getCdtTchUsername());
+            object.addProperty("cosStartDate", format.format(course.getCosStartDate()));
+            array.add(object);
+        }
+        return array.toString();
     }
 
     /**
@@ -131,7 +158,7 @@ public class CourseController {
     }
 
     @GetMapping("/closeCourse")
-    public void closeCourseById(@RequestParam("cosId") int cosId){
+    public void closeCourseById(@RequestParam("cosId") int cosId) {
         courseService.closeCourseById(cosId);
     }
 
