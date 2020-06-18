@@ -5,10 +5,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import sichuan.umbrella.chenmm.bean.Course;
 import sichuan.umbrella.chenmm.bean.CourseDetail;
 import sichuan.umbrella.chenmm.bean.CourseWithTeacher;
@@ -136,25 +133,27 @@ public class CourseController {
      * @return Json
      * @throws ParseException 日期parse异常
      */
-    @GetMapping("/recoverCourse")
-    public String recoverCourseById(@RequestParam("cosId") int cosId) throws ParseException {
+    @RequestMapping(value = "/recoverCourse", method = RequestMethod.POST)
+    public void recoverCourseById(@RequestBody List<Integer>cosIds) throws ParseException {
         //获取想恢复的课程的开课日期
-        Course course = courseService.selectCourseById(cosId);
-        Date courseOpenDate = course.getCosStartDate();
-        //获取当前的日期
-        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-        Date nowDate = new Date(System.currentTimeMillis());
-        String nowDateString = formatter.format(nowDate);
-        nowDate = formatter.parse(nowDateString);
-        String result;
-        if (nowDate.compareTo(courseOpenDate) < 0) {
-            courseService.signUpCourseById(cosId);
-            result = "课程状态改变成开课";
-            return gson.toJson(result);
-        } else {
-            courseService.openCourseById(cosId);
-            result = "课程状态改变成报名";
-            return gson.toJson(result);
+        for(Integer cosId: cosIds) {
+            Course course = courseService.selectCourseById(cosId);
+            Date courseOpenDate = course.getCosStartDate();
+            //获取当前的日期
+            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+            Date nowDate = new Date(System.currentTimeMillis());
+            String nowDateString = formatter.format(nowDate);
+            nowDate = formatter.parse(nowDateString);
+            String result;
+            if (nowDate.compareTo(courseOpenDate) < 0) {
+                courseService.signUpCourseById(cosId);
+               // result = "课程状态改变成开课";
+                //return gson.toJson(result);
+            } else {
+                courseService.openCourseById(cosId);
+               // result = "课程状态改变成报名";
+                //return gson.toJson(result);
+            }
         }
     }
 
@@ -163,9 +162,13 @@ public class CourseController {
         return courseService.selectAllCourseInfo();
     }
 
-    @GetMapping("/closeCourse")
-    public void closeCourseById(@RequestParam("cosId") int cosId) {
-        courseService.closeCourseById(cosId);
+    @RequestMapping(value = "/closeCourse", method = RequestMethod.POST)
+    public void closeCourseById(@RequestBody List<Integer>cosIds) {
+        for(Integer cosId: cosIds)
+        {
+            courseService.closeCourseById(cosId);
+        }
+            //
     }
 
 
