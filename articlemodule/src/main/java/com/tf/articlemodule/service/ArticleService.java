@@ -3,6 +3,7 @@ package com.tf.articlemodule.service;
 import com.tf.articlemodule.bean.Article;
 import com.tf.articlemodule.mapper.ArticleDao;
 
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,7 +12,6 @@ import java.util.List;
 
 @Service
 public class ArticleService {
-
     @Autowired
     private ArticleDao articleDao;
 
@@ -37,5 +37,9 @@ public class ArticleService {
 
     public int countArticle() {
         return articleDao.countArticle();
+    }
+
+    public List<Article> selectByArtUsername(String artUsername) {
+        return articleDao.selectByArtUsername(artUsername);
     }
 }

@@ -69,12 +69,13 @@
     }
 
     .title {
-        font-size: 1.6rem;
+        font-weight: bold;
+        font-size: 1.2rem;
     }
 
     .description {
         word-wrap: break-word;
         padding: 20px 0 20px 0;
-        font-size: 1.2rem;
+        font-size: 1rem;
     }
 </style>

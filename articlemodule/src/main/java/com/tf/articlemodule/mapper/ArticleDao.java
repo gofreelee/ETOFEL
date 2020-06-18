@@ -26,4 +26,9 @@ public interface ArticleDao {
 
     @Select("select count(*) from article")
     int countArticle();
+
+    @Select("select * from article where art_username = #{artUsername}")
+    List<Article> selectByArtUsername(@Param("artUsername") String artUsername);
+
+    //List<Article> selectLike(@Param("")String )
 }
