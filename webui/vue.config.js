@@ -31,5 +31,14 @@ module.exports = {
             }
         },
         port: 80
-    }
+    },
+    configureWebpack: {
+        resolve: {
+            alias: {
+            'assets': '@/assets',
+            'components': '@/components',
+            'view': '@/view',
+            }
+        }
+      }
 };

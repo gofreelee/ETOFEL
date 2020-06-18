@@ -3,7 +3,7 @@
         <el-main>
             <!--轮播台-->
             <el-carousel arrow="always">
-                <el-carousel-item v-for="item in 4" :key="item">
+                <el-carousel-item v-for="item in 4" :key="item + '_tag1'">
                     <h3>dfsdfsfsdf</h3>
                 </el-carousel-item>
             </el-carousel>
@@ -16,7 +16,7 @@
                 </el-col>
             </el-row>
             <hr/>
-            <HomeIssue v-for="item in 4" :key="item"/>
+            <HomeIssue v-for="item in 4" :key="item + '_tag2'"/>
         </el-main>
         <el-aside style="width: 35%">
             <!--签到-->
@@ -38,7 +38,7 @@
                     <el-button type="text" icon="el-icon-refresh">换一批</el-button>
                 </el-col>
             </el-row>
-            <HomeGroup v-for="item in 4" :key="item"/>
+            <HomeGroup v-for="item in 4" :key="item + '_tag3'"/>
 
             <!--最新公开课-->
             <el-row type="flex" align="middle" style="font-size: 1.3rem; margin-top: 40px">
@@ -49,7 +49,7 @@
                     <el-button type="text" icon="el-icon-refresh">换一批</el-button>
                 </el-col>
             </el-row>
-            <HomeCourse v-for="item in 4" :key="item"/>
+            <HomeCourse v-for="item in 4" :key="item + '_tag4'"/>
         </el-aside>
     </el-container>
 </template>
