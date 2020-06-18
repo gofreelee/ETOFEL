@@ -8,7 +8,7 @@ public class Article {
   private String art_id;
   private String art_username;
   private String art_title;
-  private Date art_date_time;
+  private Date art_date;
   private String art_img;
   private String art_text;
   private String art_type;
@@ -27,7 +27,7 @@ public class Article {
     this.art_username = art_username;
     this.art_title = art_title;
     this.art_type = art_type;
-    this.art_date_time = art_date_time;
+    this.art_date = art_date_time;
     this.art_img = art_img;
     this.art_text = art_text;
   }
@@ -65,11 +65,11 @@ public class Article {
   }
 
   public Date getArt_date_time() {
-    return art_date_time;
+    return art_date;
   }
 
   public void setArt_date_time(Date art_date_time) {
-    this.art_date_time = art_date_time;
+    this.art_date = art_date_time;
   }
 
   public String getArt_img() {
@@ -94,7 +94,7 @@ public class Article {
             "art_id='" + art_id + '\'' +
             ", art_username='" + art_username + '\'' +
             ", art_title='" + art_title + '\'' +
-            ", art_date_time='" + art_date_time + '\'' +
+            ", art_date_time='" + art_date + '\'' +
             ", art_img=" + art_img +
             ", art_text='" + art_text + '\'' +
             ", art_type='" + art_type + '\'' +

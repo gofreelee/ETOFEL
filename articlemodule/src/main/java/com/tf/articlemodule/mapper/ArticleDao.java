@@ -24,7 +24,7 @@ public interface ArticleDao {
     @Delete("delete from article where art_id=#{artId}")
     void deleteByArtId(String artId);
 
-    @Update("update article set art_username=#{art_username} ,art_title=#{art_title}, art_date=#{art_date_time}, art_img=#{art_img}, art_text=#{art_img}, art_type=#{art_type} where art_id = #{art_id}")
+    @Update("update article set art_username=#{art_username} ,art_title=#{art_title}, art_date=#{art_date}, art_img=#{art_img}, art_text=#{art_img}, art_type=#{art_type} where art_id = #{art_id}")
     void modifyArticle(Article article);
     @Select("select count(*) from article")
     int countArticle();
