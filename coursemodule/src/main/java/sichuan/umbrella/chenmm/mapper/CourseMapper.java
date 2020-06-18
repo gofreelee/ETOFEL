@@ -78,14 +78,11 @@ public interface CourseMapper {
      */
     Course selectCourseById(@Param("cosId") Integer cosId);
 
-<<<<<<< HEAD
     /***
      *
      * 管理员获取所有课程
      */
     List<CourseWithTeacher> selectAllCourseInfo();
-=======
     List<Integer> selectAllCourseId();
->>>>>>> 93e1615bf28c5551a383ffcf32b5b5ecb7ca17be
 }
 

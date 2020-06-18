@@ -130,17 +130,16 @@ public class CourseService {
         return courseMapper.selectCourseById(cosId);
     }
 
-<<<<<<< HEAD
-    public List<CourseWithTeacher> selectAllCourseInfo(){
+    public List<CourseWithTeacher> selectAllCourseInfo() {
         return courseMapper.selectAllCourseInfo();
-=======
+    }
     /**
      * 随机选取need个课程的id进行推荐
      *
      * @param need 需要的数量
      * @return id列表
      */
-    public List<Integer> randomCourseId(int need) {
+    public List<Integer> randomCourseId(int need){
         List<Integer> ids = courseMapper.selectAllCourseId();
         Random random = new Random();
         int range = random.nextInt(ids.size());
@@ -151,6 +150,5 @@ public class CourseService {
             ids.set(i, k);
         }
         return ids.subList(0, need);
->>>>>>> 93e1615bf28c5551a383ffcf32b5b5ecb7ca17be
     }
 }

@@ -11,11 +11,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import sichuan.umbrella.chenmm.bean.Course;
 import sichuan.umbrella.chenmm.bean.CourseDetail;
-<<<<<<< HEAD
 import sichuan.umbrella.chenmm.bean.CourseWithTeacher;
-=======
 import sichuan.umbrella.chenmm.service.CourseDetailService;
->>>>>>> 93e1615bf28c5551a383ffcf32b5b5ecb7ca17be
 import sichuan.umbrella.chenmm.service.CourseService;
 
 import java.text.ParseException;
@@ -161,18 +158,15 @@ public class CourseController {
         }
     }
 
-<<<<<<< HEAD
     @RequestMapping("/getAllCourseInfo")
     public List<CourseWithTeacher> getAllCourseInfo() {
         return courseService.selectAllCourseInfo();
     }
 
-=======
     @GetMapping("/closeCourse")
     public void closeCourseById(@RequestParam("cosId") int cosId) {
         courseService.closeCourseById(cosId);
     }
 
 
->>>>>>> 93e1615bf28c5551a383ffcf32b5b5ecb7ca17be
 }
