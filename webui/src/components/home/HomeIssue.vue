@@ -1,30 +1,54 @@
 <template>
     <el-container>
         <el-aside style="width: 40%">
-            <img src="../../assets/logo.png" alt="logo"/>
+            <img :src="article.art_img" alt="logo"/>
         </el-aside>
         <el-main>
             <el-row>
-                <el-col :span="16">
-                    <p class="title">托福人标题</p>
-                </el-col>
-                <el-col :span="8">
-                    <el-button type="success" round>托福口语</el-button>
+                <el-col style="cursor: pointer" class="title" @click.native="toArticleDetail">
+                    {{article.art_title}}
                 </el-col>
             </el-row>
-            <el-row>
-                <p class="description">dfjskldjfsldjgfdkhlgkjflkjdklgjfsdncfddsfsdfsdfsfsdflkjfdsajgfdjlsakdjfgklasgjfdlkfgjl</p>
+            <el-row class="description">
+                {{article.art_text.substring(0,50) + "......"}}
             </el-row>
             <el-row>
-                2020-5-23
+                <el-col :span="12">
+                    {{article.art_date}}
+                </el-col>
+                <el-col :span="12">
+                    {{typeMap[article.art_type]}}
+                </el-col>
             </el-row>
         </el-main>
     </el-container>
 </template>
 
 <script>
+    import router from "../../router";
+
     export default {
-        name: "HomeIssue"
+        name: "HomeIssue",
+        props: {
+            article: Object
+        },
+        data() {
+            return {
+                typeMap: {
+                    "Write": "托福写作",
+                    "Read": "托福阅读",
+                    "Listen": "托福听力",
+                    "Speak": "托福口语",
+                    "Information": "托福资讯",
+                    "Vocabulary": "托福词汇"
+                }
+            }
+        },
+        methods: {
+            toArticleDetail() {
+                router.push({path: '/tofel-article/detail', query: {art_id: this.article.art_id}});
+            }
+        }
     }
 </script>
 
@@ -45,13 +69,12 @@
     }
 
     .title {
-        font-size: 2rem;
-        margin-top: 0.4rem;
+        font-size: 1.6rem;
     }
 
     .description {
         word-wrap: break-word;
-        margin-top: 0;
+        padding: 20px 0 20px 0;
         font-size: 1.2rem;
     }
 </style>

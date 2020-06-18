@@ -12,16 +12,30 @@ import java.util.List;
 @Service
 public class ArticleService {
 
-  @Autowired
-  private ArticleDao articleDao;
+    @Autowired
+    private ArticleDao articleDao;
 
-  public Article getArticle(String artId) { return articleDao.selectByArtId(artId);  }
+    public Article getArticle(String artId) {
+        return articleDao.selectByArtId(artId);
+    }
 
-  public void addArticle(Article article) { articleDao.insert(article);  }
+    public void addArticle(Article article) {
+        articleDao.insert(article);
+    }
 
-  public List<Article> selectAll() { return articleDao.selectAll();  }
+    public List<Article> selectAll() {
+        return articleDao.selectAll();
+    }
 
-  public void removeArticle(String artId) { articleDao.deleteByArtId(artId);  }
+    public void removeArticle(String artId) {
+        articleDao.deleteByArtId(artId);
+    }
 
-  public List<Article> selectByArtType(String artType) { return articleDao.selectByArtType(artType);  }
+    public List<Article> selectByArtType(String artType) {
+        return articleDao.selectByArtType(artType);
+    }
+
+    public int countArticle() {
+        return articleDao.countArticle();
+    }
 }

@@ -3,18 +3,18 @@
         <el-main style="padding-top: 0; padding-bottom: 0">
             <el-row type="flex" align="middle">
                 <el-col :span="3">
-                    <el-image :src="portrait"></el-image>
+                    <img :src="user.usr_portrait" style="object-fit: fill; width: 100%" alt="用户头像"/>
                 </el-col>
-                <el-col :span="18">
+                <el-col :span="16" :push="1">
                     <el-row style="margin-bottom: 10px">
-                        余坚
+                        {{user.usr_nickname}}
                     </el-row>
                     <el-row>
-                        djffklsdjfkdslkjfkdhfkl
+                        {{comment.cmt_content}}
                     </el-row>
                 </el-col>
-                <el-col :span="3">
-                    2020-6-12
+                <el-col :span="5">
+                    {{comment.cmt_date_time}}
                 </el-col>
             </el-row>
             <el-divider></el-divider>
@@ -25,10 +25,30 @@
 <script>
     export default {
         name: "ArticleComment",
+        props: {
+            comment: Object
+        },
         data() {
             return {
-                portrait: 'http://b-ssl.duitang.com/uploads/item/201812/7/2018127203650_KvXLM.thumb.700_0.jpeg'
+                user: '',
             }
+        },
+        methods: {
+            getUser() {
+                let config = {
+                    method: 'get',
+                    url: '/user/user/info?usr_username=' + this.comment.cmt_username,
+                };
+
+                this.$axios(config).then(res => {
+                    this.user = res.data;
+                }).catch(function (error) {
+                    console.log(error);
+                });
+            }
+        },
+        mounted() {
+            this.getUser();
         }
     }
 </script>
