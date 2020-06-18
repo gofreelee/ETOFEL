@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import sichuan.umbrella.chenmm.bean.Course;
 import sichuan.umbrella.chenmm.bean.CourseDetail;
+import sichuan.umbrella.chenmm.bean.CourseWithTeacher;
 import sichuan.umbrella.chenmm.service.CourseService;
 
 import java.text.ParseException;
@@ -128,6 +129,11 @@ public class CourseController {
             result = "课程状态改变成报名";
             return gson.toJson(result);
         }
+    }
+
+    @RequestMapping("/getAllCourseInfo")
+    public List<CourseWithTeacher> getAllCourseInfo() {
+        return courseService.selectAllCourseInfo();
     }
 
 }

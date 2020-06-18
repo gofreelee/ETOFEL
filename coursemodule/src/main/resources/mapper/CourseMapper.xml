@@ -32,6 +32,12 @@
         where cos_id=ujc_cos_id) desc
     </select>
 
+    <!-- 管理员获取所有课程信息-->
+    <select id="selectAllCourseInfo" resultMap="CourseWithTeacher">
+        select * from course,course_detail where cos_id=cdt_cos_id
+    </select>
+
+
     <!--    按时间从早到晚给课程排序-->
     <select id="selectCourseByTime" resultMap="Course">
         select * from course order by cos_start_date,cos_start_time
@@ -47,6 +53,20 @@
         <result property="cosFee" column="cos_fee"/>
         <result property="cosCategory" column="cos_category"/>
         <result property="cosStatus" column="cos_status"/>
+    </resultMap>
+
+    <resultMap id="CourseWithTeacher" type="sichuan.umbrella.chenmm.bean.CourseWithTeacher">
+        <id property="cosId" column="cos_id"/>
+        <result property="cosTitle" column="cos_title"/>
+        <result property="cosStartDate" column="cos_start_date"/>
+        <result property="cosEndDate" column="cos_end_date"/>
+        <result property="cosStartTime" column="cos_start_time"/>
+        <result property="cosEndTime" column="cos_end_time"/>
+        <result property="cosStage" column="cos_stage"/>
+        <result property="cosFee" column="cos_fee"/>
+        <result property="cosCategory" column="cos_category"/>
+        <result property="cosStatus" column="cos_status"/>
+        <result property="cosTeacher" column="cdt_tch_username"/>
     </resultMap>
 
     <!--    发布课程基本信息-->

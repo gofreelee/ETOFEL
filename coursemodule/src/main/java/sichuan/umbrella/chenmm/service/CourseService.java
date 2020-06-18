@@ -4,6 +4,7 @@ package sichuan.umbrella.chenmm.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import sichuan.umbrella.chenmm.bean.Course;
+import sichuan.umbrella.chenmm.bean.CourseWithTeacher;
 import sichuan.umbrella.chenmm.mapper.CourseMapper;
 
 import java.util.List;
@@ -126,5 +127,9 @@ public class CourseService {
      */
     public Course selectCourseById(Integer cosId) {
         return courseMapper.selectCourseById(cosId);
+    }
+
+    public List<CourseWithTeacher> selectAllCourseInfo(){
+        return courseMapper.selectAllCourseInfo();
     }
 }
