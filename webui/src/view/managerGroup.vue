@@ -26,17 +26,17 @@
                 width="55">
             </el-table-column>
             <el-table-column
-                prop=""
+                prop="grpName"
                 label="标题"
                 width="160">
             </el-table-column>
             <el-table-column
-                prop="gmsContext"
+                prop="grpDescription"
                 label="描述"
                 width="190">
             </el-table-column>
             <el-table-column
-                prop="gmsCreateTime"
+                prop="grpCreateTime"
                 label="创建日期"
                 width="150"
                 >
@@ -48,19 +48,19 @@
                 >
             </el-table-column>
             <el-table-column
-                prop=""
+                prop="grpAllMembers"
                 label="群组人数"
                 width="130"
                 >
             </el-table-column>
             <el-table-column
-                prop=""
+                prop="grpManagerNumber"
                 label="管理员人数"
                 >
             </el-table-column>
         </el-table>
         <div class="btn_group">
-            <el-button type="danger" size="small" @click="_close">关闭</el-button>
+            <el-button type="danger" size="small" @click="_delete">删除</el-button>
         </div>
     </div>
 </template>
@@ -74,7 +74,9 @@ export default {
                 group_title: '',
                 searchDate: ''
             },
-            tableData: []
+            tableData: [],
+            delete_selected_id: [],
+            delete_selected_list: []
         }
     },
     mounted() {
@@ -84,12 +86,17 @@ export default {
         // 表格 action 监听（checkbox 选择）
         handleSelectionChange(value) {
             console.log(value)
+            this.delete_selected_list = value
+            value.forEach(item => {
+                this.delete_selected_id.push(item.grpId)
+            })
         },
         // 获取 table 数据
         getDataSource() {
             let url =  `/group/group/managerGetGroupInfo`
             this.$axios(url).then(res => {
                 console.log('数据源：', res)
+                this.tableData = res.data
             }).catch(err => {
                 console.log('获取数据失败：', err)
             })
@@ -99,8 +106,8 @@ export default {
             // let url = ``
         },
         // 关闭
-        _close() {
-            console.log('close')
+        _delete() {
+            console.log(this.delete_selected_id)
         }
     },
 }

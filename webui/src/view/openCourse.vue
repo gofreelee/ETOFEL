@@ -151,15 +151,17 @@ export default {
         _close() {
             console.log(this.selectedID)
             console.log(this.tableData)
-            // this.selectedID.forEach(item => {
-            //     this.tableData[item - 1].cosStatus = '停课'
-            // })
-            let url = `/course/course/closeCourse`
-            let data = { cosIds: this.selectedID }
-            this.$axios.post(url, data).then(() => {
+            // let url = `/course/course/closeCourse`
+            let body = { cosIds: this.selectedID }
+            this.$axios({
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                url: '/course/course/closeCourse',
+                data: JSON.stringify(body)
+            }).then(() => {
                 console.log('关闭课程成功！')
-                // 请求成功后刷新数据
-                // this.getDataSource()
                 this.selectedID.forEach(item => {
                     this.tableData[item - 1].cosStatus = '停课'
                 })
@@ -169,15 +171,16 @@ export default {
         },
         // 恢复
         _restore() {
-            let url = `/course/course/recoverCourse`
-            let data = { cosIds: this.selectedID }
-            // this.selectedID.forEach(item => {
-            //     this.tableData[item - 1].cosStatus = '报名中'
-            // })
-            this.$axios.post(url, data).then(() => {
+            let body = { cosIds: this.selectedID }
+            this.$axios({
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                url: '/course/course/recoverCourse',
+                data: JSON.stringify(body)
+            }).then(() => {
                 console.log('恢复课程成功！')
-                // 请求成功后刷新数据
-                // this.getDataSource()
                 this.selectedID.forEach(item => {
                     this.tableData[item - 1].cosStatus = '报名中'
                 })
