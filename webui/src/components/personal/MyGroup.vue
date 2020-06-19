@@ -171,6 +171,7 @@
                 };
 
                 this.$axios(config).then(res => {
+                    console.log(res.data);
                     this.groupManageList = res.data;
                 }).catch(function (error) {
                     console.log(error);

@@ -25,7 +25,7 @@ public class GroupJsonSerializer implements JsonSerializer<Group> {
         object.addProperty("grpCreateTime", dateFormat.format(group.getGrpCreateTime()));
         object.addProperty("grpDescription", group.getGrpDescription());
         object.addProperty("grpRule", group.getGrpRule());
-        object.addProperty("grpType", group.getGrpRule());
+        object.addProperty("grpType", group.getGrpType());
         object.addProperty("grpPortrait", group.getGrpPortrait());
         object.addProperty("grpCreator", group.getGrpCreator());
         object.addProperty("grpStatus", group.getGrpStatus());

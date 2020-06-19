@@ -14,8 +14,7 @@ public class Group {
     private String grpCreator;
     private String grpStatus;
 
-    public Group() {
-    }
+    public Group() {}
 
     public Group(long grpId, String grpName, Timestamp grpCreateTime, String grpDescription, String grpRule, String grpType, String grpPortrait, String grpCreator, String grpStatus) {
         this.grpId = grpId;

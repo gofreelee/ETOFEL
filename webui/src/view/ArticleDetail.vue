@@ -48,7 +48,6 @@
                 <ArticleComment :comment="item"/>
             </el-row>
 
-
             <el-row style="text-align: right; margin-top: 20px">
                 <el-pagination background layout="prev, pager, next"
                                :total="comments.length"
@@ -116,8 +115,9 @@
             getComments() {
                 let config = {
                     method: 'get',
-                    url: '/article/comment/selectArtComment?art_id=' + this.article.art_id,
+                    url: '/article/comment/selectArtComment?art_id=' + this.$route.query.art_id,
                 };
+
 
                 this.$axios(config).then(res => {
                     this.comments = res.data
