@@ -31,8 +31,8 @@
                          @select="handleSelect">
                     <el-submenu index="1">
                         <template slot="title"><span class="_text">用户管理</span></template>
-                        <el-menu-item index="1-1">用户列表</el-menu-item>
-                        <el-menu-item index="1-2">讲师列表</el-menu-item>
+                        <el-menu-item index="user_list">用户列表</el-menu-item>
+                        <el-menu-item index="teacher_list">讲师列表</el-menu-item>
                     </el-submenu>
                 </el-menu>
             </el-col>
@@ -86,29 +86,37 @@
                 this.selectId = id;
                 switch (id) {
                     case 0:
-                        router.push({path: '/home'});
+                        router.push({ path: '/home' });
                         break;
                     case 1:
-                        router.push({path: '/sys-manager'});
+                        router.push({ path: '/sys-manager' });
                         break;
                     case 2:
-                        router.push({path: '/user-manager'});
+                        router.push({ path: '/user-manager' });
                         break;
                     case 3:
-                        router.push({path: '/manager-tofel-article'})
+                        router.push({ path: '/manager-tofel-article' })
                         break;
                     case 4:
-                        router.push({path: '/manager-group'})
+                        router.push({ path: '/manager-group' })
                         break;
                     case 5:
-                        router.push({path: '/manager-open-course'})
+                        router.push({ path: '/manager-open-course' })
                         break;
                     case 6:
-                        router.push({path: '/manager-welfare-castle'})
+                        router.push({ path: '/manager-welfare-castle' })
                 }
             },
+            // 下拉列表选择，处理路由跳转
             handleSelect(value) {
                 console.log(value)
+                switch (value) {
+                    case 'user_list':
+                        router.push({ path: '/user-list-manager' })
+                        break
+                    case 'teacher_list':
+                        router.push({ path: '/teacher-list-manager' })
+                }
             }
         },
         computed: {

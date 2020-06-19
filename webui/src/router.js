@@ -15,12 +15,11 @@ const PersonalCenter = () => import('view/PersonalCenter.vue')
 
 // 管理员页面
 const SysManager = () => import('view/sysManager.vue')
-const UserManager = () => import('view/userManager.vue')
+const UserList = () => import('view/UserList.vue')
+const TeacherList = () => import('view/TeacherList.vue') 
 const ManagerTofelArticle = () => import('view/ManagerTofelArticle.vue')
 const ManagerGroup = () => import('view/managerGroup.vue')
 const OpenCourse = () => import('view/openCourse.vue')
-// const WelfareCastle = () => import('view/welfareCastle.vue')
- 
 
 Vue.use(VueRouter);
 
@@ -78,8 +77,12 @@ const routes = [
         component: SysManager
     },
     {
-        path: '/user-manager',
-        component: UserManager
+        path: '/user-list-manager',
+        component: UserList
+    },
+    {
+        path: '/teacher-list-manager',
+        component: TeacherList
     },
     {
         path: '/manager-tofel-article',
@@ -93,10 +96,6 @@ const routes = [
         path: '/manager-open-course',
         component: OpenCourse
     }
-    // {
-    //     path: '/manager-welfare-castle',
-    //     component: WelfareCastle
-    // }
 ]
 
 export default new VueRouter({
