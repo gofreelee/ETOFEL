@@ -4,9 +4,10 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.tf.articlemodule.bean.Article;
 import com.tf.articlemodule.service.ArticleService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -15,35 +16,39 @@ import java.util.*;
 @RequestMapping("/tofel-article")
 public class ArticleController {
 
-  @Autowired
-  private ArticleService articleService;
+    @Autowired
+    private ArticleService articleService;
 
-  @Autowired
-  private Gson gson;
+    private Gson gson;
+
+    private Logger logger = LoggerFactory.getLogger(ArticleController.class);
+
+    @Autowired
+    public void setGson() {
+        this.gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
+    }
 
 
-
-  @RequestMapping(value = "/createArticle", method = RequestMethod.POST)
-  public void create(@RequestParam("artUsername") String artUsername,
+    @RequestMapping(value = "/createArticle", method = RequestMethod.POST)
+    public void create(@RequestParam("artUsername") String artUsername,
                        @RequestParam("artTitle") String artTitle,
                        @RequestParam("artImg") String artImg,
                        @RequestParam("artText") String artText,
                        @RequestParam("artType") String artType) {
-    SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-    Article article = new Article();
-    article.setArt_date_time(new Date());
-    article.setArt_img(artImg);
-    article.setArt_text(artText);
-    article.setArt_type(artType);
-    article.setArt_username(artUsername);
-    article.setArt_title(artTitle);
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+        Article article = new Article();
+        article.setArt_date_time(new Date());
+        article.setArt_img(artImg);
+        article.setArt_text(artText);
+        article.setArt_type(artType);
+        article.setArt_username(artUsername);
+        article.setArt_title(artTitle);
 //    if (file != null) {
 //      System.out.println("file is not null");
 //      article.setArt_img(file.getBytes());
 //    }
-    articleService.addArticle(article);
-  }
-
+        articleService.addArticle(article);
+    }
 
 
     @RequestMapping("/classArticle/{artType}")
@@ -148,12 +153,22 @@ public class ArticleController {
     }
 
 
-
-
     @RequestMapping("/remove/{artId}")
     public String remove(@PathVariable("artId") String artId) {
         articleService.removeArticle(artId);
         return "redirect:/";
+    }
+
+    @GetMapping("/myArticle")
+    public String selectByArtUsername(@RequestParam("artUsername") String artUsername) {
+        logger.info("myArticle: " + artUsername);
+        return gson.toJson(articleService.selectByArtUsername(artUsername));
+    }
+
+    @GetMapping("/likeArticle")
+    public String selectLike(@RequestParam("ulaUsername") String ulaUsername) {
+        logger.info("likeArticle" + ulaUsername);
+        return gson.toJson(articleService.selectLike(ulaUsername));
     }
 
     //  @RequestMapping("nextArticlePage")
