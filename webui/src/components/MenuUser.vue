@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="menu">
         <el-row v-if="!isManager">
             <el-col :offset="4" :span="2">
                 <p v-bind:style="color(0)" @click="switchView(0)">首页</p>
@@ -22,14 +22,19 @@
                 <p v-bind:style="color(1)" @click="managerSwitchView(1)">系统管理</p>
             </el-col>
             <el-col :span="2">
-                <p v-bind:style="color(2)" class="el-dropdown-link" @click="managerSwitchView(2)">用户管理</p>
-                <!-- <span v-bind:style="color(2)" class="el-dropdown-link">
-                    用户管理<i class="el-icon-arrow-down el-icon--right"></i>
-                </span> -->
-                <!-- <el-dropdown-menu slot="dropdown">
-                    <el-dropdown-item>讲师管理</el-dropdown-item>
-                    <el-dropdown-item>用户管理</el-dropdown-item>
-                </el-dropdown-menu> -->
+                <!-- <p v-bind:style="color(2)" class="el-dropdown-link" @click="managerSwitchView(2)">用户管理</p> -->
+                <el-menu text-color="#fff" 
+                         background-color="#68BF4A"
+                         class="el-menu-demo" 
+                         mode="horizontal" 
+                         active-text-color="#fff"
+                         @select="handleSelect">
+                    <el-submenu index="1">
+                        <template slot="title"><span class="_text">用户管理</span></template>
+                        <el-menu-item index="1-1">用户列表</el-menu-item>
+                        <el-menu-item index="1-2">讲师列表</el-menu-item>
+                    </el-submenu>
+                </el-menu>
             </el-col>
             <el-col :span="2">
                 <p v-bind:style="color(3)" @click="managerSwitchView(3)">托福人</p>
@@ -40,9 +45,9 @@
             <el-col :span="2">
                 <p v-bind:style="color(5)" @click="managerSwitchView(5)">学习课程</p>
             </el-col>
-            <!-- <el-col :span="2">
+            <el-col :span="2">
                 <p v-bind:style="color(6)" @click="managerSwitchView(6)">福利城堡</p>
-            </el-col> -->
+            </el-col>
         </el-row>
     </div>
 </template>
@@ -101,6 +106,9 @@
                     case 6:
                         router.push({path: '/manager-welfare-castle'})
                 }
+            },
+            handleSelect(value) {
+                console.log(value)
             }
         },
         computed: {
@@ -122,12 +130,14 @@
     .el-row {
         background-color: #68BF4A;
     }
-
     p {
         font-size: 18px;
         color: white;
         margin: 0;
         padding: 1em;
         text-align: center;
+    }
+    ._text{
+        font-size: 18px;
     }
 </style>
