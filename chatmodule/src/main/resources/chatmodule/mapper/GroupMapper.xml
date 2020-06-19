@@ -19,7 +19,7 @@
         grp_status = #{grpStatus} where grp_id = #{grpId}
     </update>
 
-    <select id="indistinctiveSelectByName" resultType="chatmodule.bean.Group">
+    <select id="indistinctiveSelectByName" resultMap="Group">
         select * from `group` where grp_name like  #{groupName}
     </select>
 
@@ -44,6 +44,28 @@
         and gmb_type = #{gmbType}
     </select>
 
+
+
+    <select id="selectAllGroupId" resultType="Long">
+        select grp_id from `group`
+    </select>
+
+    <select id="selectGroupByDateAndName" resultMap="Group">
+        select * from `group`
+        <if test= "grpName != null">
+            where grp_name like #{grpName}
+        </if>
+
+        <if test= "grpCreateTime != null">
+            and grp_create_time = #{grpCreateTime}
+        </if>
+
+    </select>
+
+    <select id="selectGroupByDate" resultMap="Group">
+        select * from `group` where grp_create_time=#{grpCreateTime}
+    </select>
+
     <resultMap id="Group" type="chatmodule.bean.Group">
         <id property="grpId" column="grp_id"/>
         <result property="grpName" column="grp_name"/>
@@ -55,8 +77,4 @@
         <result property="grpCreator" column="grp_creator"/>
         <result property="grpStatus" column="grp_status"/>
     </resultMap>
-
-    <select id="selectAllGroupId" resultType="Long">
-        select grp_id from `group`
-    </select>
 </mapper>

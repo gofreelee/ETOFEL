@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
@@ -167,4 +168,30 @@ public class GroupController {
         GroupMember groupMember = new GroupMember(grpCreator, id, "manager");
         return groupService.createGroup(group) & groupMemberService.addMember(groupMember);
     }
+
+
+    /*
+    * 管理员获取群组信息
+    * */
+    @RequestMapping("/managerGetGroupInfo")
+    public List<GroupByManagerQuery> managerGetGroupInfo(){
+        return groupMemberService.managerQueryAll();
+    }
+
+    /**
+     *根据名称和时间来查询
+     */
+
+    @RequestMapping("/queryGroupByNameAndDate")
+    public List<GroupByManagerQuery> queryGroupByNameAndDate(HttpServletRequest request){
+        String name = request.getParameter("grpName");
+        String date = request.getParameter("grpDate");
+        List<Long> idList = new ArrayList<>();
+        List<Group> groupByManagerQueries = groupService.selectGroupByDateAndName(name, date);
+        for(Group group: groupByManagerQueries){
+            idList.add(group.getGrpId());
+        }
+        return groupMemberService.managerQueryGroupInfo(idList);
+    }
+
 }

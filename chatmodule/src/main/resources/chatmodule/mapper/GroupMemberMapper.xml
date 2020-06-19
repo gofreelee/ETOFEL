@@ -21,4 +21,10 @@
     <select id="selectMemberByType" resultType="chatmodule.bean.MemberQuery">
         select gmb_username, usr_portrait, gmb_type from group_member naturl join user where gmb_grp_id = #{grpId} and gmb_username = usr_username and gmb_type = #{gmbType}
     </select>
+
+    <select id="findCreator" resultType="String">
+        select gmb_username from group_member where gmb_type='creator' and gmb_grp_id = #{grpId}
+    </select>
+
+
 </mapper>

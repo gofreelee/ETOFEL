@@ -1,9 +1,6 @@
 package chatmodule.service;
 
-import chatmodule.bean.Group;
-import chatmodule.bean.GroupInfoQuery;
-import chatmodule.bean.GroupMember;
-import chatmodule.bean.MemberQuery;
+import chatmodule.bean.*;
 import chatmodule.mapper.GroupDao;
 import chatmodule.mapper.GroupMemberDao;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,10 +33,10 @@ public class GroupMemberService {
         List<MemberQuery>  allMembers = groupMemberDao.selectMemberInfo(grpId);
         List<MemberQuery>  managers = new ArrayList<>(), members = new ArrayList<>();
         for(MemberQuery member: allMembers){
-            if(member.getUserType().equals("manager"))
-                managers.add(member);
-            else
+            if(member.getUserType().equals("member"))
                 members.add(member);
+            else
+                managers.add(member);
         }
         groupInfoQuery.setBaseInfo(group);
         groupInfoQuery.setGroupMembers(membersNum);
@@ -53,4 +50,29 @@ public class GroupMemberService {
     }
 
 
+    /*
+     * 根据id列表，把管理员要的信息搞搞过去
+     * */
+    public List<GroupByManagerQuery> managerQueryGroupInfo(List<Long> idList){
+        List<GroupByManagerQuery> groupByManagerQueries = new ArrayList<>();
+        for(Long id: idList) {
+            GroupByManagerQuery groupByManagerQuery = new GroupByManagerQuery();
+            GroupInfoQuery groupInfoQuery = queryGroupInfo(id);
+            groupByManagerQuery.setGrpName(groupInfoQuery.getBaseInfo().getGrpName());
+            groupByManagerQuery.setGrpCreateTime(groupInfoQuery.getBaseInfo().getGrpCreateTime());
+            groupByManagerQuery.setGrpDescription(groupInfoQuery.getBaseInfo().getGrpDescription());
+            groupByManagerQuery.setGrpAllMembers(groupInfoQuery.getGroupMembers());
+            groupByManagerQuery.setGrpManagerNumber(groupInfoQuery.getManagers().size());
+            groupByManagerQuery.setGrpCreator(groupMemberDao.findCreator(id));
+            groupByManagerQuery.setGrpId(id);
+            groupByManagerQueries.add(groupByManagerQuery);
+
+        }
+        return groupByManagerQueries;
+    }
+
+
+    public List<GroupByManagerQuery> managerQueryAll(){
+        return managerQueryGroupInfo(groupDao.selectAllGroupId());
+    }
 }

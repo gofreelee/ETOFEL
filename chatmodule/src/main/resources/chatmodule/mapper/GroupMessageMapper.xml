@@ -26,4 +26,6 @@
         <result property="gmsContext" column="gms_content"/>
         <result property="gmsCreateTime" column="gms_create_time"/>
     </resultMap>
+
+
 </mapper>
