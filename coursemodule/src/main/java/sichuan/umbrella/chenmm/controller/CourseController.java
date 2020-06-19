@@ -134,9 +134,9 @@ public class CourseController {
      * @throws ParseException 日期parse异常
      */
     @RequestMapping(value = "/recoverCourse", method = RequestMethod.POST)
-    public void recoverCourseById(@RequestBody List<Integer>cosIds) throws ParseException {
+    public void recoverCourseById(@RequestBody List<Integer> cosIds) throws ParseException {
         //获取想恢复的课程的开课日期
-        for(Integer cosId: cosIds) {
+        for (Integer cosId : cosIds) {
             Course course = courseService.selectCourseById(cosId);
             Date courseOpenDate = course.getCosStartDate();
             //获取当前的日期
@@ -147,11 +147,11 @@ public class CourseController {
             String result;
             if (nowDate.compareTo(courseOpenDate) < 0) {
                 courseService.signUpCourseById(cosId);
-               // result = "课程状态改变成开课";
+                // result = "课程状态改变成开课";
                 //return gson.toJson(result);
             } else {
                 courseService.openCourseById(cosId);
-               // result = "课程状态改变成报名";
+                // result = "课程状态改变成报名";
                 //return gson.toJson(result);
             }
         }
@@ -163,12 +163,11 @@ public class CourseController {
     }
 
     @RequestMapping(value = "/closeCourse", method = RequestMethod.POST)
-    public void closeCourseById(@RequestBody List<Integer>cosIds) {
-        for(Integer cosId: cosIds)
-        {
+    public void closeCourseById(@RequestBody List<Integer> cosIds) {
+        for (Integer cosId : cosIds) {
             courseService.closeCourseById(cosId);
         }
-            //
+        //
     }
 
 

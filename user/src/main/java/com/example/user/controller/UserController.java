@@ -5,6 +5,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.example.user.bean.User;
 import com.example.user.service.UserService;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,16 +27,21 @@ import java.util.Map;
 public class UserController {
     @Autowired
     UserService userService;
-    @Autowired
-    Gson gson;
 
-    private Logger logger = LoggerFactory.getLogger(UserController.class);
+    private Gson gson;
+
+    @Autowired
+    public void setGson() {
+        this.gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
+    }
+
+    private final Logger logger = LoggerFactory.getLogger(UserController.class);
 
     @GetMapping("/info")
     @ResponseBody
     public String userInfo(@RequestParam("usr_username") String usr_username) {
         User user = userService.getUserByUsername(usr_username);
-        System.out.println(user);
+        logger.info(user.toString());
         return gson.toJson(user);
     }
 

@@ -9,6 +9,7 @@
                     <el-select v-model="loginType">
                         <el-option label="用户登陆" value="user"></el-option>
                         <el-option label="老师登陆" value="teacher"></el-option>
+                        <el-option label="管理员登陆" value="manager"></el-option>
                     </el-select>
                 </el-col>
             </el-row>
@@ -99,19 +100,44 @@
                 if (this.loginType === 'user') {
                     url = '/login/user/ulogin?username=' + this.username + "&password=" + this.password;
                     sessionStorage.setItem("identity", "user");
-                } else {
+                } else if (this.loginType === 'teacher') {
                     url = '/login/teacher/tlogin?username=' + this.username + "&password=" + this.password;
                     sessionStorage.setItem("identity", "teacher");
+                } else {
+                    url = '/login/administer/alogin?username=' + this.username + "&password=" + this.password;
+                    sessionStorage.setItem("identity", "manager");
                 }
+
                 this.$axios.get(url).then(res => {
                     if (res.data.information == null) {
                         alert('登录失败');
                     } else {
-                        Vue.prototype.$user = res.data.information;
-                        sessionStorage.setItem("username", res.data.information.usr_username);
-                        sessionStorage.setItem("password", res.data.information.usr_password);
+                        let information = res.data.information;
+                        if (this.loginType === 'teacher') {
+                            information.usr_username = information.tch_username;
+                            information.usr_nickname = information.tch_name;
+                            information.usr_gender = information.tch_gender;
+                            information.usr_email = information.tch_email;
+                            information.usr_phone = information.tch_phone;
+                            information.usr_birthday = information.tch_birthday;
+                            information.usr_sign = information.tch_description;
+                            information.usr_portrait = information.tch_portrait;
+                        }
+
+                        console.log(information);
+                        Vue.prototype.$user = information;
+                        if (this.loginType === 'user') {
+                            sessionStorage.setItem("username", res.data.information.usr_username);
+                            sessionStorage.setItem("password", res.data.information.usr_password);
+                        } else if (this.loginType === 'teacher') {
+                            sessionStorage.setItem("username", res.data.information.tch_username);
+                            sessionStorage.setItem("password", res.data.information.tch_password);
+                        } else {
+                            sessionStorage.setItem("username", res.data.information.ad_username);
+                            sessionStorage.setItem("password", res.data.information.ad_password);
+                        }
                         bus.$emit('loginSuccess');
-                        router.push({path: '/'})
+                        router.push({path: '/home'})
                     }
                 })
             }

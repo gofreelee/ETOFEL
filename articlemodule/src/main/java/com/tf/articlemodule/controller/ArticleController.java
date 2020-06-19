@@ -9,7 +9,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.text.SimpleDateFormat;
 import java.util.*;
 
 @RestController
@@ -21,7 +20,7 @@ public class ArticleController {
 
     private Gson gson;
 
-    private Logger logger = LoggerFactory.getLogger(ArticleController.class);
+    private final Logger logger = LoggerFactory.getLogger(ArticleController.class);
 
     @Autowired
     public void setGson() {
@@ -35,7 +34,6 @@ public class ArticleController {
                        @RequestParam("artImg") String artImg,
                        @RequestParam("artText") String artText,
                        @RequestParam("artType") String artType) {
-        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
         Article article = new Article();
         article.setArt_date_time(new Date());
         article.setArt_img(artImg);
@@ -43,10 +41,6 @@ public class ArticleController {
         article.setArt_type(artType);
         article.setArt_username(artUsername);
         article.setArt_title(artTitle);
-//    if (file != null) {
-//      System.out.println("file is not null");
-//      article.setArt_img(file.getBytes());
-//    }
         articleService.addArticle(article);
     }
 
@@ -64,23 +58,8 @@ public class ArticleController {
     }
 
     @GetMapping("/random-article")
-    public String randomArticle() {
-        int articleNumber = articleService.countArticle();
-        int[] numbers = new int[articleNumber];
-        for (int i = 0; i < articleNumber; i++) {
-            numbers[i] = i + 1;
-        }
-        Random random = new Random();
-        for (int i = articleNumber - 1; i > 0; i--) {
-            int index = random.nextInt(i);
-            int k = numbers[i];
-            numbers[i] = numbers[index];
-            numbers[index] = k;
-        }
-        List<Article> articles = new LinkedList<>();
-        for (int i = 0; i < 4; i++) {
-            articles.add(articleService.getArticle(String.valueOf(numbers[i])));
-        }
+    public String randomArticle(@RequestParam("need") int need) {
+        List<Article> articles = articleService.randomArticle(need);
         return gson.toJson(articles);
     }
 
@@ -167,7 +146,7 @@ public class ArticleController {
 
     @GetMapping("/likeArticle")
     public String selectLike(@RequestParam("ulaUsername") String ulaUsername) {
-        logger.info("likeArticle" + ulaUsername);
+        logger.info("likeArticle: " + ulaUsername);
         return gson.toJson(articleService.selectLike(ulaUsername));
     }
 

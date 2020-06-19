@@ -16,8 +16,8 @@
                 </el-col>
             </el-row>
         </el-header>
-        <el-main style="margin-left: 15%; margin-right: 15%">
-            <el-row class="header-second" type="flex" align="middle">
+        <el-main style="margin-left: 15%; margin-right: 15%;">
+            <el-row class="header-second" type="flex" align="middle" style="padding: 10px 0 10px 0">
                 <el-col :span="2" :offset="1" @click.native="selectCourseCategory(0)"
                         v-bind:class="{'course-category-select':categorySelected[0]}">
                     全部课程
@@ -42,12 +42,9 @@
                         v-bind:class="{'course-category-select':categorySelected[5]}">
                     托福词汇
                 </el-col>
-                <el-col :span="3" :offset="5">
-                    <i class="el-icon-arrow-down"/> 按开始时间排序
-                </el-col>
-                <el-col :span="3">
-                    <el-input placeholder="请输入课程名" prefix-icon="el-icon-search"/>
-                </el-col>
+<!--                <el-col :span="5" :push="5">-->
+<!--                    <el-input placeholder="请输入课程名" prefix-icon="el-icon-search"/>-->
+<!--                </el-col>-->
             </el-row>
 
             <CourseItem v-for="item in lazyShow"

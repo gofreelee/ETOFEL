@@ -11,8 +11,14 @@
 
     <!--修改用户信息-->
     <update id="updateUser" parameterType="map">
-        update user set usr_email = #{usr_email},usr_birthday = #{usr_birthday}
-        ,usr_gender = #{usr_gender},usr_sign = #{usr_sign},usr_phone = #{usr_phone}
+        update user set
+        usr_nickname = #{usr_nickname},
+        usr_gender = #{usr_gender},
+        usr_email = #{usr_email},
+        usr_birthday = #{usr_birthday},
+        usr_gender = #{usr_gender},
+        usr_sign = #{usr_sign},
+        usr_phone = #{usr_phone}
         where usr_username = #{usr_username}
     </update>
 

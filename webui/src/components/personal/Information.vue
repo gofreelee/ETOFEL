@@ -176,7 +176,6 @@
                 data.append('usr_username', this.information.usr_username);
                 data.append('usr_nickname', this.information.usr_nickname);
                 data.append('usr_email', this.information.usr_email);
-                console.log(this.information.usr_birthday);
                 data.append('usr_birthday', this.information.usr_birthday);
                 data.append('usr_sign', this.information.usr_sign);
                 data.append('usr_phone', this.information.usr_phone);
