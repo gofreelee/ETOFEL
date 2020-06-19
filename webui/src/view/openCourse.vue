@@ -107,7 +107,8 @@ export default {
                 course_type_list: []
             },
             selectedTeacher: '',
-            selectedCourseType: ''
+            selectedCourseType: '',
+            selectedList: ''
         }
     },
     mounted() {
@@ -117,6 +118,7 @@ export default {
         // 勾选 checkbox
         handleSelectionChange(value) {
             console.log(value)
+            this.selectedList = value
             this.selectedID = []
             value.forEach(item => {
                 this.selectedID.push(item.cosId)
@@ -148,27 +150,37 @@ export default {
         // 关闭
         _close() {
             console.log(this.selectedID)
-            this.$axios.post( '/course/course/closeCourse', {
-                    cosIds: this.selectedID
-                }
-            ).then(() => {
+            console.log(this.tableData)
+            // this.selectedID.forEach(item => {
+            //     this.tableData[item - 1].cosStatus = '停课'
+            // })
+            let url = `/course/course/closeCourse`
+            let data = { cosIds: this.selectedID }
+            this.$axios.post(url, data).then(() => {
                 console.log('关闭课程成功！')
                 // 请求成功后刷新数据
-                this.getDataSource()
+                // this.getDataSource()
+                this.selectedID.forEach(item => {
+                    this.tableData[item - 1].cosStatus = '停课'
+                })
             }).catch(err => {
                 console.log('关闭课程失败...', err)
             })
         },
         // 恢复
         _restore() {
-            console.log(this.selectedID)
-            this.$axios.post( '/course/course/recoverCourse', {
-                    cosIds: this.selectedID
-                }
-            ).then(() => {
+            let url = `/course/course/recoverCourse`
+            let data = { cosIds: this.selectedID }
+            // this.selectedID.forEach(item => {
+            //     this.tableData[item - 1].cosStatus = '报名中'
+            // })
+            this.$axios.post(url, data).then(() => {
                 console.log('恢复课程成功！')
                 // 请求成功后刷新数据
-                this.getDataSource()
+                // this.getDataSource()
+                this.selectedID.forEach(item => {
+                    this.tableData[item - 1].cosStatus = '报名中'
+                })
             }).catch(err => {
                 console.log('恢复课程失败...', err)
             })

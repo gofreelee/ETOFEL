@@ -87,18 +87,11 @@ export default {
         },
         // 获取 table 数据
         getDataSource() {
-            let url =  `/group/getMessage`
-            this.$axios.get(url, {
-                params: {
-                    grpId: "",
-                    index: ""
-                }
-            }).then(res => {
-                console.log("群组数据获取成功", res)
-                // do something
-
+            let url =  `/group/group/managerGetGroupInfo`
+            this.$axios(url).then(res => {
+                console.log('数据源：', res)
             }).catch(err => {
-                console.log("群组数据获取失败", err)
+                console.log('获取数据失败：', err)
             })
         },
         // 查询
