@@ -86,7 +86,7 @@
             articleCommend() {
                 let config = {
                     method: 'get',
-                    url: '/article/tofel-article/random-article',
+                    url: '/article/tofel-article/random-article?need=4',
                 };
 
                 this.$axios(config).then(res => {

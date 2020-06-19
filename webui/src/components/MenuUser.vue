@@ -49,6 +49,7 @@
 
 <script>
     import router from "../router";
+    import bus from "../bus";
 
     export default {
         name: "MenuUser",
@@ -80,7 +81,7 @@
                 this.selectId = id;
                 switch (id) {
                     case 0:
-                            router.push({path: '/home'});
+                        router.push({path: '/home'});
                         break;
                     case 1:
                         router.push({path: '/sys-manager'});
@@ -89,16 +90,16 @@
                         router.push({path: '/user-manager'});
                         break;
                     case 3:
-                        router.push({path: '/manager-tofel-article' })
+                        router.push({path: '/manager-tofel-article'})
                         break;
                     case 4:
-                        router.push({ path: '/manager-group' })
+                        router.push({path: '/manager-group'})
                         break;
                     case 5:
-                            router.push({ path: '/manager-open-course' })
+                        router.push({path: '/manager-open-course'})
                         break;
                     case 6:
-                        router.push({ path: '/manager-welfare-castle' })
+                        router.push({path: '/manager-welfare-castle'})
                 }
             }
         },
@@ -108,6 +109,11 @@
                     return id === this.selectId ? "background-color:#063" : "background-color:#68BF4A"
                 }
             }
+        },
+        mounted() {
+            bus.$on('loginSuccess', () => {
+                this.isManager = sessionStorage.getItem("identity") === 'manager';
+            })
         }
     }
 </script>

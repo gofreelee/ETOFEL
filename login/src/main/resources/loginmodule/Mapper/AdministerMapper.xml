@@ -3,12 +3,14 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="loginmodule.mapper.AdministerMapper">
-    <cache/>
-
-    <select id="selectAdministerByUNAndPW" parameterType="String" resultType="loginmodule.bean.Administer">
+    <select id="selectAdministerByUNAndPW" resultMap="Administer">
         SELECT * FROM administer WHERE
                 ad_username = #{ad_username}
                 AND ad_password = #{ad_password}
     </select>
+    <resultMap id="Administer" type="loginmodule.bean.Administer">
+        <result column="ad_username" property="ad_username"/>
+        <result column="ad_password" property="ad_password"/>
+    </resultMap>
 
 </mapper>

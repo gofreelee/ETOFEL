@@ -70,12 +70,12 @@
                             文章内容：
                         </el-col>
                         <el-col :span="12">
-                            <el-input v-model="groupDescription" type="textarea" :rows="8"/>
+                            <el-input v-model="articleText" type="textarea" :rows="8"/>
                         </el-col>
                     </el-row>
                     <el-row class="info">
                         <el-col :span="3" :push="3">
-                            <el-button type="primary">上传文章</el-button>
+                            <el-button type="primary" @click="publishArticle">上传文章</el-button>
                         </el-col>
                     </el-row>
                 </el-tab-pane>
@@ -94,13 +94,15 @@
         },
         data() {
             return {
-                activeTab: 'publish',
+                activeTab: 'like',
                 myArticles: [],
                 likeArticles: [],
                 pagePublished: 1,
                 pageLike: 1,
                 articleType: '',
-                articleTitle: ''
+                articleTitle: '',
+                articleText: '',
+                imageUpload: ''
             }
         },
         computed: {
@@ -165,6 +167,31 @@
             },
             pageLikeChange(page) {
                 this.pageLike = page;
+            },
+            publishArticle() {
+                let data = new FormData();
+                data.append('artUsername', sessionStorage.getItem("username"));
+                data.append('artTitle', this.articleTitle);
+                data.append('artImg', this.imageUpload);
+                data.append('artText', this.articleText);
+                data.append('artType', this.articleType);
+
+                let config = {
+                    method: 'post',
+                    url: '/article/tofel-article/createArticle',
+                    headers: {'Content-Type': 'application/json',},
+                    data: data
+                };
+
+                this.$axios(config).then(res => {
+                    console.log(res.data);
+                    alert("发布成功");
+                    this.articleTitle = '';
+                    this.articleText = '';
+                    this.imageUpload = '';
+                }).catch(function (error) {
+                    console.log(error);
+                });
             }
         },
         mounted() {

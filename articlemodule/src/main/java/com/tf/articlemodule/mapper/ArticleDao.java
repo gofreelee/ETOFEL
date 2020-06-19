@@ -26,8 +26,9 @@ public interface ArticleDao {
 
     @Update("update article set art_username=#{art_username} ,art_title=#{art_title}, art_date=#{art_date}, art_img=#{art_img}, art_text=#{art_img}, art_type=#{art_type} where art_id = #{art_id}")
     void modifyArticle(Article article);
-    @Select("select count(*) from article")
-    int countArticle();
+
+    @Select("select art_id from article")
+    List<Integer> selectAllArtId();
 
     @Select("select * from article where art_username = #{artUsername}")
     List<Article> selectByArtUsername(@Param("artUsername") String artUsername);

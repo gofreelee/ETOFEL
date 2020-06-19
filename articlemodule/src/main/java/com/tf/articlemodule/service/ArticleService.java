@@ -8,7 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Random;
 
 @Service
 public class ArticleService {
@@ -31,14 +33,29 @@ public class ArticleService {
         articleDao.deleteByArtId(artId);
     }
 
-  public List<Article> selectByArtType(String artType) { return articleDao.selectByArtType(artType);  }
+    public List<Article> selectByArtType(String artType) {
+        return articleDao.selectByArtType(artType);
+    }
 
-  public void modifyArticle(Article article){
+    public void modifyArticle(Article article) {
         articleDao.modifyArticle(article);
-  }
+    }
 
-    public int countArticle() {
-        return articleDao.countArticle();
+    public List<Article> randomArticle(int need) {
+        List<Integer> ids = articleDao.selectAllArtId();
+        Random random = new Random();
+        int range = random.nextInt(ids.size());
+        for (int i = range; i > 0; i--) {
+            int index = random.nextInt(i);
+            int k = ids.get(index);
+            ids.set(index, ids.get(i));
+            ids.set(i, k);
+        }
+        List<Article> articles = new ArrayList<>();
+        for (int i = 0; i < need; i++) {
+            articles.add(articleDao.selectByArtId(String.valueOf(ids.get(i))));
+        }
+        return articles;
     }
 
     public List<Article> selectByArtUsername(String artUsername) {

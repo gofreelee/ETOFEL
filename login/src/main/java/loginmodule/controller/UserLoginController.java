@@ -13,10 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -59,17 +56,19 @@ public class UserLoginController {
      * @param username 用户名
      * @param password 密码
      * @param email    邮箱
-     *                 NECaptchaVerifier.REQ_VALIDATE = 'NECaptchaValidate'
      * @return 注册的新用户json
      */
-    @GetMapping("/register")
-    public String newuser(@RequestParam("username") String username, @RequestParam("password") String password, @RequestParam("email") String email) {
-        User user;
+    @PostMapping("/register")
+    public String newUser(@RequestParam("username") String username,
+                          @RequestParam("password") String password,
+                          @RequestParam("email") String email) {
         if (loginService.NoExistInUser(username) && loginService.NoExistInTeacher(username)) {
             loginService.addUserByNPE(username, password, email);
-            user = loginService.selectUserByUNAndPW(username, password);
-            return gson.toJson(user);
-        } else return null;
+            return gson.toJson(loginService.selectUserByUNAndPW(username, password));
+        } else {
+            logger.error(username + "用户名已存在");
+            return null;
+        }
     }
 
     /**

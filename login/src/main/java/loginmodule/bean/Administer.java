@@ -1,12 +1,22 @@
 package loginmodule.bean;
 
-public class Administer {
+import java.io.Serializable;
+
+public class Administer implements Serializable {
 
     private String ad_username;
     private String ad_password;
 
+    public String getAd_username() {
+        return ad_username;
+    }
+
     public void setAd_username(String ad_username) {
         this.ad_username = ad_username;
+    }
+
+    public String getAd_password() {
+        return ad_password;
     }
 
     public void setAd_password(String ad_password) {

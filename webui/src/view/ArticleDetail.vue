@@ -70,31 +70,18 @@
             <el-row v-for="item in courses" :key="item.cosId">
                 <HomeCourse :course="item"/>
             </el-row>
-
-            <!--名师推荐-->
-            <el-row type="flex" align="middle" style="font-size: 1.3rem; margin-top: 40px">
-                <el-col :span="18">
-                    名师推荐
-                </el-col>
-                <el-col :span="6">
-                    <el-button type="text" icon="el-icon-refresh">换一批</el-button>
-                </el-col>
-            </el-row>
-            <ArticleTeacher v-for="item in 4" :key="item"/>
         </el-aside>
     </el-container>
 </template>
 
 <script>
     import HomeCourse from "../components/home/HomeCourse";
-    import ArticleTeacher from "../components/article/ArticleTeacher";
     import ArticleComment from "../components/article/ArticleComment";
 
     export default {
         name: "ArticleDetail",
         components: {
             HomeCourse,
-            ArticleTeacher,
             ArticleComment
         },
         computed: {

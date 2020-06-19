@@ -49,26 +49,21 @@ public class LoginService {
     //注册验证，判断注册用户是否已存在于user表中
     public boolean NoExistInUser(String username) {
         User user = userMapper.selectUserByUsername(username);
-        if (user != null) {
-            return false;
-        } else return true;
+        return user == null;
     }
 
     //注册验证，判断用户是否已存在于teacher表中
     public boolean NoExistInTeacher(String username) {
         Teacher teacher = teacherMapper.selectTeacherUsername(username);
-        if (teacher != null) {
-            return false;
-        } else return true;
+        return teacher == null;
     }
 
 
     //验证码检验,返回二次校验的结果
     public boolean Verification(String veri) {
-        String validate = veri; // 从请求体里获得验证码validate数据
         String user = "{'id':'123456'}";
 
-        VerifyResult result = verifier.verify(validate, user); // 发起二次校验
+        VerifyResult result = verifier.verify(veri, user); // 发起二次校验
 
         return result.isResult();
     }

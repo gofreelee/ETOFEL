@@ -40,14 +40,24 @@
                 if (this.username !== '请登录') router.push({path: '/personal-center'})
             },
             loginEasy(username, password) {
-                let url = '/login/user/ulogin?username=' + username + "&password=" + password;
+                let identity = sessionStorage.getItem("identity");
+
+                let url = '';
+                if (identity === 'user') {
+                    url = '/login/user/ulogin?username=' + username + "&password=" + password;
+                } else if (identity === 'teacher') {
+                    url = '/login/teacher/tlogin?username=' + username + "&password=" + password;
+                } else {
+                    url = '/login/administer/alogin?username=' + username + "&password=" + password;
+                }
+
                 this.$axios.get(url).then(res => {
                     if (res.data.information == null) {
                         alert('登录失败');
                     } else {
                         Vue.prototype.$user = res.data.information;
                         bus.$emit('loginSuccess');
-                        router.push({path: '/'})
+                        router.push({path: '/home'})
                     }
                 })
             }
