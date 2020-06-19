@@ -45,9 +45,6 @@
             <el-col :span="2">
                 <p v-bind:style="color(5)" @click="managerSwitchView(5)">学习课程</p>
             </el-col>
-            <el-col :span="2">
-                <p v-bind:style="color(6)" @click="managerSwitchView(6)">福利城堡</p>
-            </el-col>
         </el-row>
     </div>
 </template>
@@ -101,10 +98,7 @@
                         router.push({ path: '/manager-group' })
                         break;
                     case 5:
-                        router.push({ path: '/manager-open-course' })
-                        break;
-                    case 6:
-                        router.push({ path: '/manager-welfare-castle' })
+                        router.push({ path: '/manager-learning-course' })
                 }
             },
             // 下拉列表选择，处理路由跳转
@@ -147,5 +141,8 @@
     }
     ._text{
         font-size: 18px;
+    }
+    .el-menu--horizontal > .el-submenu .el-submenu__title {
+        border-bottom: none;
     }
 </style>

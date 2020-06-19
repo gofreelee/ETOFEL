@@ -1,6 +1,6 @@
 import Vue from 'vue';
 import VueRouter from "vue-router";
-
+// 用户页面
 const Home = () => import('view/Home.vue')
 const TofelArticle = () => import('view/TofelArticle.vue')
 const Group = () => import('view/Group.vue')
@@ -14,12 +14,12 @@ const Register = () => import('view/Register.vue')
 const PersonalCenter = () => import('view/PersonalCenter.vue')
 
 // 管理员页面
-const SysManager = () => import('view/sysManager.vue')
+const SysManager = () => import('view/SysManager.vue')
 const UserList = () => import('view/UserList.vue')
 const TeacherList = () => import('view/TeacherList.vue') 
 const ManagerTofelArticle = () => import('view/ManagerTofelArticle.vue')
-const ManagerGroup = () => import('view/managerGroup.vue')
-const OpenCourse = () => import('view/openCourse.vue')
+const ManagerGroup = () => import('view/ManagerGroup.vue')
+const LearningCourse = () => import('view/LearningCourse.vue')
 
 Vue.use(VueRouter);
 
@@ -93,8 +93,8 @@ const routes = [
         component: ManagerGroup
     },
     {
-        path: '/manager-open-course',
-        component: OpenCourse
+        path: '/manager-learning-course',
+        component: LearningCourse
     }
 ]
 
