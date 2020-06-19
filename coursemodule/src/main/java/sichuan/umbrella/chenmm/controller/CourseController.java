@@ -129,7 +129,7 @@ public class CourseController {
     /**
      * 管理员功能——按照课程id恢复课程，根据当前日期和目标课程的开课日记做比较，调整课程状态为报名或者开课
      *
-     * @param cosId：课程id
+     * @param cosIds：课程id
      * @return Json
      * @throws ParseException 日期parse异常
      */
