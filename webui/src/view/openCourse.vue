@@ -132,6 +132,8 @@ export default {
                     this.searchCondition.course_type_list.push(item.cosCategory)
                     this.searchCondition.teacher_list.push(item.cosTeacher)
                 })
+                this.searchCondition.course_type_list = new Set(this.searchCondition.course_type_list)
+                this.searchCondition.teacher_list = new Set(this.searchCondition.teacher_list)
                 console.log(this.searchCondition.course_type_list)
             }).catch(err => {
                 console.log('获取数据失败：', err)

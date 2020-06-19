@@ -16,7 +16,7 @@ const PersonalCenter = () => import('view/PersonalCenter.vue')
 // 管理员页面
 const SysManager = () => import('view/sysManager.vue')
 const UserManager = () => import('view/userManager.vue')
-const ManagerTofelArticle = () => import('view/managerTofelArticle.vue')
+const ManagerTofelArticle = () => import('view/ManagerTofelArticle.vue')
 const ManagerGroup = () => import('view/managerGroup.vue')
 const OpenCourse = () => import('view/openCourse.vue')
 // const WelfareCastle = () => import('view/welfareCastle.vue')

@@ -26,10 +26,10 @@
                 <!-- <span v-bind:style="color(2)" class="el-dropdown-link">
                     用户管理<i class="el-icon-arrow-down el-icon--right"></i>
                 </span> -->
-                <el-dropdown-menu slot="dropdown">
+                <!-- <el-dropdown-menu slot="dropdown">
                     <el-dropdown-item>讲师管理</el-dropdown-item>
                     <el-dropdown-item>用户管理</el-dropdown-item>
-                </el-dropdown-menu>
+                </el-dropdown-menu> -->
             </el-col>
             <el-col :span="2">
                 <p v-bind:style="color(3)" @click="managerSwitchView(3)">托福人</p>
@@ -56,7 +56,7 @@
         data() {
             return {
                 selectId: 0,
-                isManager: false
+                isManager: true
             }
         },
         methods: {
