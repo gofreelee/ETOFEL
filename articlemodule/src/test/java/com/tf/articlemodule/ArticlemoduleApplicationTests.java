@@ -23,5 +23,17 @@ class ArticlemoduleApplicationTests {
         System.out.println(df.format(new Date()));
     }
 
+    @Test
+    void testAddArticle(){
+        Article article = new Article();
+        article.setArt_id("13");
+        article.setArt_date_time(new Date());
+        article.setArt_img("");
+        article.setArt_text("112313");
+        article.setArt_type("artType");
+        article.setArt_username("artUsername");
+        article.setArt_title("artTitle");
+        as.modifyArticle(article);
+    }
 
 }

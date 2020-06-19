@@ -4,6 +4,7 @@ package sichuan.umbrella.chenmm.mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Component;
 import sichuan.umbrella.chenmm.bean.Course;
+import sichuan.umbrella.chenmm.bean.CourseWithTeacher;
 
 import java.util.List;
 
@@ -77,6 +78,11 @@ public interface CourseMapper {
      */
     Course selectCourseById(@Param("cosId") Integer cosId);
 
+    /***
+     *
+     * 管理员获取所有课程
+     */
+    List<CourseWithTeacher> selectAllCourseInfo();
     List<Integer> selectAllCourseId();
 }
 

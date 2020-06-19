@@ -22,7 +22,14 @@
                 <p v-bind:style="color(1)" @click="managerSwitchView(1)">系统管理</p>
             </el-col>
             <el-col :span="2">
-                <p v-bind:style="color(2)" @click="managerSwitchView(2)">用户管理</p>
+                <p v-bind:style="color(2)" class="el-dropdown-link" @click="managerSwitchView(2)">用户管理</p>
+                <!-- <span v-bind:style="color(2)" class="el-dropdown-link">
+                    用户管理<i class="el-icon-arrow-down el-icon--right"></i>
+                </span> -->
+                <el-dropdown-menu slot="dropdown">
+                    <el-dropdown-item>讲师管理</el-dropdown-item>
+                    <el-dropdown-item>用户管理</el-dropdown-item>
+                </el-dropdown-menu>
             </el-col>
             <el-col :span="2">
                 <p v-bind:style="color(3)" @click="managerSwitchView(3)">托福人</p>
@@ -31,11 +38,11 @@
                 <p v-bind:style="color(4)" @click="managerSwitchView(4)">群组聊天</p>
             </el-col>
             <el-col :span="2">
-                <p v-bind:style="color(5)" @click="managerSwitchView(5)">公开课</p>
+                <p v-bind:style="color(5)" @click="managerSwitchView(5)">学习课程</p>
             </el-col>
-            <el-col :span="2">
+            <!-- <el-col :span="2">
                 <p v-bind:style="color(6)" @click="managerSwitchView(6)">福利城堡</p>
-            </el-col>
+            </el-col> -->
         </el-row>
     </div>
 </template>

@@ -36,10 +36,10 @@
             <el-table-column
                 prop="cosCategory"
                 label="课程分类"
-                width="150">
+                width="100">
             </el-table-column>
             <el-table-column
-                prop="address"
+                prop="cosTeacher"
                 label="讲师"
                 width="160"
                 show-overflow-tooltip>
@@ -51,9 +51,39 @@
                 >
             </el-table-column>
             <el-table-column
+                prop="cosEndDate"
+                label="结束日期"
+                width="160"
+                >
+            </el-table-column>
+            <el-table-column
+                prop="cosStage" 
+                label="上课周期"
+                width="120"
+                >
+            </el-table-column>
+            <el-table-column
                 prop="cosStartTime"
                 label="上课时间"
+                width="120"
                 show-overflow-tooltip>
+            </el-table-column>
+            <el-table-column
+                prop="cosFee"
+                label="课程费用"
+                width="130"
+                >
+            </el-table-column>
+            <el-table-column
+                fixed="right"
+                prop="cosStatus"
+                label="课程状态"
+                width="160"
+                >
+                <template slot-scope="scope">
+                    <p v-if='scope.row.cosStatus === "停课" ' style="color: red;">{{ scope.row.cosStatus }}</p>
+                    <p v-else>{{ scope.row.cosStatus }}</p>
+                </template>
             </el-table-column>
         </el-table>
         <div class="btn_group">
@@ -73,12 +103,15 @@ export default {
             selectedID: [],
             searchCondition: {
                 course_title: '',
-                teacher_list: ['raj', 'pony', 'jack'],
+                teacher_list: [],
                 course_type_list: []
             },
             selectedTeacher: '',
             selectedCourseType: ''
         }
+    },
+    mounted() {
+        this.getDataSource()
     },
     methods: {
         // 勾选 checkbox
@@ -91,12 +124,13 @@ export default {
         },
         // 获取数据源
         getDataSource() {
-            let url =  `/course/course/selectCourseDynamic`
+            let url =  `/course/course/getAllCourseInfo`
             this.$axios(url).then(res => {
                 console.log('数据源：', res)
                 this.tableData = res.data 
                 res.data.forEach(item => {
-                    this.searchCondition.course_type_list.push(item.cosCategory) 
+                    this.searchCondition.course_type_list.push(item.cosCategory)
+                    this.searchCondition.teacher_list.push(item.cosTeacher)
                 })
                 console.log(this.searchCondition.course_type_list)
             }).catch(err => {
@@ -108,12 +142,40 @@ export default {
             console.log(this.searchCondition.course_title)
             console.log(this.selectedTeacher)
             console.log(this.selectedCourseType)
+        },
+        // 关闭
+        _close() {
             console.log(this.selectedID)
+            this.$axios.post( '/course/course/closeCourse', {
+                    cosIds: this.selectedID
+                }
+            ).then(() => {
+                console.log('关闭课程成功！')
+                // 请求成功后刷新数据
+                this.getDataSource()
+            }).catch(err => {
+                console.log('关闭课程失败...', err)
+            })
+        },
+        // 恢复
+        _restore() {
+            console.log(this.selectedID)
+            this.$axios.post( '/course/course/recoverCourse', {
+                    cosIds: this.selectedID
+                }
+            ).then(() => {
+                console.log('恢复课程成功！')
+                // 请求成功后刷新数据
+                this.getDataSource()
+            }).catch(err => {
+                console.log('恢复课程失败...', err)
+            })
+        },
+        // 删除
+        _delete() {
+            // let url = ``
         }
-    },
-    mounted() {
-        this.getDataSource()
-    },
+    }
 }
 </script>
 
@@ -122,9 +184,12 @@ export default {
         width: 70%;
         margin: 0 auto;
         margin-top: 40px;
-        margin-bottom: 100px;
+        margin-bottom: 60px;
     }
     .btn_group {
         margin-top: 15px;
+    }
+    .el-table .warning-row {
+        background: oldlace;
     }
 </style>

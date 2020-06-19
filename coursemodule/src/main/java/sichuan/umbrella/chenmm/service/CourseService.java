@@ -4,6 +4,7 @@ package sichuan.umbrella.chenmm.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import sichuan.umbrella.chenmm.bean.Course;
+import sichuan.umbrella.chenmm.bean.CourseWithTeacher;
 import sichuan.umbrella.chenmm.mapper.CourseMapper;
 
 import java.util.List;
@@ -129,13 +130,16 @@ public class CourseService {
         return courseMapper.selectCourseById(cosId);
     }
 
+    public List<CourseWithTeacher> selectAllCourseInfo() {
+        return courseMapper.selectAllCourseInfo();
+    }
     /**
      * 随机选取need个课程的id进行推荐
      *
      * @param need 需要的数量
      * @return id列表
      */
-    public List<Integer> randomCourseId(int need) {
+    public List<Integer> randomCourseId(int need){
         List<Integer> ids = courseMapper.selectAllCourseId();
         Random random = new Random();
         int range = random.nextInt(ids.size());

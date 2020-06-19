@@ -31,9 +31,11 @@ public class ArticleService {
         articleDao.deleteByArtId(artId);
     }
 
-    public List<Article> selectByArtType(String artType) {
-        return articleDao.selectByArtType(artType);
-    }
+  public List<Article> selectByArtType(String artType) { return articleDao.selectByArtType(artType);  }
+
+  public void modifyArticle(Article article){
+        articleDao.modifyArticle(article);
+  }
 
     public int countArticle() {
         return articleDao.countArticle();

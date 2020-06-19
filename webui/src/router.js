@@ -1,16 +1,5 @@
 import Vue from 'vue';
 import VueRouter from "vue-router";
-// import Home from "./view/Home";
-// import TofelArticle from "./view/TofelArticle";
-// import Group from "./view/Group";
-// import GroupInformation from "./view/GroupInformation";
-// import ChatRoom from "./view/ChatRoom";
-// import ArticleDetail from "./view/ArticleDetail";
-// import Course from "./view/Course";
-// import CourseDetail from "./view/CourseDetail";
-// import Login from "./view/Login";
-// import Register from "./view/Register";
-// import PersonalCenter from "./view/PersonalCenter";
 
 const Home = () => import('view/Home.vue')
 const TofelArticle = () => import('view/TofelArticle.vue')
@@ -27,11 +16,11 @@ const PersonalCenter = () => import('view/PersonalCenter.vue')
 // 管理员页面
 const SysManager = () => import('view/sysManager.vue')
 const UserManager = () => import('view/userManager.vue')
-const ManagerTofelArticle = () => import('view/managerTofelArticle.vue')
+const ManagerTofelArticle = () => import('view/ManagerTofelArticle.vue')
 const ManagerGroup = () => import('view/managerGroup.vue')
 const OpenCourse = () => import('view/openCourse.vue')
-const WelfareCastle = () => import('view/welfareCastle.vue')
-
+// const WelfareCastle = () => import('view/welfareCastle.vue')
+ 
 
 Vue.use(VueRouter);
 
@@ -103,11 +92,11 @@ const routes = [
     {
         path: '/manager-open-course',
         component: OpenCourse
-    },
-    {
-        path: '/manager-welfare-castle',
-        component: WelfareCastle
     }
+    // {
+    //     path: '/manager-welfare-castle',
+    //     component: WelfareCastle
+    // }
 ]
 
 export default new VueRouter({

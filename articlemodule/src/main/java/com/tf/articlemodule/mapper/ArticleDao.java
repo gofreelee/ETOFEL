@@ -18,12 +18,14 @@ public interface ArticleDao {
     @Select("select * from article where art_type=#{artType}")
     List<Article> selectByArtType(String artType);
 
-    @Insert("insert into article(art_id,art_username,art_title,art_date,art_img,art_text,art_type) values(#{artId},#{artUsername},#{artTitle},#{artDate},#{artImg},#{artText},#{artType})")
+    @Insert("insert into article(art_id,art_username,art_title,art_date,art_img,art_text,art_type) values(#{art_id},#{art_username},#{art_title},#{art_date_time},#{art_img},#{art_text},#{art_type})")
     void insert(Article article);
 
     @Delete("delete from article where art_id=#{artId}")
     void deleteByArtId(String artId);
 
+    @Update("update article set art_username=#{art_username} ,art_title=#{art_title}, art_date=#{art_date}, art_img=#{art_img}, art_text=#{art_img}, art_type=#{art_type} where art_id = #{art_id}")
+    void modifyArticle(Article article);
     @Select("select count(*) from article")
     int countArticle();
 
