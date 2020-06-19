@@ -1,12 +1,16 @@
 package chatmodule.service;
 
 import chatmodule.bean.Group;
+import chatmodule.bean.GroupByManagerQuery;
+import chatmodule.bean.GroupInfoQuery;
 import chatmodule.mapper.GroupDao;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
@@ -31,6 +35,7 @@ public class GroupService {
 
     public List<Group> searchByGroupNameLike(String groupName) {
         groupName = "%" + groupName + "%";
+        System.out.println(groupName);
         return groupDao.indistinctiveSelectByName(groupName);
     }
 
@@ -63,4 +68,17 @@ public class GroupService {
         logger.info(list.toString());
         return list.subList(0, need);
     }
+
+    public List<Group> selectGroupByDateAndName(String grpName, String grpCreatetime){
+        if(grpName == null && grpCreatetime == null)
+            return null;
+        if(grpName!=null) {
+            String str = "%" + grpName + "%";
+            return groupDao.selectGroupByDateAndName(str, grpCreatetime);
+        }
+        else
+            return groupDao.selectGroupByDate(grpCreatetime);
+    }
+
+
 }

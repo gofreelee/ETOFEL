@@ -4,6 +4,7 @@ import chatmodule.bean.Group;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 @Repository
@@ -25,4 +26,8 @@ public interface GroupDao {
     List<Group> selectWhoJoin(@Param("gmbUsername") String gmbUsername, @Param("gmbType") String gmbType);
 
     List<Long> selectAllGroupId();
+
+    List<Group> selectGroupByDateAndName(@Param("grpName") String grpName, @Param("grpCreateTime")String grpCreateTime);
+
+    List<Group> selectGroupByDate(@Param("grpCreateTime")String grpCreateTime);
 }

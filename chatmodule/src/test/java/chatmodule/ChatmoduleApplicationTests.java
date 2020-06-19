@@ -8,6 +8,7 @@ import chatmodule.mapper.GroupMemberDao;
 import chatmodule.service.GroupMemberService;
 import chatmodule.service.GroupMessageService;
 import chatmodule.service.GroupService;
+import com.sun.javaws.IconUtil;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -83,7 +84,8 @@ class ChatmoduleApplicationTests {
 
     @Test
     void testGroupSearch() {
-        List<Group> groupList = groupService.searchByGroupNameLike("dev");
+        String str = "托福";
+        List<Group> groupList = groupService.searchByGroupNameLike(str);
 
         for (Group group : groupList) {
             System.out.println(group.toString());
@@ -117,5 +119,13 @@ class ChatmoduleApplicationTests {
         System.out.println(groupMessageService.calculateMessageNum(2));
     }
 
+    @Test
+    void testGroupSelect(){
+        String str = "托福";
+        List<Group> groups = groupService.selectGroupByDateAndName(str,null);
+        for(Group group : groups){
+            System.out.println(group.getGrpName());
+        }
+    }
 
 }
