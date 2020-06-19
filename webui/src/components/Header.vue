@@ -55,7 +55,18 @@
                     if (res.data.information == null) {
                         alert('登录失败');
                     } else {
-                        Vue.prototype.$user = res.data.information;
+                        let information = res.data.information;
+                        if (sessionStorage.getItem("identity") === 'teacher') {
+                            information.usr_username = information.tch_username;
+                            information.usr_nickname = information.tch_name;
+                            information.usr_gender = information.tch_gender;
+                            information.usr_email = information.tch_email;
+                            information.usr_phone = information.tch_phone;
+                            information.usr_birthday = information.tch_birthday;
+                            information.usr_sign = information.tch_description;
+                            information.usr_portrait = information.tch_portrait;
+                        }
+                        Vue.prototype.$user = information;
                         bus.$emit('loginSuccess');
                         router.push({path: '/home'})
                     }
