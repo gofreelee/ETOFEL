@@ -3,8 +3,8 @@
         <el-main>
             <!--轮播台-->
             <el-carousel arrow="always">
-                <el-carousel-item v-for="item in 4" :key="item + '_tag1'">
-                    <h3>dfsdfsfsdf</h3>
+                <el-carousel-item v-for="item in imgUrls" :key="item + '_tag1'">
+                    <el-image :src="item" fit="fill" style="width: 100%; height: 100%"/>
                 </el-carousel-item>
             </el-carousel>
             <el-row type="flex" justify="space-between" align="middle" style="margin-top: 10px">
@@ -16,7 +16,9 @@
                 </el-col>
             </el-row>
             <hr/>
-            <HomeIssue v-for="item in 4" :key="item + '_tag2'"/>
+            <el-row v-for="item in articles" :key="item.art_id">
+                <HomeIssue :article="item"/>
+            </el-row>
         </el-main>
 
         <el-aside style="width: 35%">
@@ -39,7 +41,9 @@
                     <el-button type="text" icon="el-icon-refresh" @click="groupCommend">换一批</el-button>
                 </el-col>
             </el-row>
-            <HomeGroup v-for="item in 4" :key="item + '_tag3'"/>
+            <el-row v-for="item in groups" :key="item.grpId">
+                <HomeGroup :group="item"/>
+            </el-row>
 
             <!--最新公开课-->
             <el-row type="flex" align="middle" style="font-size: 1.3rem; margin-top: 40px">
@@ -50,7 +54,9 @@
                     <el-button type="text" icon="el-icon-refresh" @click="courseCommend">换一批</el-button>
                 </el-col>
             </el-row>
-            <HomeCourse v-for="item in 4" :key="item + '_tag4'"/>
+            <el-row v-for="item in courses" :key="item.cosId">
+                <HomeCourse :course="item"/>
+            </el-row>
         </el-aside>
     </el-container>
 </template>
