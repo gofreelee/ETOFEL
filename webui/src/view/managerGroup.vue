@@ -97,6 +97,7 @@ export default {
             this.$axios(url).then(res => {
                 console.log('数据源：', res)
                 res.data.forEach(item => {
+                    // 日期数据格式化
                     let temp = new Date(item.grpCreateTime)
                     let year = temp.getFullYear()
                     let mounth = temp.getMonth() + 1
@@ -118,9 +119,27 @@ export default {
         onSearch() {
             // let url = ``
         },
-        // 关闭
+        // 删除
         _delete() {
             console.log(this.delete_selected_id)
+            // 要删除到 id 列表
+            let body = { grpIds: this.delete_selected_id }
+            this.$axios({
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                url: '/group/group/deleteGroup',
+                data: JSON.stringify(body)
+            }).then(() => {
+                console.log('删除聊天组成功！')
+                this.delete_selected_id.forEach(item => {
+                    // 数据表删除对应项，表 id 从 1 开始，数据从 0 开始
+                    this.tableData.splice(item - 1, 1)
+                })
+            }).catch(err => {
+                console.log('删除聊天组失败...', err)
+            })
         }
     },
 }
