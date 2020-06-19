@@ -96,6 +96,19 @@ export default {
             let url =  `/group/group/managerGetGroupInfo`
             this.$axios(url).then(res => {
                 console.log('数据源：', res)
+                res.data.forEach(item => {
+                    let temp = new Date(item.grpCreateTime)
+                    let year = temp.getFullYear()
+                    let mounth = temp.getMonth() + 1
+                    if(mounth < 10) {
+                        mounth = `0${mounth}`
+                    }
+                    let date =  temp.getDate()
+                    if(date < 10) {
+                        date = `0${date}`
+                    }
+                    item.grpCreateTime = `${year}-${mounth}-${date}`
+                })
                 this.tableData = res.data
             }).catch(err => {
                 console.log('获取数据失败：', err)
