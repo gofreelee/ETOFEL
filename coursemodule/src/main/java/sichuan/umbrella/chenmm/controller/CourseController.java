@@ -211,6 +211,9 @@ public class CourseController {
      */
     @GetMapping("/selectCourseDynamic")
     public String selectCourseDynamic(String cosTitle, String cosCategory, String cdtTchUsername) {
+        if (cosTitle.equals("")) cosTitle = null;
+        if (cosCategory.equals("")) cosCategory = null;
+        if (cdtTchUsername.equals("")) cdtTchUsername = null;
         List<Course> list = courseService.selectCourseDynamic(cosTitle, cosCategory, cdtTchUsername);
         return gson.toJson(list);
     }

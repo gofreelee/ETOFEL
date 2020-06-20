@@ -90,6 +90,9 @@ public class CourseService {
      * @return 查询的list列表
      */
     public List<Course> selectCourseDynamic(String cosTitle, String cosCategory, String cdtTchUsername) {
+        if (cosTitle != null) cosTitle = "%" + cosTitle + "%";
+        if (cosCategory != null) cosCategory = "%" + cosCategory + "%";
+        if (cdtTchUsername != null) cdtTchUsername = "%" + cdtTchUsername + "%";
         return courseMapper.selectCourseDynamic(cosTitle, cosCategory, cdtTchUsername);
     }
 
