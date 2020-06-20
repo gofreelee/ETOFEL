@@ -1,19 +1,19 @@
 <template>
     <div class="openCourseWrapper">
         <el-form ref="search_form" :inline="true" :model="searchCondition" class="demo-form-inline">
-            <el-form-item label="标题" >
-                <el-input  v-model="searchCondition.course_title" placeholder="标题"></el-input>
+            <el-form-item label="标题">
+                <el-input v-model="searchCondition.course_title" placeholder="标题"></el-input>
             </el-form-item>
             <el-form-item label="发布讲师">
                 <el-select v-model="selectedTeacher" placeholder="发布讲师" >
                     <el-option v-for="(item, index) in searchCondition.teacher_list" :key="index + '_teacher'" :label="item" :value="item"></el-option>
                 </el-select>
             </el-form-item>
-            <!-- <el-form-item label="课程类别">
+            <el-form-item label="课程类别">
                 <el-select v-model="selectedCourseType" placeholder="课程类别">
                     <el-option v-for="(item, index) in searchCondition.course_type_list" :key="index + '_type'" :label="item" :value="item"></el-option>
                 </el-select>
-            </el-form-item> -->
+            </el-form-item>
             <el-form-item>
                 <el-button type="primary" @click="onSearch">查询</el-button>
             </el-form-item>
@@ -26,31 +26,31 @@
                 @selection-change="handleSelectionChange">
             <el-table-column
                 type="selection"
-                width="75"
-                >
+                width="55">
             </el-table-column>
             <el-table-column
-                prop="art_title"
+                prop="cosTitle"
                 label="文章标题"
-                width="220">
+                width="140">
             </el-table-column>
             <el-table-column
-                prop="art_type"
+                prop="cosCategory"
                 label="文章类别"
-                width="220">
+                width="130">
             </el-table-column>
             <el-table-column
-                prop="art_username"
+                prop="cosTeacher"
                 label="发布讲师"
-                width="220"
+                width="130"
                 show-overflow-tooltip>
             </el-table-column>
             <el-table-column
-                prop="art_date"
+                prop="cosStartDate"
                 label="发布时间"
+                width="160"
                 >
             </el-table-column>
-            <!-- <el-table-column
+            <el-table-column
                 prop="cosEndDate"
                 label="收藏人数"
                 width="140"
@@ -60,11 +60,11 @@
                 prop="cosStage" 
                 label="阅读数量"
                 >
-            </el-table-column> -->
+            </el-table-column>
         </el-table>
         <div class="btn_group">
-            <el-button type="success" size="small" @click="_forbidden">禁读</el-button>
-            <el-button type="primary" size="small" @click="_liftTheBan">解禁</el-button>
+            <el-button type="success" size="small" @click="_close">禁读</el-button>
+            <el-button type="primary" size="small" @click="_restore">解禁</el-button>
             <el-button type="danger" size="small" @click="_delete">删除</el-button>
         </div>
     </div>
@@ -76,14 +76,14 @@ export default {
     data() {
         return {
             tableData: [],
-            articleSelectedTitle: [],
+            selectedID: [],
             searchCondition: {
                 course_title: '',
                 teacher_list: [],
-                // course_type_list: []
+                course_type_list: []
             },
             selectedTeacher: '',
-            // selectedCourseType: ''
+            selectedCourseType: ''
         }
     },
     mounted() {
@@ -93,70 +93,18 @@ export default {
         // 勾选 checkbox
         handleSelectionChange(value) {
             console.log(value)
-            this.articleSelectedTitle = []
+            this.selectedID = []
             value.forEach(item => {
-                this.articleSelectedTitle.push(item.art_title)
+                this.selectedID.push(item.cosId)
             })
         },
         // 获取数据源
         getDataSource() {
-            let url =  `/articlemodule/tofel-article/getAllArticle`
-            this.$axios(url).then(res => {
-                console.log('文章数据源：', res)
-                this.tableData = res.data 
-                // 填充查询条件讲师下拉列表
-                res.data.forEach(item => {
-                    // this.searchCondition.course_type_list.push(item.cosCategory)
-                    this.searchCondition.teacher_list.push(item.art_username)
-                    // 日期格式化
-                    let temp = new Date(item.art_date)
-                    let year = temp.getFullYear()
-                    let month = temp.getMonth() + 1
-                    if(month < 10) month = `0${month}`
-                    let date = temp.getDate()
-                    if(date < 10) date = `0${date}`
-                    item.art_date = `${year}-${month}-${date}`
-                }) 
-                // 列表去重复
-                // this.searchCondition.course_type_list = new Set(this.searchCondition.course_type_list)
-                this.searchCondition.teacher_list = new Set(this.searchCondition.teacher_list)
-                console.log(this.searchCondition.course_type_list)
-            }).catch(err => {
-                console.log('获取文章数据失败：', err)
-            })
+            
         },
         // 搜索
         onSearch() {
-            console.log(this.searchCondition.course_title)
-            console.log(this.selectedTeacher)
-        },
-        // 禁读
-        _forbidden() {
-
-        },
-        // 解禁
-        _liftTheBan() {
             
-        }, 
-        // 删除
-        _delete() {
-            // let body = { xxx: this.articleSelectedTitle }
-            // this.$axios({
-            //     method: 'POST',
-            //     headers: {
-            //         'Content-Type': 'application/json'
-            //     },
-            //     url: '',
-            //     data: JSON.stringify(body)
-            // }).then(() => {
-            //     console.log('删除文章成功！')
-            //     // this.articleSelectedTitle.forEach(item => {
-            //     //     // 数据表删除对应项，表 id 从 1 开始，数据从 0 开始
-            //     //     this.tableData.splice(item - 1, 1)
-            //     // })
-            // }).catch(err => {
-            //     console.log('删除文章失败...', err)
-            // })
         }
     }
 }

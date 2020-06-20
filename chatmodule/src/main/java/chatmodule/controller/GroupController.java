@@ -16,10 +16,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.sql.Timestamp;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 
 @RestController
 @RequestMapping("/group")
@@ -194,6 +191,16 @@ public class GroupController {
             idList.add(group.getGrpId());
         }
         return groupMemberService.managerQueryGroupInfo(idList);
+    }
+
+    @RequestMapping(value = "/deleteGroup", method = RequestMethod.POST)
+    public void closeCourseById(@RequestBody Map<String, List<Integer>> grpIdsMap) {
+        List<Integer> grpIds = grpIdsMap.get("grpIds");
+        for (Integer grpId : grpIds) {
+             groupService.deleteGroup(grpId);
+            // courseService.closeCourseById(cosId);
+        }
+        //
     }
 
 }

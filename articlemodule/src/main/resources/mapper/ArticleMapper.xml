@@ -3,4 +3,30 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.tf.articlemodule.mapper.ArticleDao">
 
+
+    <select id="managerSearchArticle" resultMap="Article">
+        SELECT * FROM article
+        <where>
+            <if test="artTitle != null">
+                art_title like #{artTitle}
+            </if>
+            <if test="artTitle != null and artUsername != null">
+                AND art_username=#{artUsername}
+            </if>
+            <if test="artTitle == null and artUsername != null">
+                art_username=#{artUsername}
+            </if>
+        </where>
+    </select>
+
+    <resultMap id="Article" type="com.tf.articlemodule.bean.Article">
+        <id property="art_id" column="art_id"/>
+        <result property="art_username" column="art_username"/>
+        <result property="art_title" column="art_title"/>
+        <result property="art_date" column="art_date"/>
+        <result property="art_img" column="art_img"/>
+        <result property="art_text" column="art_text"/>
+        <result property="art_type" column="art_type"/>
+    </resultMap>
+
 </mapper>

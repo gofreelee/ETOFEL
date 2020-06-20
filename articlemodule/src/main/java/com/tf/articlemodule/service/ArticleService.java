@@ -1,6 +1,7 @@
 package com.tf.articlemodule.service;
 
 import com.tf.articlemodule.bean.Article;
+import com.tf.articlemodule.bean.ManagerQueryArticle;
 import com.tf.articlemodule.mapper.ArticleDao;
 
 import org.apache.ibatis.annotations.Param;
@@ -17,7 +18,7 @@ public class ArticleService {
     @Autowired
     private ArticleDao articleDao;
 
-    public Article getArticle(String artId) {
+    public Article getArticle(long artId) {
         return articleDao.selectByArtId(artId);
     }
 
@@ -29,7 +30,7 @@ public class ArticleService {
         return articleDao.selectAll();
     }
 
-    public void removeArticle(String artId) {
+    public void removeArticle(long artId) {
         articleDao.deleteByArtId(artId);
     }
 
@@ -53,7 +54,7 @@ public class ArticleService {
         }
         List<Article> articles = new ArrayList<>();
         for (int i = 0; i < need; i++) {
-            articles.add(articleDao.selectByArtId(String.valueOf(ids.get(i))));
+            articles.add(articleDao.selectByArtId(ids.get(i)));
         }
         return articles;
     }
@@ -65,4 +66,38 @@ public class ArticleService {
     public List<Article> selectLike(@Param("ulaUsername") String ulaUsername) {
         return articleDao.selectLike(ulaUsername);
     }
+
+    public List<ManagerQueryArticle> managerQueryArticles(){
+        List<Article> articleList = articleDao.selectAll();
+        List<ManagerQueryArticle> managerQueryArticleList = new ArrayList<>();
+        for(Article article : articleList){
+            ManagerQueryArticle managerQueryArticle = new ManagerQueryArticle();
+            managerQueryArticle.setArt_date(article.getArt_date_time());
+            managerQueryArticle.setArt_title(article.getArt_title());
+            managerQueryArticle.setArt_type(article.getArt_type());
+            managerQueryArticle.setArt_username(article.getArt_username());
+            managerQueryArticleList.add(managerQueryArticle);
+        }
+        return managerQueryArticleList;
+    }
+
+    public List<ManagerQueryArticle> managerQueryArticlesDynamic(String artTitle, String artUsername){
+        if(artTitle !=null)
+            artTitle = "%" + artTitle + "%";
+        System.out.println(artTitle + " " + artUsername);
+        List<Article> articleList = articleDao.managerSearchArticle(artTitle,artUsername);
+        List<ManagerQueryArticle> managerQueryArticleList = new ArrayList<>();
+        for(Article article : articleList){
+            ManagerQueryArticle managerQueryArticle = new ManagerQueryArticle();
+            managerQueryArticle.setArt_date(article.getArt_date_time());
+            managerQueryArticle.setArt_title(article.getArt_title());
+            managerQueryArticle.setArt_type(article.getArt_type());
+            managerQueryArticle.setArt_username(article.getArt_username());
+            managerQueryArticleList.add(managerQueryArticle);
+        }
+        return managerQueryArticleList;
+    }
+
+
+
 }
