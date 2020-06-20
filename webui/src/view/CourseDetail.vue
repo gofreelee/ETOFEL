@@ -45,7 +45,7 @@
                 </el-row>
                 <el-row :gutter="20">
                     <el-col :span="6">
-                        <el-button type="danger" style="width: 100%">立刻报名</el-button>
+                        <el-button type="danger" style="width: 100%" @click="joinCourse">立刻报名</el-button>
                     </el-col>
                     <el-col :span="6">
                         <el-button type="primary" plain style="width: 100%" @click="toGroupInformation">查看课程群</el-button>
@@ -117,6 +117,24 @@
                     this.joinNumber = res.data;
                 });
             },
+            joinCourse() {
+                let data = new FormData();
+                data.append('ujcCosId', this.$route.query.course_id);
+                data.append('ujcUsrUsername', sessionStorage.getItem("username"));
+
+                let config = {
+                    method: 'post',
+                    url: '/course/userJoinCourse/joinCourse',
+                    data: data
+                };
+
+                this.$axios(config).then(res => {
+                    console.log(res.data);
+                    alert("加入课程成功")
+                }).catch(function (error) {
+                    console.log(error);
+                });
+            }
         },
         mounted() {
             this.getCourse();
