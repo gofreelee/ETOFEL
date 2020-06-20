@@ -1,7 +1,7 @@
 <template>
     <el-container style="margin-top: 10px">
         <el-aside style="width: 10%; margin-right: 30px">
-            <el-image :src="portrait"></el-image>
+            <el-image :src="portrait"/>
         </el-aside>
         <el-main>
             <el-row type="flex" justify="space-between" align="middle">
@@ -42,6 +42,15 @@
                 this.$axios(config).then(res => {
                     this.nickname = res.data.usr_nickname;
                     this.portrait = res.data.usr_portrait;
+                }).catch(function (error) {
+                    console.log(error);
+                });
+
+                config.url = '/user/teacher/info?tch_username=' + this.message.gmsUsername;
+                this.$axios(config).then(res => {
+                    console.log(res.data);
+                    this.nickname = res.data.tch_name;
+                    this.portrait = res.data.tch_portrait;
                 }).catch(function (error) {
                     console.log(error);
                 });

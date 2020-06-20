@@ -48,11 +48,9 @@ public class ArticleController {
 
 
     @RequestMapping("/getAllArticle")
-    public List<ManagerQueryArticle> getAllArticle(){
+    public List<ManagerQueryArticle> getAllArticle() {
         return articleService.managerQueryArticles();
     }
-
-
 
 
     @RequestMapping("/classArticle/{artType}")
@@ -149,13 +147,13 @@ public class ArticleController {
     }
 
     @RequestMapping("/managerSearchDynamic")
-    public List<ManagerQueryArticle> managerSearch(HttpServletRequest request){
+    public List<ManagerQueryArticle> managerSearch(HttpServletRequest request) {
         String title = request.getParameter("artTitle");
         String username = request.getParameter("artUsername");
-        if(title == null && username == null)
+        if (title == null && username == null)
             return null;
         System.out.println(title + " " + username);
-        return articleService.managerQueryArticlesDynamic(title,username);
+        return articleService.managerQueryArticlesDynamic(title, username);
     }
 
     @GetMapping("/myArticle")

@@ -18,22 +18,23 @@ public class GroupMemberService {
     @Autowired
     GroupDao groupDao;
 
-    public int addMember(GroupMember groupMember){
-       return  groupMemberDao.addGroupMember(groupMember);
+    public int addMember(GroupMember groupMember) {
+        return groupMemberDao.addGroupMember(groupMember);
     }
 
-    public int deleteMember(String gmbUsername){
+    public int deleteMember(String gmbUsername) {
         return groupMemberDao.deleteMember(gmbUsername);
     }
 
-    public GroupInfoQuery queryGroupInfo(long grpId){
+    public GroupInfoQuery queryGroupInfo(long grpId) {
         GroupInfoQuery groupInfoQuery = new GroupInfoQuery();
         Group group = groupDao.selectByGrpID(grpId);
         int membersNum = groupMemberDao.calculateAllMemberNum(grpId);
-        List<MemberQuery>  allMembers = groupMemberDao.selectMemberInfo(grpId);
-        List<MemberQuery>  managers = new ArrayList<>(), members = new ArrayList<>();
-        for(MemberQuery member: allMembers){
-            if(member.getUserType().equals("member"))
+        List<MemberQuery> allMembers = groupMemberDao.selectMemberInfo(grpId);
+        allMembers.addAll(groupMemberDao.selectMemberTeacherInfo(grpId));
+        List<MemberQuery> managers = new ArrayList<>(), members = new ArrayList<>();
+        for (MemberQuery member : allMembers) {
+            if (member.getUserType().equals("member"))
                 members.add(member);
             else
                 managers.add(member);
@@ -45,7 +46,7 @@ public class GroupMemberService {
         return groupInfoQuery;
     }
 
-    public List<MemberQuery> queryGroupByType(long grpId, String gmpType){
+    public List<MemberQuery> queryGroupByType(long grpId, String gmpType) {
         return groupMemberDao.selectMemberByType(grpId, gmpType);
     }
 
@@ -53,9 +54,9 @@ public class GroupMemberService {
     /*
      * 根据id列表，把管理员要的信息搞搞过去
      * */
-    public List<GroupByManagerQuery> managerQueryGroupInfo(List<Long> idList){
+    public List<GroupByManagerQuery> managerQueryGroupInfo(List<Long> idList) {
         List<GroupByManagerQuery> groupByManagerQueries = new ArrayList<>();
-        for(Long id: idList) {
+        for (Long id : idList) {
             GroupByManagerQuery groupByManagerQuery = new GroupByManagerQuery();
             GroupInfoQuery groupInfoQuery = queryGroupInfo(id);
             groupByManagerQuery.setGrpName(groupInfoQuery.getBaseInfo().getGrpName());
@@ -72,7 +73,7 @@ public class GroupMemberService {
     }
 
 
-    public List<GroupByManagerQuery> managerQueryAll(){
+    public List<GroupByManagerQuery> managerQueryAll() {
         return managerQueryGroupInfo(groupDao.selectAllGroupId());
     }
 }

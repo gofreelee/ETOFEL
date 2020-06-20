@@ -113,6 +113,7 @@
                 };
 
                 this.$axios(config).then(res => {
+                    console.log(res.data);
                     this.group = res.data.baseInfo;
                     this.groupMembers = res.data.groupMembers;
                     this.admins = res.data.managers;

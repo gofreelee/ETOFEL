@@ -12,6 +12,7 @@ public interface GroupMemberDao {
     int deleteMember(String gmbUsername);
     int calculateAllMemberNum(long grpId);
     List<MemberQuery> selectMemberInfo(long grpId);
+    List<MemberQuery> selectMemberTeacherInfo(long grpId);
     List<MemberQuery> selectMemberByType(long grpId, String gmbType);
     String findCreator(long grpId);
 }

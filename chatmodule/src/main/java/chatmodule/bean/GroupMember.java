@@ -2,7 +2,7 @@ package chatmodule.bean;
 
 public class GroupMember {
     private String gmbUsername;
-    private long    gmbGroupId;
+    private long gmbGroupId;
     private String gmbType;
 
     public GroupMember(String gmbUsername, long gmbGroupId, String gmbType) {

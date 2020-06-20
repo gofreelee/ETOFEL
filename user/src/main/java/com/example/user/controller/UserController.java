@@ -41,7 +41,7 @@ public class UserController {
     @ResponseBody
     public String userInfo(@RequestParam("usr_username") String usr_username) {
         User user = userService.getUserByUsername(usr_username);
-        logger.info(user.toString());
+        if (user != null) logger.info(user.toString());
         return gson.toJson(user);
     }
 

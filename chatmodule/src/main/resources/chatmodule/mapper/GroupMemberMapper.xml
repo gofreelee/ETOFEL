@@ -18,6 +18,10 @@
         select gmb_username, usr_portrait, gmb_type from group_member naturl join user where gmb_grp_id = #{grpId} and gmb_username = usr_username
     </select>
 
+    <select id="selectMemberTeacherInfo"  resultType="chatmodule.bean.MemberQuery">
+        select gmb_username, tch_portrait, gmb_type from group_member, teacher where gmb_grp_id = #{grpId} and gmb_username = tch_username
+    </select>
+
     <select id="selectMemberByType" resultType="chatmodule.bean.MemberQuery">
         select gmb_username, usr_portrait, gmb_type from group_member naturl join user where gmb_grp_id = #{grpId} and gmb_username = usr_username and gmb_type = #{gmbType}
     </select>

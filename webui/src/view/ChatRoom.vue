@@ -3,7 +3,7 @@
         <el-main>
             <el-row type="flex" align="middle">
                 <el-col :span="4">
-                    <el-image :src="group.grpPortrait" fit="fill"></el-image>
+                    <el-image :src="group.grpPortrait" fit="fill"/>
                 </el-col>
                 <el-col :span="14" :push="1">
                     <p style="font-size: 2rem; font-weight: bold">{{group.grpName}}</p>
