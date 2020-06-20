@@ -64,7 +64,7 @@ export default {
                 course_title: '',
                 teacher_list: []
             },
-            selectedTeacher: ''
+            selectedTeacher: 'nihao'
         }
     },
     mounted() {
@@ -81,7 +81,7 @@ export default {
         },
         // 获取数据源
         getDataSource() {
-            let url =  `/articlemodule/tofel-article/getAllArticle`
+            let url =  `/article/tofel-article/getAllArticle`
             this.$axios(url).then(res => {
                 console.log('文章数据源：', res)
                 this.tableData = res.data 
@@ -106,21 +106,28 @@ export default {
         },
         // 搜索
         onSearch() {
-            let url =  `/articlemodule/tofel-article/managerSearchDynamic`
-            let data = { artUsername: this.selectedTeacher, artTitle: this.searchCondition.course_title }
-            this.$axios({url, data}).then(res => {
+            let url =  `/article/tofel-article/managerSearchDynamic`
+            console.log(this.selectedTeacher, this.searchCondition.course_title)
+            this.$axios.get(url, {
+                params: {
+                    artUsername: this.selectedTeacher,
+                    artTitle: this.searchCondition.course_title
+                }
+            }).then(res => {
                 console.log('文章数据源：', res)
-                this.tableData = res.data 
-                res.data.forEach(item => {
-                    // 日期格式化
-                    let temp = new Date(item.art_date)
-                    let year = temp.getFullYear()
-                    let month = temp.getMonth() + 1
-                    if(month < 10) month = `0${month}`
-                    let date = temp.getDate()
-                    if(date < 10) date = `0${date}`
-                    item.art_date = `${year}-${month}-${date}`
-                }) 
+                if(res) {
+                    this.tableData = res.data 
+                    res.data.forEach(item => {
+                        // 日期格式化
+                        let temp = new Date(item.art_date)
+                        let year = temp.getFullYear()
+                        let month = temp.getMonth() + 1
+                        if(month < 10) month = `0${month}`
+                        let date = temp.getDate()
+                        if(date < 10) date = `0${date}`
+                        item.art_date = `${year}-${month}-${date}`
+                    }) 
+                }
             }).catch(err => {
                 console.log('获取文章数据失败：', err)
             })
