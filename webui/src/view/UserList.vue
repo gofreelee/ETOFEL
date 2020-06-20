@@ -124,17 +124,16 @@ export default {
             let url =  `/login/userlist/userlist`
             this.$axios.get(url, {
                 params: {
-                    username: '',
                     state: 'normal'
                 }
             }).then(res1 => {
+                console.log(res1.data);
                 total_list = res1.data
             }).catch(err => {
                 console.log('获取失败', err)
             })
             this.$axios.get(url, {
                 params: {
-                    username: '',
                     state: 'frozen'
                 }
             }).then(res2 => {

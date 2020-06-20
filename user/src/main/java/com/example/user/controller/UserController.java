@@ -45,7 +45,6 @@ public class UserController {
         return gson.toJson(user);
     }
 
-
     @PostMapping("/update")
     public String update(@RequestParam("usr_username") String usr_username,
                          @RequestParam("usr_nickname") String usr_nickname,

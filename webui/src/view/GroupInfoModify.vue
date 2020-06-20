@@ -3,11 +3,21 @@
         <el-main>
             <el-row style="padding-top: 100px; padding-left: 40px" class="group-info-title">
                 <el-col :span="4">
-                    <el-image :src="group.grpPortrait" style="width: 100%; height: 200px" fit="fill" alt="群头像"/>
+                    <el-upload
+                            class="avatar-uploader"
+                            action="##"
+                            :show-file-list="false"
+                            :on-success="handleAvatarSuccess"
+                            :before-upload="beforeAvatarUpload">
+                        <img v-if="group.grpPortrait" :src="group.grpPortrait" class="avatar" alt="portrait">
+                        <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+                    </el-upload>
                 </el-col>
                 <el-col :span="14" :push="1">
                     <el-row style="font-weight: bold; font-size: 2.8rem">
-                        {{group.grpName}}
+                        <el-col :span="16">
+                            <el-input  v-model="group.grpName"/>
+                        </el-col>
                     </el-row>
                     <el-row style="margin-top: 10px; margin-bottom: 20px">
                         建群时间: {{group.grpCreateTime}}
@@ -16,21 +26,18 @@
                         {{groupMembers}}人已加入
                     </el-row>
                     <el-row>
-                        {{group.grpType}}
+                        <el-select v-model="group.grpType">
+                            <el-option label="名师课堂群" value="名师课堂群"></el-option>
+                            <el-option label="同城群" value="同城群"></el-option>
+                            <el-option label="结伴备考群" value="结伴备考群"></el-option>
+                        </el-select>
                     </el-row>
                 </el-col>
                 <el-col :span="4">
                     <el-row type="flex" justify="center" style="margin-top: 20px">
-                        <el-button type="primary" icon="el-icon-chat-dot-round" v-if="isMember" @click="toChatRoom">
-                            进群聊天
+                        <el-button type="primary" icon="el-icon-chat-dot-round" @click="toChatRoom">
+                            确认修改
                         </el-button>
-                        <el-button type="primary" icon="el-icon-chat-dot-round" v-else>申请加群</el-button>
-                    </el-row>
-                    <el-row type="flex" justify="center" style="margin-top: 20px" v-if="isAdmin">
-                        <el-button type="warning" icon="el-icon-chat-dot-round" @click="toGroupInfoModify">修改群信息</el-button>
-                    </el-row>
-                    <el-row type="flex" justify="center" style="margin-top: 20px" v-if="isMember">
-                        <el-button type="danger" icon="el-icon-chat-dot-round">退出该群</el-button>
                     </el-row>
                 </el-col>
             </el-row>
@@ -42,7 +49,7 @@
                     <img src="../assets/qzl_CyInfoDl.png" style="object-fit: fill" alt="分割图片"/>
                 </el-col>
                 <el-col :span="18">
-                    {{group.grpDescription}}
+                    <el-input type="textarea" :rows="6" v-model="group.grpDescription"/>
                 </el-col>
             </el-row>
             <el-row type="flex" align="middle" style="margin-top: 30px">
@@ -53,7 +60,7 @@
                     <img src="../assets/qzl_CyInfoDl.png" style="object-fit: fill" alt="分割图片"/>
                 </el-col>
                 <el-col :span="18">
-                    {{group.grpRule}}
+                    <el-input type="textarea" :rows="6" v-model="group.grpRule"/>
                 </el-col>
             </el-row>
             <el-row class="admin-title">
@@ -90,7 +97,7 @@
     import router from "../router";
 
     export default {
-        name: "GroupInformation",
+        name: "GroupInfoModify",
         data() {
             return {
                 grpId: '',
@@ -98,8 +105,6 @@
                 groupMembers: '',
                 admins: [],
                 members: [],
-                isAdmin: false,
-                isMember: false
             }
         },
         methods: {
@@ -126,23 +131,27 @@
                     console.log(error);
                 });
             },
-            isMemberOrAdmin() {
-                let username = sessionStorage.getItem("username");
-                if (username == null) return;
-                for (let i = 0; i < this.admins.length; i++) {
-                    if (username === this.admins[i].gmbUsername) {
-                        this.isAdmin = true;
-                        this.isMember = true;
-                        return;
-                    }
+            handleAvatarSuccess(res, file) {
+                this.group.grpPortrait = URL.createObjectURL(file.raw);
+            },
+            beforeAvatarUpload(file) {
+                const isJPG = file.type === 'image/jpeg';
+                const isLt2M = file.size / 1024 / 1024 < 2;
+
+                if (!isJPG) {
+                    this.$message.error('上传头像图片只能是 JPG 格式!');
                 }
-                for (let i = 0; i < this.members.length; i++) {
-                    if (username === this.members[i].gmbUsername) {
-                        this.isAdmin = false;
-                        this.isMember = true;
-                        return;
-                    }
+                if (!isLt2M) {
+                    this.$message.error('上传头像图片大小不能超过 2MB!');
                 }
+
+                let self = this;
+                let fileReader = new FileReader();
+                fileReader.readAsDataURL(file);
+                fileReader.onload = function (e) {
+                    self.group.grpPortrait = e.target.result;
+                }
+                return isJPG && isLt2M;
             }
         },
         mounted() {
@@ -171,5 +180,33 @@
         font-size: 2rem;
         background: url("../assets/classInfo_Button.png") 0 -195px no-repeat;
         padding-left: 10px;
+    }
+
+    .avatar-uploader {
+        width: 250px;
+        border: 1px dashed #d9d9d9;
+        border-radius: 6px;
+        cursor: pointer;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .avatar-uploader:hover {
+        border-color: #409EFF;
+    }
+
+    .avatar-uploader-icon {
+        font-size: 28px;
+        color: #8c939d;
+        width: 250px;
+        height: 200px;
+        line-height: 200px;
+        text-align: center;
+    }
+
+    .avatar {
+        width: 250px;
+        height: 200px;
+        display: block;
     }
 </style>

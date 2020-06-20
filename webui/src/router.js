@@ -1,5 +1,6 @@
 import Vue from 'vue';
 import VueRouter from "vue-router";
+
 // 用户页面
 const Home = () => import('view/Home.vue')
 const TofelArticle = () => import('view/TofelArticle.vue')
@@ -12,6 +13,7 @@ const CourseDetail = () => import('view/CourseDetail.vue')
 const Login = () => import('view/Login.vue')
 const Register = () => import('view/Register.vue')
 const PersonalCenter = () => import('view/PersonalCenter.vue')
+const GroupInfoModify =() => import("view/GroupInfoModify")
 
 // 管理员页面
 const SysManager = () => import('view/SysManager.vue')
@@ -43,7 +45,11 @@ const routes = [
     {
         path: '/group/group-information',
         component: GroupInformation
-    }, 
+    },
+    {
+        path: '/group/group-info-modify',
+        component: GroupInfoModify
+    },
     {
         path: '/group/chat-room',
         component: ChatRoom

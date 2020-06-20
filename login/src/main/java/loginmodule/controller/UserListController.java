@@ -26,67 +26,55 @@ public class UserListController {
 
     /**
      * 系统管理-用户列表
-     *  根据选则的用户和状态显示用户列表
+     * 根据选则的用户和状态显示用户列表
+     *
      * @param username 用户名
-     * @param state 用户的状态：normal（正常）/frozen（冻结）
+     * @param state    用户的状态：normal（正常）/frozen（冻结）
      * @return 用户列表json
      */
     @GetMapping("/userlist")
-    public String userList(String username, @RequestParam("state") String state){
-
-        List<User> users = userManageService.selectUserByUNAndState(username,state);
+    public String userList(String username, @RequestParam("state") String state) {
+        List<User> users = userManageService.selectUserByUNAndState(username, state);
         return gson.toJson(users);
     }
 
     /**
      * 系统管理-用户列表
-     *  冻结选中的用户
-     * @param username 用户名
-     * @return 被冻结的用户json
+     * 冻结选中的用户
+     *
+     * @param usernames 用户名
      */
     @GetMapping("/updateUserToFrozen")
-    public String updateUserToFrozen(@RequestParam("username") String username){
-        int result = userManageService.updateStaToFrozen(username);
-        User user;
-        if(result == 1) {
-            user = userManageService.selectUserByUsername(username);
-            return gson.toJson(user);
+    public void updateUserToFrozen(@RequestParam("usernames") List<String> usernames) {
+        for (String username : usernames) {
+            userManageService.updateStaToFrozen(username);
         }
-        else return null;
     }
 
     /**
      * 系统管理-用户列表
-     *  解冻选中的用户
-     * @param username 用户名
-     * @return 被解冻的用户json
+     * 解冻选中的用户
+     *
+     * @param usernames 用户名
      */
     @GetMapping("/updateUserToNormal")
-    public String updateUserToNormal(@RequestParam("username") String username){
-        int result = userManageService.updateStaToNormal(username);
-        User user;
-        if(result == 1) {
-            user = userManageService.selectUserByUsername(username);
-            return gson.toJson(user);
+    public void updateUserToNormal(@RequestParam("usernames") List<String> usernames) {
+        for (String username : usernames) {
+            userManageService.updateStaToNormal(username);
         }
-        else return null;
     }
 
     /**
      * 系统管理-用户列表
-     *  删除被选中的用户
-     * @param username 用户名
-     * @return 被删除的用户json
+     * 删除被选中的用户
+     *
+     * @param usernames 用户名
      */
     @GetMapping("/deleteUser")
-    public String deleteUser(@RequestParam("username") String username){
-
-        User user = userManageService.selectUserByUsername(username);
-        int result = userManageService.deleteUser(username);
-        if(result == 1) {
-            return gson.toJson(user);
+    public void deleteUser(@RequestParam("usernames") List<String> usernames) {
+        for (String username : usernames) {
+            userManageService.deleteUser(username);
         }
-        else return null;
     }
 }
 
