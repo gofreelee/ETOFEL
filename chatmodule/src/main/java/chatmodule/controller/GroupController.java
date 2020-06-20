@@ -38,7 +38,7 @@ public class GroupController {
     private final Logger logger = LoggerFactory.getLogger(GroupController.class);
 
     @GetMapping("/selectByGrpID")
-    public Group selectByGrpID(int grpId) {
+    public Group selectByGrpID(long grpId) {
         logger.info("查询group_id=" + grpId);
         return groupService.selectByGrpID(grpId);
     }

@@ -4,7 +4,7 @@
             <el-row type="flex" align="middle" class="header-first" style="text-align: center">
                 <el-col :span="2" :offset="5" @click.native="selectCourseType(0)"
                         v-bind:class="{'course-type-select': courseTypeList[0]}">
-                    公益商城
+                    公益课程
                 </el-col>
                 <el-col :span="2" @click.native="selectCourseType(1)"
                         v-bind:class="{'course-type-select': courseTypeList[1]}">

@@ -23,7 +23,7 @@
                 <el-button type="primary" plain @click="toCourseDetail">课程明细</el-button>
             </el-row>
             <el-row>
-                <el-button type="primary" plain v-if="status.ujcStatus === '已支付'">退课</el-button>
+                <el-button type="primary" plain v-if="status.ujcStatus === '已支付'">我要退课</el-button>
                 <el-button type="primary" plain v-if="status.ujcStatus === '未支付'">付款</el-button>
             </el-row>
         </el-aside>

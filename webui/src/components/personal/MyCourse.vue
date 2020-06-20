@@ -3,7 +3,7 @@
         <el-main>
             <el-tabs v-model="tabName" type="card">
 
-                <el-tab-pane label="我的公开课" name="myCourse">
+                <el-tab-pane label="我的课程" name="myCourse">
                     <el-row v-for="item in courseShowed" :key="item.cosId">
                         <CourseItem :course="item"/>
                     </el-row>
@@ -15,7 +15,7 @@
                     </el-row>
                 </el-tab-pane>
 
-                <el-tab-pane label="发布公开课" name="publish" v-if="isTeacher">
+                <el-tab-pane label="发布课程" name="publish" v-if="isTeacher">
                     <el-row class="info" type="flex" align="middle">
                         <el-col :span="3">
                             课程标题：

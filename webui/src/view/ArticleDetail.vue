@@ -60,7 +60,7 @@
             <!--最新公开课-->
             <el-row type="flex" align="middle" style="font-size: 1.3rem; margin-top: 40px">
                 <el-col :span="18">
-                    最新公开课
+                    最新课程
                 </el-col>
                 <el-col :span="6">
                     <el-button type="text" icon="el-icon-refresh" @click="courseCommend">换一批</el-button>
