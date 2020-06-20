@@ -120,12 +120,29 @@ export default {
         },
         // 获取数据源
         getDataSource() {
-            let url =  `/course/course/getAllCourseInfo`
-            this.$axios(url).then(res => {
-                console.log('数据源：', res)
+            let total_list = []
+            let url =  `/login/userlist/userlist`
+            this.$axios.get(url, {
+                params: {
+                    username: '',
+                    state: 'normal'
+                }
+            }).then(res1 => {
+                total_list = res1.data
             }).catch(err => {
-                console.log('获取数据失败：', err)
+                console.log('获取失败', err)
             })
+            this.$axios.get(url, {
+                params: {
+                    username: '',
+                    state: 'frozen'
+                }
+            }).then(res2 => {
+                total_list.concat(res2.data)
+            }).catch(err => {
+                console.log('获取失败', err)
+            })
+            this.tableData = total_list
         },
         // 搜索
         onSearch() {
