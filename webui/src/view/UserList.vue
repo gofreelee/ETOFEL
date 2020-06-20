@@ -5,13 +5,8 @@
                 <el-input v-model="searchCondition.user_name" placeholder="用户名"></el-input>
             </el-form-item>
             <el-form-item label="状态">
-                <el-select v-model="status" placeholder="状态" >
-                    <el-option v-for="(item, index) in searchCondition.teacher_list" :key="index + '_status'" :label="item" :value="item"></el-option>
-                </el-select>
-            </el-form-item>
-            <el-form-item label="等级">
-                <el-select v-model="level" placeholder="等级">
-                    <el-option v-for="(item, index) in searchCondition.course_type_list" :key="index + '_level'" :label="item" :value="item"></el-option>
+                <el-select v-model="selectedState" placeholder="状态" >
+                    <el-option v-for="(item, index) in ['normal', 'frozen']" :key="index + '_status'" :label="item" :value="item"></el-option>
                 </el-select>
             </el-form-item>
             <el-form-item>
@@ -29,60 +24,47 @@
                 width="65">
             </el-table-column>
             <el-table-column
-                prop="cosTitle"
+                prop="usr_portrait"
                 label="头像"
                 width="80">
+                <template slot-scope="scope">
+                    <el-avatar :src="scope.row.usr_portrait"></el-avatar>
+                </template>
             </el-table-column>
             <el-table-column
-                prop="cosCategory"
+                prop="usr_nickname"
                 label="用户名称"
                 width="120">
             </el-table-column>
             <el-table-column
-                prop="性别"
-                label="讲师"
+                prop="usr_gender"
+                label="性别"
                 width="120"
                 show-overflow-tooltip>
             </el-table-column>
             <el-table-column
-                prop="cosStartDate"
+                prop="usr_email"
                 label="邮箱"
                 width="180"
                 >
             </el-table-column>
             <el-table-column
-                prop="cosEndDate"
+                prop="usr_phone"
                 label="电话"
                 width="170"
                 >
             </el-table-column>
             <el-table-column
-                prop="cosStage" 
+                prop="usr_birthday" 
                 label="出生日期"
                 width="130"
                 >
             </el-table-column>
             <el-table-column
-                prop="cosStartTime"
-                label="注册日期"
-                width="130"
-                show-overflow-tooltip>
-            </el-table-column>
-            <el-table-column
-                prop="cosFee"
-                label="等级"
-                width="100"
-                >
-            </el-table-column>
-            <el-table-column
                 fixed="right"
-                prop="cosStatus"
+                prop="usr_state"
                 label="状态"
                 >
-                <template slot-scope="scope">
-                    <p v-if='scope.row.cosStatus === "停课" ' style="color: red;">{{ scope.row.cosStatus }}</p>
-                    <p v-else>{{ scope.row.cosStatus }}</p>
-                </template>
             </el-table-column>
         </el-table>
         <div class="btn_group">
@@ -98,25 +80,35 @@ export default {
     name: 'openCourse',
     data() {
         return {
-            tableData: [],
-            selectedID: [],
+            tableData: [
+                { usr_nickname: '112', usr_username: 'raj1' },
+                { usr_nickname: '3113', usr_username: 'raj2' },
+                { usr_nickname: '11', usr_username: 'raj3' },
+                { usr_nickname: '3121', usr_username: 'raj4' },
+                { usr_nickname: '141', usr_username: 'raj5' }
+            ],
             searchCondition: {
                 user_name: '',
-                user_status: [],
-                user_level: []
+                user_state: []
             },
-            selectedStatus: '',
-            selectedLevel: '',
-            // selectedList: ''
+            selectedState: '',
+            selectedList: [],
+            selectedUserName: []
         }
     },
     mounted() {
-        this.getDataSource()
+        // this.getDataSource()
     },
     methods: {
         // 勾选 checkbox
         handleSelectionChange(value) {
             console.log(value)
+            this.selectedList = value
+            this.selectedUserName = []
+            value.forEach(item => {
+                this.selectedUserName.push(item.usr_username)
+            })
+            console.log(this.selectedUserName)
         },
         // 获取数据源
         getDataSource() {
@@ -141,6 +133,15 @@ export default {
             }).catch(err => {
                 console.log('获取失败', err)
             })
+            total_list.forEach(item => {
+                let temp = new Date(item.usr_birthday)
+                let year = temp.getFullYear()
+                let month = temp.getMonth() + 1
+                if(month < 10) month = `0${month}`
+                let date = temp.getDate()
+                if(date < 10) date = `0${date}`
+                item.usr_birthday = `${year}-${month}-${date}`
+            })
             this.tableData = total_list
         },
         // 搜索
@@ -149,45 +150,51 @@ export default {
         },
         // 冷冻
         _freezing() {
-            // let body = { cosIds: this.selectedID }
-            // this.$axios({
-            //     method: 'POST',
-            //     headers: {
-            //         'Content-Type': 'application/json'
-            //     },
-            //     url: '/course/course/closeCourse',
-            //     data: JSON.stringify(body)
-            // }).then(() => {
-            //     console.log('关闭课程成功！')
-            //     this.selectedID.forEach(item => {
-            //         this.tableData[item - 1].cosStatus = '停课'
-            //     })
-            // }).catch(err => {
-            //     console.log('关闭课程失败...', err)
-            // })
+            let body = { usernames: this.selectedUserName }
+            this.$axios({
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                url: '/login/userlist/updateUserToFrozen',
+                data: JSON.stringify(body)
+            }).then(() => {
+                console.log('冷冻用户成功！')
+            }).catch(err => {
+                console.log('冷冻用户失败...', err)
+            })
         },
         // 解冻
-        _restore() {
-            // let body = { cosIds: this.selectedID }
-            // this.$axios({
-            //     method: 'POST',
-            //     headers: {
-            //         'Content-Type': 'application/json'
-            //     },
-            //     url: '/course/course/recoverCourse',
-            //     data: JSON.stringify(body)
-            // }).then(() => {
-            //     console.log('恢复课程成功！')
-            //     this.selectedID.forEach(item => {
-            //         this.tableData[item - 1].cosStatus = '报名中'
-            //     })
-            // }).catch(err => {
-            //     console.log('恢复课程失败...', err)
-            // })
+        _thaw() {
+            let body = { usernames: this.selectedUserName }
+            this.$axios({
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                url: '/login/userlist/updateUserToNormal',
+                data: JSON.stringify(body)
+            }).then(() => {
+                console.log('解冻成功成功！')
+            }).catch(err => {
+                console.log('解冻失败...', err)
+            })
         },
         // 删除
         _delete() {
-            // let url = ``
+            let body = { usernames: this.selectedUserName }
+            this.$axios({
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                url: '/login/userlist/deleteUser',
+                data: JSON.stringify(body)
+            }).then(() => {
+                console.log('删除成功!')
+            }).catch(err => {
+                console.log('删除失败...', err)
+            })
         }
     }
 }
