@@ -20,3 +20,6 @@ spring:
 
 mybatis:
   mapper-locations: classpath:mapper/*.xml
+feign:
+  httpclient:
+    enabled: true

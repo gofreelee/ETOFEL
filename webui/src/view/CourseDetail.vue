@@ -48,7 +48,7 @@
                         <el-button type="danger" style="width: 100%">立刻报名</el-button>
                     </el-col>
                     <el-col :span="6">
-                        <el-button type="primary" plain style="width: 100%">查看课程群</el-button>
+                        <el-button type="primary" plain style="width: 100%" @click="toGroupInformation">查看课程群</el-button>
                     </el-col>
                 </el-row>
             </el-main>
@@ -71,6 +71,7 @@
 <script>
     import CourseDescription from "../components/course/CourseDescription";
     import TeacherDescription from "../components/course/TeacherDescription";
+    import router from "../router";
 
     export default {
         name: "CourseDetail",
@@ -88,6 +89,9 @@
             }
         },
         methods: {
+            toGroupInformation() {
+                router.push({path: '/group/group-information', query: {group_id: this.courseDetail.cdtGrpId}})
+            },
             getCourse() {
                 let url = "/course/course/getCourseByCosId?cosId=" + this.$route.query.course_id;
                 this.$axios.get(url).then(res => {

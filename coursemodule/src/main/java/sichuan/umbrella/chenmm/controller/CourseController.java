@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import sichuan.umbrella.chenmm.bean.Course;
 import sichuan.umbrella.chenmm.bean.CourseDetail;
 import sichuan.umbrella.chenmm.bean.CourseWithTeacher;
+import sichuan.umbrella.chenmm.bean.Group;
 import sichuan.umbrella.chenmm.remote.GroupRemote;
 import sichuan.umbrella.chenmm.service.CourseDetailService;
 import sichuan.umbrella.chenmm.service.CourseService;
@@ -159,7 +160,12 @@ public class CourseController {
         course.setCosStage("每天");
         course.setCosStatus("报名中");
 
-        String grpId = groupRemote.createGroup("名师课堂群", cosTitle + "课堂群", "", "", cdtPortrait, cdtTchUsername);
+        Group group = new Group();
+        group.setGrpType("名师课堂群");
+        group.setGrpName(cosTitle + "课堂群");
+        group.setGrpPortrait(cdtPortrait);
+        group.setGrpCreator(cdtTchUsername);
+        String grpId = groupRemote.createGroup(group);
 
         CourseDetail courseDetail = new CourseDetail();
         courseDetail.setCdtCosId(id);
@@ -213,8 +219,6 @@ public class CourseController {
      * 管理员功能——按照课程id恢复课程，根据当前日期和目标课程的开课日记做比较，调整课程状态为报名或者开课
      *
      * @param cosIdsMap：课程id
-     * @return Json
-
      * @throws ParseException 日期parse异常
      */
     @RequestMapping(value = "/recoverCourse", method = RequestMethod.POST)
@@ -252,11 +256,10 @@ public class CourseController {
         List<Integer> cosIds = cosIdMap.get("cosIds");
         for (Integer cosId : cosIds) {
             System.out.println(cosId);
-           // courseService.closeCourseById(cosId);
+            // courseService.closeCourseById(cosId);
         }
         //
     }
-
 
 
 }

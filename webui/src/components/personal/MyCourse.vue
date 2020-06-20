@@ -179,7 +179,7 @@
         computed: {
             courseShowed() {
                 let index = this.currentPage - 1;
-                return this.course.slice(index * 4, index * 4 + 4);
+                return this.course.slice(index * 5, index * 5 + 5);
             }
         },
         methods: {

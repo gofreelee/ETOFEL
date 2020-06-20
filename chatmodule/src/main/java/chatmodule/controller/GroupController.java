@@ -168,6 +168,18 @@ public class GroupController {
         else return "0";
     }
 
+    @PostMapping("/createGroup2")
+    public String createGroup(@RequestBody Group group) {
+        long id = SnowflakeIdWorker.getInstance().nextId();
+        group.setGrpId(id);
+        group.setGrpCreateTime(new Timestamp(new Date().getTime()));
+        group.setGrpStatus("正常");
+        GroupMember groupMember = new GroupMember(group.getGrpCreator(), id, "manager");
+        if (groupService.createGroup(group) == 1 && groupMemberService.addMember(groupMember) == 1)
+            return String.valueOf(id);
+        else return "0";
+    }
+
 
     /*
      * 管理员获取群组信息
@@ -197,7 +209,7 @@ public class GroupController {
     public void closeCourseById(@RequestBody Map<String, List<Integer>> grpIdsMap) {
         List<Integer> grpIds = grpIdsMap.get("grpIds");
         for (Integer grpId : grpIds) {
-             groupService.deleteGroup(grpId);
+            groupService.deleteGroup(grpId);
             // courseService.closeCourseById(cosId);
         }
         //

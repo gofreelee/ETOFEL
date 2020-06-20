@@ -18,9 +18,9 @@
             <el-col :offset="4" :span="2">
                 <p v-bind:style="color(0)" @click="managerSwitchView(0)">首页</p>
             </el-col>
-            <el-col :span="2">
-                <p v-bind:style="color(1)" @click="managerSwitchView(1)">系统管理</p>
-            </el-col>
+<!--            <el-col :span="2">-->
+<!--                <p v-bind:style="color(1)" @click="managerSwitchView(1)">系统管理</p>-->
+<!--            </el-col>-->
             <el-col :span="2">
                 <!-- <p v-bind:style="color(2)" class="el-dropdown-link" @click="managerSwitchView(2)">用户管理</p> -->
                 <el-menu text-color="#fff" 

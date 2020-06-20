@@ -21,3 +21,7 @@ spring:
 mybatis:
   mapper-locations: classpath:chatmodule/mapper/*.xml
   type-aliases-package: chatmodule.bean
+
+feign:
+  httpclient:
+    enabled: true
