@@ -71,8 +71,18 @@
                     <el-row>
                         <el-image :src="item.userPortrait"/>
                     </el-row>
-                    <el-row style="text-align: center">
+                    <el-row style="text-align: center; padding: 5px 0 15px 0">
                         {{item.gmbUsername}}
+                    </el-row>
+                    <el-row>
+                        <el-col :span="10">
+                            <el-button type="success" @click="updateMemberType(item.gmbUsername, 'manager')">同意
+                            </el-button>
+                        </el-col>
+                        <el-col :span="10" :push="4">
+                            <el-button type="danger" @click="updateMemberType(item.gmbUsername, 'member')">拒绝
+                            </el-button>
+                        </el-col>
                     </el-row>
                 </el-col>
             </el-row>
@@ -151,7 +161,26 @@
                 }).catch(function (error) {
                     console.log(error);
                 });
+            },
+            updateMemberType(username, type) {
+                let data = new FormData();
+                data.append('gmbUsername', username);
+                data.append('gmbGrpId', this.grpId);
+                data.append('gmbType', type);
 
+                let config = {
+                    method: 'post',
+                    url: '/group/group-member/updateMemberType',
+                    data: data
+                };
+
+                this.$axios(config).then(res => {
+                    console.log(res.data);
+                    this.getTobeManager();
+                    this.getTobeMember();
+                }).catch(function (error) {
+                    console.log(error);
+                });
             },
             handleAvatarSuccess(res, file) {
                 this.group.grpPortrait = URL.createObjectURL(file.raw);

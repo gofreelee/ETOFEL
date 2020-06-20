@@ -37,5 +37,9 @@
         select gmb_username from group_member where gmb_type='creator' and gmb_grp_id = #{grpId}
     </select>
 
-
+    <update id="updateMemberType">
+        update group_member set gmb_type = #{gmbType}
+        where gmb_username = #{gmbUsername}
+            and gmb_grp_id = #{gmbGrpId}
+    </update>
 </mapper>

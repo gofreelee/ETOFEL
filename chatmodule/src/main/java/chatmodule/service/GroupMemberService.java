@@ -3,6 +3,7 @@ package chatmodule.service;
 import chatmodule.bean.*;
 import chatmodule.mapper.GroupDao;
 import chatmodule.mapper.GroupMemberDao;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -36,7 +37,7 @@ public class GroupMemberService {
         for (MemberQuery member : allMembers) {
             if (member.getUserType().equals("member"))
                 members.add(member);
-            else
+            else if (member.getUserType().equals("manager"))
                 managers.add(member);
         }
         groupInfoQuery.setBaseInfo(group);
@@ -74,5 +75,9 @@ public class GroupMemberService {
 
     public List<GroupByManagerQuery> managerQueryAll() {
         return managerQueryGroupInfo(groupDao.selectAllGroupId());
+    }
+
+    public void updateMemberType(String gmbUsername, long gmbGrpId, String gmbType) {
+        groupMemberDao.updateMemberType(gmbUsername, gmbGrpId, gmbType);
     }
 }

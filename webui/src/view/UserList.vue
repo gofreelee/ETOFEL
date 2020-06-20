@@ -113,8 +113,19 @@ export default {
                     state: 'normal'
                 }
             }).then(res1 => {
+                total_list.concat(res1.data);
+                total_list.forEach(item => {
+                    let temp = new Date(item.usr_birthday)
+                    let year = temp.getFullYear()
+                    let month = temp.getMonth() + 1
+                    if(month < 10) month = `0${month}`
+                    let date = temp.getDate()
+                    if(date < 10) date = `0${date}`
+                    item.usr_birthday = `${year}-${month}-${date}`
+                })
                 console.log(res1.data);
-                total_list = res1.data
+                console.log(total_list);
+                this.tableData = total_list
             }).catch(err => {
                 console.log('获取失败', err)
             })
@@ -123,20 +134,20 @@ export default {
                     state: 'frozen'
                 }
             }).then(res2 => {
-                total_list.concat(res2.data)
+                total_list.concat(res2.data);
+                total_list.forEach(item => {
+                    let temp = new Date(item.usr_birthday)
+                    let year = temp.getFullYear()
+                    let month = temp.getMonth() + 1
+                    if(month < 10) month = `0${month}`
+                    let date = temp.getDate()
+                    if(date < 10) date = `0${date}`
+                    item.usr_birthday = `${year}-${month}-${date}`
+                })
+                this.tableData = total_list
             }).catch(err => {
                 console.log('获取失败', err)
             })
-            total_list.forEach(item => {
-                let temp = new Date(item.usr_birthday)
-                let year = temp.getFullYear()
-                let month = temp.getMonth() + 1
-                if(month < 10) month = `0${month}`
-                let date = temp.getDate()
-                if(date < 10) date = `0${date}`
-                item.usr_birthday = `${year}-${month}-${date}`
-            })
-            this.tableData = total_list
         },
         // 搜索
         onSearch() {

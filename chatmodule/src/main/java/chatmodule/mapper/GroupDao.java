@@ -27,7 +27,7 @@ public interface GroupDao {
 
     List<Long> selectAllGroupId();
 
-    List<Group> selectGroupByDateAndName(@Param("grpName") String grpName, @Param("grpCreateTime")String grpCreateTime);
+    List<Group> selectGroupByDateAndName(@Param("grpName") String grpName, @Param("grpCreateTime") String grpCreateTime);
 
-    List<Group> selectGroupByDate(@Param("grpCreateTime")String grpCreateTime);
+    List<Group> selectGroupByDate(@Param("grpCreateTime") String grpCreateTime);
 }
