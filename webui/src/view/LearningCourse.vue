@@ -89,7 +89,6 @@
         <div class="btn_group">
             <el-button type="success" size="small" @click="_close">关闭</el-button>
             <el-button type="primary" size="small" @click="_restore">恢复</el-button>
-            <el-button type="danger" size="small" @click="_delete">删除</el-button>
         </div>
     </div>
 </template>
@@ -143,12 +142,12 @@ export default {
         },
         // 搜索
         onSearch() {
-            let url =  `/course/course/slectCourseDynamic`
+            let url =  `/course/course/selectCourseDynamic`
             this.$axios.get(url, {
                 params: {
                     cosTitle: this.searchCondition.course_title,
-                    cosCategory: this.selectedTeacher,
-                    cdtTchUsername: this.selectedCourseType
+                    cosCategory: this.selectedCourseType,
+                    cdtTchUsername: this.selectedTeacher
                 }
             }).then(res => {
                 console.log('文章数据源：', res)
@@ -196,10 +195,6 @@ export default {
             }).catch(err => {
                 console.log('恢复课程失败...', err)
             })
-        },
-        // 删除
-        _delete() {
-            // let url = ``
         }
     }
 }
