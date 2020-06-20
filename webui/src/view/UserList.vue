@@ -106,36 +106,49 @@ export default {
         },
         // 获取数据源
         getDataSource() {
-            let total_list = []
-            let url =  `/login/userlist/userlist`
-            this.$axios.get(url, {
-                params: {
-                    state: 'normal'
-                }
-            }).then(res1 => {
-                total_list = res1.data
-            }).catch(err => {
-                console.log('获取失败', err)
-            })
-            this.$axios.get(url, {
-                params: {
-                    state: 'frozen'
-                }
-            }).then(res2 => {
-                total_list.concat(res2.data)
-            }).catch(err => {
-                console.log('获取失败', err)
-            })
-            total_list.forEach(item => {
-                let temp = new Date(item.usr_birthday)
-                let year = temp.getFullYear()
-                let month = temp.getMonth() + 1
-                if(month < 10) month = `0${month}`
-                let date = temp.getDate()
-                if(date < 10) date = `0${date}`
-                item.usr_birthday = `${year}-${month}-${date}`
-            })
-            this.tableData = total_list
+            function getData1() {
+                return this.$axios.get(`/login/userlist/userlist`, { params: { state: 'normal' } })
+            }
+            function getData2() {
+                return this.$axios.get(`/login/userlist/userlist`, { params: { state: 'frozen' } })
+            }
+            let temp = []
+            this.$axios.all([getData1(), getData2()])
+                .then(this.$axios.spread(function(res1, res2) {
+                    console.log(res1, res2)
+                    temp = temp.concat(res1).concat(res2)
+                }))
+            console.log(temp)
+            // let total_list = []
+            // let url =  `/login/userlist/userlist`
+            // this.$axios.get(url, {
+            //     params: {
+            //         state: 'normal'
+            //     }
+            // }).then(res1 => {
+            //     total_list = res1.data
+            // }).catch(err => {
+            //     console.log('获取失败', err)
+            // })
+            // this.$axios.get(url, {
+            //     params: {
+            //         state: 'frozen'
+            //     }
+            // }).then(res2 => {
+            //     total_list.concat(res2.data)
+            // }).catch(err => {
+            //     console.log('获取失败', err)
+            // })
+            // total_list.forEach(item => {
+            //     let temp = new Date(item.usr_birthday)
+            //     let year = temp.getFullYear()
+            //     let month = temp.getMonth() + 1
+            //     if(month < 10) month = `0${month}`
+            //     let date = temp.getDate()
+            //     if(date < 10) date = `0${date}`
+            //     item.usr_birthday = `${year}-${month}-${date}`
+            // })
+            // this.tableData = total_list
         },
         // 搜索
         onSearch() {
