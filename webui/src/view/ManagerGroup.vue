@@ -8,6 +8,7 @@
                 <el-date-picker
                     v-model="searchCondition.searchDate"
                     type="date"
+                    value-format="yyyy-MM-dd"
                     placeholder="选择日期">
                 </el-date-picker>
             </el-form-item>
@@ -72,7 +73,7 @@ export default {
         return {
             searchCondition: {
                 group_title: '',
-                searchDate: ''
+                searchDate: null
             },
             tableData: [],
             delete_selected_id: [],
@@ -117,19 +118,12 @@ export default {
         },
         // 查询
         onSearch() {
-            let temp = new Date(this.searchCondition.searchDate)
-            let year = temp.getFullYear()
-            let month = temp.getMonth() + 1
-            if(month < 10) month = `0${month}`
-            let date = temp.getDate()
-            if(date < 10) date = `0${date}`
-            let result = `${year}-${month}-${date}`
-            console.log(this.searchCondition.group_title, result)
+            console.log(this.searchCondition.group_title, this.searchCondition.searchDate)
             let url =  `/group/group/queryGroupByNameAndDate`
             this.$axios.get(url, {
                 params: {
                     grpName: this.searchCondition.group_title,
-                    grpDate: result
+                    grpDate: this.searchCondition.searchDate
                 }
             }).then(res => {
                 console.log('搜索成功：', res)
