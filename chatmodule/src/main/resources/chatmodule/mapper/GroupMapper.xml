@@ -15,8 +15,13 @@
     </delete>
 
     <update id="modifyGroupInfo">
-        update `group` set grp_name = #{grpName}, grp_description = #{grpDescription}, grp_rule = #{grpRule}, grp_portrait = #{grpPortrait},
-        grp_status = #{grpStatus} where grp_id = #{grpId}
+        update `group` set
+        grp_name = #{grpName},
+        grp_description = #{grpDescription},
+        grp_rule = #{grpRule},
+        grp_portrait = #{grpPortrait},
+        grp_type = #{grpType}
+        where grp_id = #{grpId}
     </update>
 
     <select id="indistinctiveSelectByName" resultMap="Group">

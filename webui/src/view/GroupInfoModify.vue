@@ -35,7 +35,7 @@
                 </el-col>
                 <el-col :span="4">
                     <el-row type="flex" justify="center" style="margin-top: 20px">
-                        <el-button type="primary" icon="el-icon-chat-dot-round" @click="toChatRoom">
+                        <el-button type="primary" icon="el-icon-chat-dot-round" @click="modifyInformation">
                             确认修改
                         </el-button>
                     </el-row>
@@ -141,7 +141,6 @@
                 };
 
                 this.$axios(config).then(res => {
-                    console.log(res.data);
                     this.group = res.data.baseInfo;
                     this.groupMembers = res.data.groupMembers;
                 }).catch(function (error) {
@@ -185,9 +184,30 @@
                 };
 
                 this.$axios(config).then(res => {
-                    console.log(res.data);
+                    console.log('修改成员状态', res.data);
                     this.getTobeManager();
                     this.getTobeMember();
+                }).catch(function (error) {
+                    console.log(error);
+                });
+            },
+            modifyInformation() {
+                let data = new FormData();
+                data.append('grpId', this.grpId);
+                data.append('grpName', this.group.grpName);
+                data.append('grpDescription', this.group.grpDescription);
+                data.append('grpRule', this.group.grpRule);
+                data.append('grpType', this.group.grpType);
+                data.append('grpPortrait', this.group.grpPortrait);
+                let config = {
+                    method: 'post',
+                    url: '/group/group/modifyGroupInfo',
+                    data: data
+                };
+
+                this.$axios(config).then(res => {
+                    console.log('修改群信息', res.data);
+                    alert("修改成功")
                 }).catch(function (error) {
                     console.log(error);
                 });

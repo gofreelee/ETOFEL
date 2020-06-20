@@ -27,10 +27,8 @@
                         <el-button type="primary" icon="el-icon-chat-dot-round" v-else>申请加群</el-button>
                     </el-row>
                     <el-row type="flex" justify="center" style="margin-top: 20px" v-if="isAdmin">
-                        <el-button type="warning" icon="el-icon-chat-dot-round" @click="toGroupInfoModify">修改群信息</el-button>
-                    </el-row>
-                    <el-row type="flex" justify="center" style="margin-top: 20px" v-if="isMember">
-                        <el-button type="danger" icon="el-icon-chat-dot-round">退出该群</el-button>
+                        <el-button type="warning" icon="el-icon-chat-dot-round" @click="toGroupInfoModify">修改群信息
+                        </el-button>
                     </el-row>
                 </el-col>
             </el-row>
@@ -125,6 +123,25 @@
                 }).catch(function (error) {
                     console.log(error);
                 });
+            },
+            joinGroup() {
+                let data = new FormData();
+                data.append('gmbUsername', sessionStorage.getItem("username"));
+                data.append('gmbGrpId', this.grpId);
+
+                let config = {
+                    method: 'post',
+                    url: '/group/group-member/addGroupMember',
+                    data: data
+                };
+
+                this.$axios(config).then(function (response) {
+                    console.log(JSON.stringify(response.data));
+                    alert("申请成功，等待管理员确认")
+                }).catch(function (error) {
+                    console.log(error);
+                });
+
             },
             isMemberOrAdmin() {
                 let username = sessionStorage.getItem("username");

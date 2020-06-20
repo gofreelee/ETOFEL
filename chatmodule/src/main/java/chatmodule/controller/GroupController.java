@@ -21,7 +21,6 @@ import java.util.*;
 @RestController
 @RequestMapping("/group")
 public class GroupController {
-
     @Autowired
     GroupService groupService;
     @Autowired
@@ -52,6 +51,11 @@ public class GroupController {
             groups.add(groupService.selectByGrpID(aLong));
         }
         return gson.toJson(groups);
+    }
+
+    @PostMapping("/modifyGroupInfo")
+    public int modifyGroupInfo(Group group) {
+        return groupService.modifyGroupInfo(group);
     }
 
     /**
@@ -118,7 +122,6 @@ public class GroupController {
         String gmpType = request.getParameter("gmpType");
         return gson.toJson(groupMemberService.queryGroupByType(grpId, gmpType));
     }
-
 
 
     @RequestMapping(value = "/sendMessage", method = RequestMethod.POST)
