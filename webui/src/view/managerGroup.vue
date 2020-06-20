@@ -96,6 +96,20 @@ export default {
             let url =  `/group/group/managerGetGroupInfo`
             this.$axios(url).then(res => {
                 console.log('数据源：', res)
+                res.data.forEach(item => {
+                    // 日期数据格式化
+                    let temp = new Date(item.grpCreateTime)
+                    let year = temp.getFullYear()
+                    let mounth = temp.getMonth() + 1
+                    if(mounth < 10) {
+                        mounth = `0${mounth}`
+                    }
+                    let date =  temp.getDate()
+                    if(date < 10) {
+                        date = `0${date}`
+                    }
+                    item.grpCreateTime = `${year}-${mounth}-${date}`
+                })
                 this.tableData = res.data
             }).catch(err => {
                 console.log('获取数据失败：', err)
@@ -103,13 +117,51 @@ export default {
         },
         // 查询
         onSearch() {
-            // let url = ``
+            let url = ``
+            this.$axios(url).then(res => {
+                console.log('查询结果：', res)
+                res.data.forEach(query_item => {
+                    // 日期数据格式化
+                    let temp = new Date(query_item.grpCreateTime)
+                    let year = temp.getFullYear()
+                    let mounth = temp.getMonth() + 1
+                    if(mounth < 10) {
+                        mounth = `0${mounth}`
+                    }
+                    let date =  temp.getDate()
+                    if(date < 10) {
+                        date = `0${date}`
+                    }
+                    query_item.grpCreateTime = `${year}-${mounth}-${date}`
+                })
+                this.tableData = res.data
+            }).catch(err => {
+                console.log('查询失败：', err)
+            })
         },
-        // 关闭
+        // 删除
         _delete() {
             console.log(this.delete_selected_id)
+            // 要删除到 id 列表
+            let body = { grpIds: this.delete_selected_id }
+            this.$axios({
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                url: '/group/group/deleteGroup',
+                data: JSON.stringify(body)
+            }).then(() => {
+                console.log('删除聊天组成功！')
+                this.delete_selected_id.forEach(item => {
+                    // 数据表删除对应项，表 id 从 1 开始，数据从 0 开始
+                    this.tableData.splice(item - 1, 1)
+                })
+            }).catch(err => {
+                console.log('删除聊天组失败...', err)
+            })
         }
-    },
+    }
 }
 </script>
 

@@ -149,9 +149,6 @@ export default {
         },
         // 关闭
         _close() {
-            console.log(this.selectedID)
-            console.log(this.tableData)
-            // let url = `/course/course/closeCourse`
             let body = { cosIds: this.selectedID }
             this.$axios({
                 method: 'POST',
