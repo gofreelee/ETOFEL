@@ -42,4 +42,10 @@
         where gmb_username = #{gmbUsername}
             and gmb_grp_id = #{gmbGrpId}
     </update>
+
+    <select id="getGroupMember" resultType="chatmodule.bean.GroupMember">
+        select * from group_member
+        where gmb_username = #{gmbUsername}
+            and gmb_grp_id = #{gmbGrpId}
+    </select>
 </mapper>

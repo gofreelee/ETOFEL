@@ -90,12 +90,22 @@
                 申请加群：
             </el-row>
             <el-row :gutter="20">
-                <el-col :span="2" v-for="item in members" :key="item.gmbUsername" style="margin-top: 20px">
+                <el-col :span="3" v-for="item in members" :key="item.gmbUsername" style="margin-top: 20px">
                     <el-row>
                         <el-image :src="item.userPortrait"/>
                     </el-row>
-                    <el-row style="text-align: center">
+                    <el-row style="text-align: center; padding: 5px 0 15px 0">
                         {{item.gmbUsername}}
+                    </el-row>
+                    <el-row>
+                        <el-col :span="10">
+                            <el-button type="success" @click="updateMemberType(item.gmbUsername, 'member')">同意
+                            </el-button>
+                        </el-col>
+                        <el-col :span="10" :push="4">
+                            <el-button type="danger" @click="updateMemberType(item.gmbUsername, 'reject')">拒绝
+                            </el-button>
+                        </el-col>
                     </el-row>
                 </el-col>
             </el-row>

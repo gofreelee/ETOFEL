@@ -51,7 +51,6 @@ public class GroupMemberService {
         return groupMemberDao.selectMemberByType(grpId, gmpType);
     }
 
-
     /*
      * 根据id列表，把管理员要的信息搞搞过去
      * */
@@ -79,5 +78,9 @@ public class GroupMemberService {
 
     public void updateMemberType(String gmbUsername, long gmbGrpId, String gmbType) {
         groupMemberDao.updateMemberType(gmbUsername, gmbGrpId, gmbType);
+    }
+
+    public GroupMember getGroupMember(String gmbUsername, long gmbGrpId) {
+        return groupMemberDao.getGroupMember(gmbUsername, gmbGrpId);
     }
 }

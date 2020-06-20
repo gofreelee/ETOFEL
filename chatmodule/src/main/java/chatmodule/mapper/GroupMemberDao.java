@@ -10,11 +10,20 @@ import java.util.List;
 @Repository
 public interface GroupMemberDao {
     int addGroupMember(GroupMember groupMember);
+
     int deleteMember(String gmbUsername);
+
     int calculateAllMemberNum(long grpId);
+
     List<MemberQuery> selectMemberInfo(long grpId);
+
     List<MemberQuery> selectMemberTeacherInfo(long grpId);
+
     List<MemberQuery> selectMemberByType(long grpId, String gmbType);
+
     String findCreator(long grpId);
+
     void updateMemberType(@Param("gmbUsername") String gmbUsername, @Param("gmbGrpId") long gmbGrpId, @Param("gmbType") String gmbType);
+
+    GroupMember getGroupMember(@Param("gmbUsername") String gmbUsername, @Param("gmbGrpId") long gmbGrpId);
 }

@@ -106,19 +106,21 @@ export default {
         },
         // 获取数据源
         getDataSource() {
+            let self = this;
             function getData1() {
-                return this.$axios.get(`/login/userlist/userlist`, { params: { state: 'normal' } })
+                return self.$axios.get(`/login/userlist/userlist`, { params: { state: 'normal' } })
             }
             function getData2() {
-                return this.$axios.get(`/login/userlist/userlist`, { params: { state: 'frozen' } })
+                return self.$axios.get(`/login/userlist/userlist`, { params: { state: 'frozen' } })
             }
             let temp = []
             this.$axios.all([getData1(), getData2()])
                 .then(this.$axios.spread(function(res1, res2) {
                     console.log(res1, res2)
-                    temp = temp.concat(res1).concat(res2)
+                    temp = temp.concat(res1.data).concat(res2.data)
+                    self.tableData = temp;
+                    console.log(self.tableData)
                 }))
-            console.log(temp)
             // let total_list = []
             // let url =  `/login/userlist/userlist`
             // this.$axios.get(url, {
