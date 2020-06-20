@@ -11,11 +11,18 @@
     </delete>
 
     <select id="calculateAllMemberNum" resultType="int">
-        select count(*)from group_member where gmb_grp_id=#{grpId}
+        select count(*)
+        from group_member
+        where gmb_grp_id=#{grpId}
+            and (gmb_type = 'member' or gmb_type = 'tobeManager' or gmb_type = 'manager')
     </select>
 
     <select id="selectMemberInfo"  resultType="chatmodule.bean.MemberQuery">
-        select gmb_username, usr_portrait, gmb_type from group_member naturl join user where gmb_grp_id = #{grpId} and gmb_username = usr_username
+        select gmb_username, usr_portrait, gmb_type
+        from group_member naturl join user
+        where gmb_grp_id = #{grpId}
+            and gmb_username = usr_username
+            and (gmb_type = 'member' or gmb_type = 'tobeManager' or gmb_type = 'manager')
     </select>
 
     <select id="selectMemberTeacherInfo"  resultType="chatmodule.bean.MemberQuery">

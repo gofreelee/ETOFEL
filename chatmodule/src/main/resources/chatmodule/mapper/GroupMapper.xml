@@ -35,7 +35,10 @@
     </select>
 
     <select id="countGroupMembers" resultType="Integer">
-        select count(*) from group_member where gmb_grp_id = #{grpId}
+        select count(*)
+        from group_member
+        where gmb_grp_id = #{grpId}
+            and (gmb_type = 'member' or gmb_type = 'tobeManager' or gmb_type = 'manager')
     </select>
 
     <select id="selectWhoJoin" resultMap="Group">

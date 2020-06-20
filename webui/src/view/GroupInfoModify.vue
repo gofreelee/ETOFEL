@@ -139,6 +139,18 @@
                 }).catch(function (error) {
                     console.log(error);
                 });
+            },
+            getTobeMember() {
+                let config = {
+                    method: 'get',
+                    url: '/group/group/searchMember?grpId=' + this.grpId + '&gmpType=tobeMember',
+                };
+
+                this.$axios(config).then(res => {
+                    this.members = res.data
+                }).catch(function (error) {
+                    console.log(error);
+                });
 
             },
             handleAvatarSuccess(res, file) {
@@ -168,6 +180,7 @@
             this.grpId = this.$route.query.group_id;
             this.getInformation();
             this.getTobeManager();
+            this.getTobeMember();
         }
     }
 </script>

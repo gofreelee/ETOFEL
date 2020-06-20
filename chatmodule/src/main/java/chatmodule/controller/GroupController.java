@@ -112,12 +112,11 @@ public class GroupController {
         return groupMemberService.queryGroupInfo(grpId);
     }
 
-
     @RequestMapping("/searchMember")
-    public List<MemberQuery> searchMember(HttpServletRequest request) {
+    public String searchMember(HttpServletRequest request) {
         long grpId = Long.parseLong(request.getParameter("grpId"));
         String gmpType = request.getParameter("gmpType");
-        return groupMemberService.queryGroupByType(grpId, gmpType);
+        return gson.toJson(groupMemberService.queryGroupByType(grpId, gmpType));
     }
 
     @RequestMapping(value = "/sendMessage", method = RequestMethod.POST)
