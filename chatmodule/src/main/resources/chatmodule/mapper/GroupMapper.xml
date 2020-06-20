@@ -45,25 +45,26 @@
     </select>
 
 
-
     <select id="selectAllGroupId" resultType="Long">
         select grp_id from `group`
     </select>
 
     <select id="selectGroupByDateAndName" resultMap="Group">
         select * from `group`
-        <if test= "grpName != null">
+        <if test="grpName != null">
             where grp_name like #{grpName}
         </if>
 
-        <if test= "grpCreateTime != null">
-            and grp_create_time = #{grpCreateTime}
+        <if test="grpCreateTime != null">
+            and grp_create_time
+            between #{grpCreateTime} and date_add(#{grpCreateTime}, interval 1 day)
         </if>
 
     </select>
 
     <select id="selectGroupByDate" resultMap="Group">
-        select * from `group` where grp_create_time=#{grpCreateTime}
+        select * from `group` where grp_create_time
+        between #{grpCreateTime} and date_add(#{grpCreateTime}, interval 1 day)
     </select>
 
     <resultMap id="Group" type="chatmodule.bean.Group">

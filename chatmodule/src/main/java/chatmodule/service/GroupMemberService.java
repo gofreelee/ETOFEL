@@ -67,7 +67,6 @@ public class GroupMemberService {
             groupByManagerQuery.setGrpCreator(groupMemberDao.findCreator(id));
             groupByManagerQuery.setGrpId(id);
             groupByManagerQueries.add(groupByManagerQuery);
-
         }
         return groupByManagerQueries;
     }

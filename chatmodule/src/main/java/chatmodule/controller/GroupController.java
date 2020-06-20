@@ -192,12 +192,12 @@ public class GroupController {
         return groupMemberService.managerQueryAll();
     }
 
+
     /**
      * 根据名称和时间来查询
      */
-
     @RequestMapping("/queryGroupByNameAndDate")
-    public List<GroupByManagerQuery> queryGroupByNameAndDate(HttpServletRequest request) {
+    public String queryGroupByNameAndDate(HttpServletRequest request) {
         String name = request.getParameter("grpName");
         String date = request.getParameter("grpDate");
         List<Long> idList = new ArrayList<>();
@@ -205,7 +205,7 @@ public class GroupController {
         for (Group group : groupByManagerQueries) {
             idList.add(group.getGrpId());
         }
-        return groupMemberService.managerQueryGroupInfo(idList);
+        return gson.toJson(groupMemberService.managerQueryGroupInfo(idList));
     }
 
     @RequestMapping(value = "/deleteGroup", method = RequestMethod.POST)

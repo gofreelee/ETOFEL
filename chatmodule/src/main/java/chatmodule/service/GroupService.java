@@ -70,15 +70,15 @@ public class GroupService {
     }
 
     public List<Group> selectGroupByDateAndName(String grpName, String grpCreatetime){
-        if(grpName == null && grpCreatetime == null)
+        if(grpName == null && grpCreatetime == null){
             return null;
+        }
         if(grpName!=null) {
             String str = "%" + grpName + "%";
             return groupDao.selectGroupByDateAndName(str, grpCreatetime);
         }
-        else
+        else {
             return groupDao.selectGroupByDate(grpCreatetime);
+        }
     }
-
-
 }

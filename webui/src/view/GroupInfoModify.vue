@@ -16,7 +16,7 @@
                 <el-col :span="14" :push="1">
                     <el-row style="font-weight: bold; font-size: 2.8rem">
                         <el-col :span="16">
-                            <el-input  v-model="group.grpName"/>
+                            <el-input v-model="group.grpName"/>
                         </el-col>
                     </el-row>
                     <el-row style="margin-top: 10px; margin-bottom: 20px">
@@ -124,12 +124,22 @@
                     console.log(res.data);
                     this.group = res.data.baseInfo;
                     this.groupMembers = res.data.groupMembers;
-                    this.admins = res.data.managers;
-                    this.members = res.data.members;
-                    this.isMemberOrAdmin();
                 }).catch(function (error) {
                     console.log(error);
                 });
+            },
+            getTobeManager() {
+                let config = {
+                    method: 'get',
+                    url: '/group/group/searchMember?grpId=' + this.grpId + '&gmpType=tobeManager',
+                };
+
+                this.$axios(config).then(res => {
+                    this.admins = res.data
+                }).catch(function (error) {
+                    console.log(error);
+                });
+
             },
             handleAvatarSuccess(res, file) {
                 this.group.grpPortrait = URL.createObjectURL(file.raw);
@@ -157,6 +167,7 @@
         mounted() {
             this.grpId = this.$route.query.group_id;
             this.getInformation();
+            this.getTobeManager();
         }
     }
 </script>
