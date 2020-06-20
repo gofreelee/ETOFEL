@@ -14,11 +14,7 @@ public class UserJoinCourse {
     }
 
     public boolean noNullValue() {
-        if (getUjcCosId() == null || getUjcUsrUsername() == null || getUjcStatus() == null) {
-            return false;
-        } else {
-            return true;
-        }
+        return getUjcCosId() != null && getUjcUsrUsername() != null && getUjcStatus() != null;
     }
 
     public Integer getUjcCosId() {

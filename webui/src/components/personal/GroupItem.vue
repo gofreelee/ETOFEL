@@ -31,13 +31,14 @@
                     <el-button type="primary" plain @click="toGroupInformation">群信息</el-button>
                 </el-col>
                 <el-col :span="4" v-if="!isAdmin">
-                    <el-button type="primary" plain>申请做管理员</el-button>
+                    <el-button type="primary" plain @click="updateMemberType(username, 'tobeManager')">申请做管理员
+                    </el-button>
                 </el-col>
                 <el-col :span="4" v-if="isAdmin">
-                    <el-button type="primary" plain>退出管理员</el-button>
+                    <el-button type="primary" plain @click="updateMemberType(username, 'member')">退出管理员</el-button>
                 </el-col>
                 <el-col :span="4" v-if="!isAdmin">
-                    <el-button type="primary" plain>退出群</el-button>
+                    <el-button type="primary" plain @click="updateMemberType(username, 'reject')">退出群</el-button>
                 </el-col>
                 <el-col :span="4" v-if="isAdmin">
                     <el-button type="primary" plain>解散群</el-button>
@@ -59,7 +60,8 @@
         },
         data() {
             return {
-                groupMembers: 0
+                groupMembers: 0,
+                username: ''
             }
         },
         methods: {
@@ -80,10 +82,30 @@
                 }).catch(function (error) {
                     console.log(error);
                 });
+            },
+            updateMemberType(username, type) {
+                let data = new FormData();
+                data.append('gmbUsername', username);
+                data.append('gmbGrpId', this.group.grpId);
+                data.append('gmbType', type);
+
+                let config = {
+                    method: 'post',
+                    url: '/group/group-member/updateMemberType',
+                    data: data
+                };
+
+                this.$axios(config).then(res => {
+                    console.log('修改成员状态', res.data);
+                    alert("请求成功")
+                }).catch(function (error) {
+                    console.log(error);
+                });
             }
         },
         mounted() {
             this.getGroupMemberNumber();
+            this.username = sessionStorage.getItem("username");
         }
     }
 </script>

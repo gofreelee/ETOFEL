@@ -6,10 +6,8 @@ import org.omg.PortableInterceptor.INACTIVE;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.*;
 import sichuan.umbrella.chenmm.bean.UserJoinCourse;
 import sichuan.umbrella.chenmm.service.UserJoinCourseService;
 
@@ -37,7 +35,7 @@ public class UserJoinCourseController {
     }
 
     @GetMapping("getJoinedStatus")
-    public String getJoinedStatus(@RequestParam("ujcCosId") String ujcCosId,
+    public String getJoinedStatus(@RequestParam("ujcCosId") Integer ujcCosId,
                                   @RequestParam("ujcUsrUsername") String ujcUsrUsername) {
         UserJoinCourse userJoinCourse = userJoinCourseService.getJoinedStatus(ujcCosId, ujcUsrUsername);
         logger.info("查询我的课程状态：" + gson.toJson(userJoinCourse));
@@ -86,5 +84,16 @@ public class UserJoinCourseController {
         /*}else{
              return "payFalse"
         }*/
+    }
+
+    @Transactional
+    @PostMapping("/joinCourse")
+    public void joinCourse(@RequestParam("ujcCosId") Integer ujcCosId, @RequestParam("ujcUsrUsername") String ujcUsrUsername) {
+        logger.info(ujcUsrUsername + "加入课程" + ujcCosId);
+        UserJoinCourse userJoinCourse = userJoinCourseService.getJoinedStatus(ujcCosId, ujcUsrUsername);
+        if (userJoinCourse == null) {
+            userJoinCourseService.insertUserUnpaidOrder(ujcCosId, ujcUsrUsername);
+        }
+        userJoinCourseService.updateUserStatusToPaid(ujcCosId, ujcUsrUsername);
     }
 }

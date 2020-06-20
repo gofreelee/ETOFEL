@@ -1,7 +1,7 @@
 <template>
     <el-container class="container">
         <el-aside style="padding-top: 20px; padding-bottom: 20px;">
-            <img :src="courseDetail.cdtPortrait" style="width: 300px; height: 200px"/>
+            <img :src="courseDetail.cdtPortrait" style="width: 300px; height: 200px" alt="图片"/>
             <el-row style="text-align: center">
                 RMB : {{course.cosFee}}
             </el-row>
@@ -30,7 +30,7 @@
                 <el-button type="primary" plain @click="toCourseDetail(course.cosId)">课程详情</el-button>
             </el-row>
             <el-row class="course-choice">
-                <el-button type="primary" plain>我要学习</el-button>
+                <el-button type="primary" plain @click="joinCourse">我要学习</el-button>
             </el-row>
         </el-aside>
     </el-container>
@@ -64,6 +64,24 @@
                 let url = "/course/userJoinCourse/countCourseJoin?ujcCosId=" + this.course.cosId;
                 this.$axios.get(url).then(res => {
                     this.joinNumber = res.data;
+                });
+            },
+            joinCourse() {
+                let data = new FormData();
+                data.append('ujcCosId', this.course.cosId);
+                data.append('ujcUsrUsername', sessionStorage.getItem("username"));
+
+                let config = {
+                    method: 'post',
+                    url: '/course/userJoinCourse/joinCourse',
+                    data: data
+                };
+
+                this.$axios(config).then(res => {
+                    console.log(res.data);
+                    alert("加入课程成功")
+                }).catch(function (error) {
+                    console.log(error);
                 });
             }
         },

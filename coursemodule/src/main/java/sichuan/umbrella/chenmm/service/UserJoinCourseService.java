@@ -69,9 +69,7 @@ public class UserJoinCourseService {
      * @param ujcUsrUsername 用户名
      * @return UserJoinCourse实体类
      */
-    public UserJoinCourse getJoinedStatus(@Param("ujc_cos_id") String ujcCosId, @Param("ujc_usr_username") String ujcUsrUsername) {
+    public UserJoinCourse getJoinedStatus(@Param("ujc_cos_id") Integer ujcCosId, @Param("ujc_usr_username") String ujcUsrUsername) {
         return userJoinCourseMapper.getJoinedStatus(ujcCosId, ujcUsrUsername);
     }
-
-
 }

@@ -48,5 +48,5 @@ public interface UserJoinCourseMapper {
      * @param ujcUsrUsername 用户名
      * @return UserJoinCourse实体类
      */
-    UserJoinCourse getJoinedStatus(@Param("ujc_cos_id") String ujcCosId, @Param("ujc_usr_username") String ujcUsrUsername);
+    UserJoinCourse getJoinedStatus(@Param("ujc_cos_id") Integer ujcCosId, @Param("ujc_usr_username") String ujcUsrUsername);
 }
