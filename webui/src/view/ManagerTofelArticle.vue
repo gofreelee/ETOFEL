@@ -64,7 +64,7 @@ export default {
                 course_title: '',
                 teacher_list: []
             },
-            selectedTeacher: 'nihao'
+            selectedTeacher: ''
         }
     },
     mounted() {
