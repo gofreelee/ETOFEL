@@ -143,9 +143,21 @@ export default {
         },
         // 搜索
         onSearch() {
-            console.log(this.searchCondition.course_title)
-            console.log(this.selectedTeacher)
-            console.log(this.selectedCourseType)
+            let url =  `/course/course/slectCourseDynamic`
+            this.$axios.get(url, {
+                params: {
+                    cosTitle: this.searchCondition.course_title,
+                    cosCategory: this.selectedTeacher,
+                    cdtTchUsername: this.selectedCourseType
+                }
+            }).then(res => {
+                console.log('文章数据源：', res)
+                if(res.data) {
+                    this.tableData = res.data 
+                }
+            }).catch(err => {
+                console.log('获取文章数据失败：', err)
+            })
         },
         // 关闭
         _close() {
