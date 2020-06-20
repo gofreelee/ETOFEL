@@ -69,8 +69,10 @@
 
     <!--    发布课程基本信息-->
     <insert id="insertCourseBasicInfo" parameterType="sichuan.umbrella.chenmm.bean.Course">
-        insert into course (cos_title, cos_start_date, cos_end_date, cos_start_time, cos_end_time, cos_stage, cos_fee, cos_category, cos_status)
-        values (#{course.cosTitle}, #{course.cosStartDate}, #{course.cosEndDate}, #{course.cosStartTime}, #{course.cosEndTime}, #{course.cosStage}, #{course.cosFee}, #{course.cosCategory}, #{course.cosStatus})
+        insert into course
+        (cos_id, cos_title, cos_start_date, cos_end_date, cos_start_time, cos_end_time, cos_stage, cos_fee, cos_category, cos_status)
+        values
+        (#{course.cosId}, #{course.cosTitle}, #{course.cosStartDate}, #{course.cosEndDate}, #{course.cosStartTime}, #{course.cosEndTime}, #{course.cosStage}, #{course.cosFee}, #{course.cosCategory}, #{course.cosStatus})
     </insert>
 
     <!--    发布课程详细信息-->

@@ -133,13 +133,14 @@ public class CourseService {
     public List<CourseWithTeacher> selectAllCourseInfo() {
         return courseMapper.selectAllCourseInfo();
     }
+
     /**
      * 随机选取need个课程的id进行推荐
      *
      * @param need 需要的数量
      * @return id列表
      */
-    public List<Integer> randomCourseId(int need){
+    public List<Integer> randomCourseId(int need) {
         List<Integer> ids = courseMapper.selectAllCourseId();
         Random random = new Random();
         int range = random.nextInt(ids.size());
@@ -150,5 +151,14 @@ public class CourseService {
             ids.set(i, k);
         }
         return ids.subList(0, need);
+    }
+
+    /**
+     * 获取所有课程的id
+     *
+     * @return 课程id列表
+     */
+    public List<Integer> selectAllCourseId() {
+        return courseMapper.selectAllCourseId();
     }
 }

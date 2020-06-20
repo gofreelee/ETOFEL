@@ -26,6 +26,14 @@
                     </el-row>
                     <el-row class="info" type="flex" align="middle">
                         <el-col :span="3">
+                            课程价格：
+                        </el-col>
+                        <el-col :span="12">
+                            <el-input v-model="fee"/>
+                        </el-col>
+                    </el-row>
+                    <el-row class="info" type="flex" align="middle">
+                        <el-col :span="3">
                             开始日期：
                         </el-col>
                         <el-col :span="12">
@@ -51,8 +59,12 @@
                             开始时间：
                         </el-col>
                         <el-col :span="12">
-                            <el-time-select v-model="startTime"
-                                            :picker-options="{start: '08:00',step: '00:15',end: '22:00'}"
+                            <el-time-picker v-model="startTime"
+                                            :picker-options="{
+                                                selectableRange: '08:00:00 - 22:00:00'
+                                            }"
+                                            format="HH:mm:ss"
+                                            value-format="HH:mm:ss"
                                             placeholder="选择时间"/>
                         </el-col>
                     </el-row>
@@ -61,8 +73,12 @@
                             结束时间：
                         </el-col>
                         <el-col :span="12">
-                            <el-time-select v-model="endTime"
-                                            :picker-options="{start: '08:00',step: '00:15',end: '22:00'}"
+                            <el-time-picker v-model="endTime"
+                                            :picker-options="{
+                                                selectableRange: '08:00:00 - 22:00:00'
+                                            }"
+                                            format="HH:mm:ss"
+                                            value-format="HH:mm:ss"
                                             placeholder="结束时间"/>
                         </el-col>
                     </el-row>
@@ -122,7 +138,7 @@
                     </el-row>
                     <el-row class="info">
                         <el-col :span="3" :push="3">
-                            <el-button type="primary">确认</el-button>
+                            <el-button type="primary" @click="createCourse">确认</el-button>
                         </el-col>
                     </el-row>
 
@@ -150,12 +166,13 @@
                 endTime: '',
                 courseType: '',
                 plan: '',
+                fee: '',
                 pattern: '',
                 guide: '',
                 imageUpload: '',
                 course: [],
                 currentPage: 1,
-                tabName: 'publish',
+                tabName: 'myCourse',
                 isTeacher: ''
             }
         },
@@ -204,7 +221,36 @@
                 return isJPG && isLt2M;
             },
             createCourse() {
+                let data = new FormData();
+                data.append('cosTitle', this.courseTitle);
+                data.append('cosStartDate', this.startDate);
+                data.append('cosEndDate', this.endDate);
+                data.append('cosStartTime', this.startTime);
+                data.append('cosEndTime', this.endTime);
+                data.append('cosFee', this.fee);
+                data.append('cosCategory', this.courseType);
+                data.append('cdtTchUsername', sessionStorage.getItem("username"));
+                data.append('cdtPortrait', this.imageUpload);
+                data.append('cdtPlan', this.plan);
+                data.append('cdtPattern', this.pattern);
+                data.append('cdtGuide', this.guide);
 
+                let config = {
+                    method: 'post',
+                    url: '/course/course/releaseCourse',
+                    headers: {'Content-Type': 'application/json',},
+                    data: data
+                };
+
+                this.$axios(config).then(res => {
+                    if (res.data == null) {
+                        alert("课程创建失败");
+                    } else {
+                        alert("课程创建成功")
+                    }
+                }).catch(function (error) {
+                    console.log(error);
+                });
             }
         },
         mounted() {
