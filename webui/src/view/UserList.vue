@@ -121,36 +121,6 @@ export default {
                     self.tableData = temp;
                     console.log(self.tableData)
                 }))
-            // let total_list = []
-            // let url =  `/login/userlist/userlist`
-            // this.$axios.get(url, {
-            //     params: {
-            //         state: 'normal'
-            //     }
-            // }).then(res1 => {
-            //     total_list = res1.data
-            // }).catch(err => {
-            //     console.log('获取失败', err)
-            // })
-            // this.$axios.get(url, {
-            //     params: {
-            //         state: 'frozen'
-            //     }
-            // }).then(res2 => {
-            //     total_list.concat(res2.data)
-            // }).catch(err => {
-            //     console.log('获取失败', err)
-            // })
-            // total_list.forEach(item => {
-            //     let temp = new Date(item.usr_birthday)
-            //     let year = temp.getFullYear()
-            //     let month = temp.getMonth() + 1
-            //     if(month < 10) month = `0${month}`
-            //     let date = temp.getDate()
-            //     if(date < 10) date = `0${date}`
-            //     item.usr_birthday = `${year}-${month}-${date}`
-            // })
-            // this.tableData = total_list
         },
         // 搜索
         onSearch() {
