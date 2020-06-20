@@ -64,7 +64,7 @@
                 </el-col>
             </el-row>
             <el-row class="admin-title">
-                管理员
+                申请做管理员：
             </el-row>
             <el-row :gutter="20">
                 <el-col :span="3" v-for="item in admins" :key="item.gmbUsername" style="margin-top: 20px">
@@ -77,7 +77,7 @@
                 </el-col>
             </el-row>
             <el-row class="admin-title">
-                群成员
+                申请加群：
             </el-row>
             <el-row :gutter="20">
                 <el-col :span="2" v-for="item in members" :key="item.gmbUsername" style="margin-top: 20px">

@@ -94,7 +94,10 @@ public class GroupController {
 
     @GetMapping("/groupJoined")
     public String getGroupJoined(@RequestParam("gmsUsername") String gmsUsername) {
-        return gson.toJson(groupService.selectWhoJoin(gmsUsername, "member"));
+        List<Group> groups = new ArrayList<>();
+        groups.addAll(groupService.selectWhoJoin(gmsUsername, "member"));
+        groups.addAll(groupService.selectWhoJoin(gmsUsername, "tobeManager"));
+        return gson.toJson(groups);
     }
 
     @GetMapping("/groupManaged")
@@ -112,7 +115,7 @@ public class GroupController {
 
     @RequestMapping("/searchMember")
     public List<MemberQuery> searchMember(HttpServletRequest request) {
-        int grpId = Integer.parseInt(request.getParameter("grpId"));
+        long grpId = Long.parseLong(request.getParameter("grpId"));
         String gmpType = request.getParameter("gmpType");
         return groupMemberService.queryGroupByType(grpId, gmpType);
     }
