@@ -10,7 +10,7 @@ import java.util.List;
 public interface ArticleDao {
 
     @Select("select * from article where art_id = #{artId}")
-    Article selectByArtId(String artId);
+    Article selectByArtId(long artId);
 
     @Select("select * from article")
     List<Article> selectAll();
@@ -22,7 +22,7 @@ public interface ArticleDao {
     void insert(Article article);
 
     @Delete("delete from article where art_id=#{artId}")
-    void deleteByArtId(String artId);
+    void deleteByArtId(long artId);
 
     @Update("update article set art_username=#{art_username} ,art_title=#{art_title}, art_date=#{art_date}, art_img=#{art_img}, art_text=#{art_img}, art_type=#{art_type} where art_id = #{art_id}")
     void modifyArticle(Article article);
@@ -35,4 +35,7 @@ public interface ArticleDao {
 
     @Select("select * from article,user_like_article where art_id = ula_art_id and ula_username = #{ulaUsername}")
     List<Article> selectLike(@Param("ulaUsername") String ulaUsername);
+
+    List<Article> managerSearchArticle(@Param("artTitle")String artTitle, @Param("artUsername")String artUsername);
+
 }

@@ -17,6 +17,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/course")
@@ -129,13 +130,14 @@ public class CourseController {
     /**
      * 管理员功能——按照课程id恢复课程，根据当前日期和目标课程的开课日记做比较，调整课程状态为报名或者开课
      *
-     * @param cosIds：课程id
+     * @param cosIdsMap：课程id
      * @return Json
      * @throws ParseException 日期parse异常
      */
     @RequestMapping(value = "/recoverCourse", method = RequestMethod.POST)
-    public void recoverCourseById(@RequestBody List<Integer> cosIds) throws ParseException {
+    public void recoverCourseById(@RequestBody Map<String, List<Integer>> cosIdsMap) throws ParseException {
         //获取想恢复的课程的开课日期
+        List<Integer> cosIds = cosIdsMap.get("cosIds");
         for (Integer cosId : cosIds) {
             Course course = courseService.selectCourseById(cosId);
             Date courseOpenDate = course.getCosStartDate();
@@ -163,12 +165,15 @@ public class CourseController {
     }
 
     @RequestMapping(value = "/closeCourse", method = RequestMethod.POST)
-    public void closeCourseById(@RequestBody List<Integer> cosIds) {
+    public void closeCourseById(@RequestBody Map<String, List<Integer>> cosIdMap) {
+        List<Integer> cosIds = cosIdMap.get("cosIds");
         for (Integer cosId : cosIds) {
-            courseService.closeCourseById(cosId);
+            System.out.println(cosId);
+           // courseService.closeCourseById(cosId);
         }
         //
     }
+
 
 
 }

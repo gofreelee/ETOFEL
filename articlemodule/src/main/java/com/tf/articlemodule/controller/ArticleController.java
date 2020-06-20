@@ -3,12 +3,14 @@ package com.tf.articlemodule.controller;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.tf.articlemodule.bean.Article;
+import com.tf.articlemodule.bean.ManagerQueryArticle;
 import com.tf.articlemodule.service.ArticleService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.*;
 
 @RestController
@@ -43,6 +45,14 @@ public class ArticleController {
         article.setArt_title(artTitle);
         articleService.addArticle(article);
     }
+
+
+    @RequestMapping("/getAllArticle")
+    public List<ManagerQueryArticle> getAllArticle(){
+        return articleService.managerQueryArticles();
+    }
+
+
 
 
     @RequestMapping("/classArticle/{artType}")
@@ -127,15 +137,25 @@ public class ArticleController {
     }
 
     @RequestMapping("/getArtInfo")
-    public String getArticleInfo(@RequestParam("artId") String artId) {
+    public String getArticleInfo(@RequestParam("artId") long artId) {
         return gson.toJson(articleService.getArticle(artId));
     }
 
 
     @RequestMapping("/remove/{artId}")
-    public String remove(@PathVariable("artId") String artId) {
+    public String remove(@PathVariable("artId") long artId) {
         articleService.removeArticle(artId);
         return "redirect:/";
+    }
+
+    @RequestMapping("/managerSearchDynamic")
+    public List<ManagerQueryArticle> managerSearch(HttpServletRequest request){
+        String title = request.getParameter("artTitle");
+        String username = request.getParameter("artUsername");
+        if(title == null && username == null)
+            return null;
+        System.out.println(title + " " + username);
+        return articleService.managerQueryArticlesDynamic(title,username);
     }
 
     @GetMapping("/myArticle")
