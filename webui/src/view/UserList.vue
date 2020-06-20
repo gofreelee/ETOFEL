@@ -80,13 +80,7 @@ export default {
     name: 'openCourse',
     data() {
         return {
-            tableData: [
-                { usr_nickname: '112', usr_username: 'raj1' },
-                { usr_nickname: '3113', usr_username: 'raj2' },
-                { usr_nickname: '11', usr_username: 'raj3' },
-                { usr_nickname: '3121', usr_username: 'raj4' },
-                { usr_nickname: '141', usr_username: 'raj5' }
-            ],
+            tableData: [],
             searchCondition: {
                 user_name: '',
                 user_state: []
@@ -97,7 +91,7 @@ export default {
         }
     },
     mounted() {
-        // this.getDataSource()
+        this.getDataSource()
     },
     methods: {
         // 勾选 checkbox
