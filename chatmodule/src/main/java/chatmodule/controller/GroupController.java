@@ -119,6 +119,8 @@ public class GroupController {
         return gson.toJson(groupMemberService.queryGroupByType(grpId, gmpType));
     }
 
+
+
     @RequestMapping(value = "/sendMessage", method = RequestMethod.POST)
     public int sendMessage(@RequestParam("gmsGrpId") long gmsGrpId,
                            @RequestParam("gmsUsername") String gmsUsername,
