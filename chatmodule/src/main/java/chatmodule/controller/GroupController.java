@@ -148,47 +148,49 @@ public class GroupController {
     /**
      * 创建一个新的群
      *
-     * @param grpType 群类型
-     * @param grpName 群名称
+     * @param grpType        群类型
+     * @param grpName        群名称
      * @param grpDescription 群描述
-     * @param grpRule 群规则
-     * @param grpPortrait 群头像
-     * @param grpCreator 创建人
+     * @param grpRule        群规则
+     * @param grpPortrait    群头像
+     * @param grpCreator     创建人
      * @return 1表示创建成功 其余为创建失败
      */
     @PostMapping("/createGroup")
-    public int createGroup(@RequestParam("grpType") String grpType,
-                           @RequestParam("grpName") String grpName,
-                           @RequestParam("grpDescription") String grpDescription,
-                           @RequestParam("grpRule") String grpRule,
-                           @RequestParam("grpPortrait") String grpPortrait,
-                           @RequestParam("grpCreator") String grpCreator) {
+    public String createGroup(@RequestParam("grpType") String grpType,
+                              @RequestParam("grpName") String grpName,
+                              @RequestParam("grpDescription") String grpDescription,
+                              @RequestParam("grpRule") String grpRule,
+                              @RequestParam("grpPortrait") String grpPortrait,
+                              @RequestParam("grpCreator") String grpCreator) {
         long id = SnowflakeIdWorker.getInstance().nextId();
         Group group = new Group(id, grpName, new Timestamp(new Date().getTime()), grpDescription, grpRule, grpType, grpPortrait, grpCreator, "正常");
         GroupMember groupMember = new GroupMember(grpCreator, id, "manager");
-        return groupService.createGroup(group) & groupMemberService.addMember(groupMember);
+        if (groupService.createGroup(group) == 1 && groupMemberService.addMember(groupMember) == 1)
+            return String.valueOf(id);
+        else return "0";
     }
 
 
     /*
-    * 管理员获取群组信息
-    * */
+     * 管理员获取群组信息
+     * */
     @RequestMapping("/managerGetGroupInfo")
-    public List<GroupByManagerQuery> managerGetGroupInfo(){
+    public List<GroupByManagerQuery> managerGetGroupInfo() {
         return groupMemberService.managerQueryAll();
     }
 
     /**
-     *根据名称和时间来查询
+     * 根据名称和时间来查询
      */
 
     @RequestMapping("/queryGroupByNameAndDate")
-    public List<GroupByManagerQuery> queryGroupByNameAndDate(HttpServletRequest request){
+    public List<GroupByManagerQuery> queryGroupByNameAndDate(HttpServletRequest request) {
         String name = request.getParameter("grpName");
         String date = request.getParameter("grpDate");
         List<Long> idList = new ArrayList<>();
         List<Group> groupByManagerQueries = groupService.selectGroupByDateAndName(name, date);
-        for(Group group: groupByManagerQueries){
+        for (Group group : groupByManagerQueries) {
             idList.add(group.getGrpId());
         }
         return groupMemberService.managerQueryGroupInfo(idList);

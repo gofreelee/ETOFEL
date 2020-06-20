@@ -5,7 +5,7 @@ import java.io.Serializable;
 public class CourseDetail implements Serializable {
     private Integer cdtCosId;
     private String cdtTchUsername;
-    private Integer cdtGrpId;
+    private Long cdtGrpId;
     private String cdtPortrait;
     private String cdtPlan;
     private String cdtPattern;
@@ -19,7 +19,7 @@ public class CourseDetail implements Serializable {
         return getCdtCosId() != null && getCdtTchUsername() != null && getCdtGrpId() != null;
     }
 
-    public CourseDetail(Integer cdtCosId, String cdtTchUsername, Integer cdtGrpId, String cdtPortrait, String cdtPlan, String cdtPattern, String cdtGuide, String cdtImg) {
+    public CourseDetail(Integer cdtCosId, String cdtTchUsername, Long cdtGrpId, String cdtPortrait, String cdtPlan, String cdtPattern, String cdtGuide, String cdtImg) {
         this.cdtCosId = cdtCosId;
         this.cdtTchUsername = cdtTchUsername;
         this.cdtGrpId = cdtGrpId;
@@ -54,11 +54,11 @@ public class CourseDetail implements Serializable {
         this.cdtTchUsername = cdtTchUsername;
     }
 
-    public Integer getCdtGrpId() {
+    public Long getCdtGrpId() {
         return cdtGrpId;
     }
 
-    public void setCdtGrpId(Integer cdtGrpId) {
+    public void setCdtGrpId(Long cdtGrpId) {
         this.cdtGrpId = cdtGrpId;
     }
 

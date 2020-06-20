@@ -58,7 +58,7 @@
         data() {
             return {
                 selectId: 0,
-                isManager: true
+                isManager: false
             }
         },
         methods: {

@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import sichuan.umbrella.chenmm.bean.Course;
 import sichuan.umbrella.chenmm.bean.CourseDetail;
 import sichuan.umbrella.chenmm.bean.CourseWithTeacher;
+import sichuan.umbrella.chenmm.remote.GroupRemote;
 import sichuan.umbrella.chenmm.service.CourseDetailService;
 import sichuan.umbrella.chenmm.service.CourseService;
 import sichuan.umbrella.chenmm.service.UserJoinCourseService;
@@ -30,7 +31,18 @@ public class CourseController {
     private CourseService courseService;
     private CourseDetailService courseDetailService;
     private UserJoinCourseService userJoinCourseService;
+    private GroupRemote groupRemote;
     private Gson gson;
+
+    @Autowired
+    public void setUserJoinCourseService(UserJoinCourseService userJoinCourseService) {
+        this.userJoinCourseService = userJoinCourseService;
+    }
+
+    @Autowired
+    public void setGroupRemote(GroupRemote groupRemote) {
+        this.groupRemote = groupRemote;
+    }
 
     @Autowired
     public void setCourseService(CourseService courseService) {
@@ -146,9 +158,11 @@ public class CourseController {
         course.setCosStage("每天");
         course.setCosStatus("报名中");
 
+        String grpId = groupRemote.createGroup("名师课堂群", cosTitle + "课堂群", "", "", cdtPortrait, cdtTchUsername);
+
         CourseDetail courseDetail = new CourseDetail();
         courseDetail.setCdtCosId(id);
-        courseDetail.setCdtGrpId(-1);
+        courseDetail.setCdtGrpId(Long.valueOf(grpId));
         courseDetail.setCdtTchUsername(cdtTchUsername);
         courseDetail.setCdtPortrait(cdtPortrait);
         courseDetail.setCdtPlan(cdtPlan);
@@ -162,8 +176,9 @@ public class CourseController {
         boolean releaseSuccess = courseService.insertCourseBasicInfo(course);
         userJoinCourseService.insertUserUnpaidOrder(id, cdtTchUsername);
         userJoinCourseService.updateUserStatusToPaid(id, cdtTchUsername);
-        if (releaseSuccess && insertSuccess) return gson.toJson(course);
-        else return null;
+
+        if (releaseSuccess && insertSuccess) return "1";
+        else return "0";
     }
 
     /**

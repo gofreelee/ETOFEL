@@ -211,7 +211,7 @@
                 };
 
                 this.$axios(config).then(res => {
-                    if (res.data === 1) {
+                    if (res.data !== 0) {
                         alert("成功创建群");
                         this.getManageGroup();
                         this.clearGroup();
