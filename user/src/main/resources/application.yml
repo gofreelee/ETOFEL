@@ -11,8 +11,12 @@ spring:
       password: chinasoft6
       driver-class-name: com.mysql.cj.jdbc.Driver
       max-lifetime: 30000
-  http:
-    multipart:
+  application:
+    name: user
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848
 
 mybatis:
   mapper-locations: classpath:user/mapper/*.xml
