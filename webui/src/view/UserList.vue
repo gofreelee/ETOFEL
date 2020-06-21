@@ -1,18 +1,18 @@
 <template>
     <div class="openCourseWrapper">
-        <el-form ref="search_form" :inline="true" :model="searchCondition" class="demo-form-inline">
-            <el-form-item label="用户名">
-                <el-input v-model="searchCondition.user_name" placeholder="用户名"></el-input>
-            </el-form-item>
-            <el-form-item label="状态">
-                <el-select v-model="selectedState" placeholder="状态" >
-                    <el-option v-for="(item, index) in ['normal', 'frozen']" :key="index + '_status'" :label="item" :value="item"></el-option>
-                </el-select>
-            </el-form-item>
-            <el-form-item>
-                <el-button type="primary" @click="onSearch">查询</el-button>
-            </el-form-item>
-        </el-form>
+<!--        <el-form ref="search_form" :inline="true" :model="searchCondition" class="demo-form-inline">-->
+<!--            <el-form-item label="用户名">-->
+<!--                <el-input v-model="searchCondition.user_name" placeholder="用户名"></el-input>-->
+<!--            </el-form-item>-->
+<!--            <el-form-item label="状态">-->
+<!--                <el-select v-model="selectedState" placeholder="状态" >-->
+<!--                    <el-option v-for="(item, index) in ['normal', 'frozen']" :key="index + '_status'" :label="item" :value="item"></el-option>-->
+<!--                </el-select>-->
+<!--            </el-form-item>-->
+<!--            <el-form-item>-->
+<!--                <el-button type="primary" @click="onSearch">查询</el-button>-->
+<!--            </el-form-item>-->
+<!--        </el-form>-->
         <el-table
                 ref="multipleTable"
                 :data="tableData"
@@ -102,7 +102,6 @@ export default {
             value.forEach(item => {
                 this.selectedUserName.push(item.usr_username)
             })
-            console.log(this.selectedUserName)
         },
         // 获取数据源
         getDataSource() {
@@ -124,7 +123,7 @@ export default {
         },
         // 搜索
         onSearch() {
-            console.log('搜索')
+
         },
         // 冷冻
         _freezing() {
@@ -137,6 +136,7 @@ export default {
                 url: '/login/userlist/updateUserToFrozen',
                 data: JSON.stringify(body)
             }).then(() => {
+                this.getDataSource();
                 console.log('冷冻用户成功！')
             }).catch(err => {
                 console.log('冷冻用户失败...', err)
@@ -153,6 +153,7 @@ export default {
                 url: '/login/userlist/updateUserToNormal',
                 data: JSON.stringify(body)
             }).then(() => {
+                this.getDataSource();
                 console.log('解冻成功成功！')
             }).catch(err => {
                 console.log('解冻失败...', err)
@@ -169,6 +170,7 @@ export default {
                 url: '/login/userlist/deleteUser',
                 data: JSON.stringify(body)
             }).then(() => {
+                this.getDataSource();
                 console.log('删除成功!')
             }).catch(err => {
                 console.log('删除失败...', err)

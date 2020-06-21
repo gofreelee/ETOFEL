@@ -24,7 +24,8 @@
                         <el-button type="primary" icon="el-icon-chat-dot-round" v-if="isMember" @click="toChatRoom">
                             进群聊天
                         </el-button>
-                        <el-button type="primary" icon="el-icon-chat-dot-round" v-else>申请加群</el-button>
+                        <el-button type="primary" icon="el-icon-chat-dot-round" v-else @click="joinGroup">申请加群
+                        </el-button>
                     </el-row>
                     <el-row type="flex" justify="center" style="margin-top: 20px" v-if="isAdmin">
                         <el-button type="warning" icon="el-icon-chat-dot-round" @click="toGroupInfoModify">修改群信息

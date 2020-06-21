@@ -6,14 +6,12 @@ import loginmodule.service.LoginService;
 import loginmodule.service.UserManageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/userlist")
@@ -44,9 +42,11 @@ public class UserListController {
      *
      * @param usernames 用户名
      */
-    @GetMapping("/updateUserToFrozen")
-    public void updateUserToFrozen(@RequestParam("usernames") List<String> usernames) {
-        for (String username : usernames) {
+    @PostMapping("/updateUserToFrozen")
+    public void updateUserToFrozen(@RequestBody Map<String, List<String>> usernames) {
+        List<String> list = usernames.get("usernames");
+        for (String username : list) {
+            System.out.println(username);
             userManageService.updateStaToFrozen(username);
         }
     }
@@ -57,9 +57,10 @@ public class UserListController {
      *
      * @param usernames 用户名
      */
-    @GetMapping("/updateUserToNormal")
-    public void updateUserToNormal(@RequestParam("usernames") List<String> usernames) {
-        for (String username : usernames) {
+    @PostMapping("/updateUserToNormal")
+    public void updateUserToNormal(@RequestBody Map<String, List<String>> usernames) {
+        List<String> list = usernames.get("usernames");
+        for (String username : list) {
             userManageService.updateStaToNormal(username);
         }
     }
@@ -70,9 +71,10 @@ public class UserListController {
      *
      * @param usernames 用户名
      */
-    @GetMapping("/deleteUser")
-    public void deleteUser(@RequestParam("usernames") List<String> usernames) {
-        for (String username : usernames) {
+    @PostMapping("/deleteUser")
+    public void deleteUser(@RequestBody Map<String, List<String>> usernames) {
+        List<String> list = usernames.get("usernames");
+        for (String username : list) {
             userManageService.deleteUser(username);
         }
     }

@@ -36,17 +36,17 @@
             </el-row>
         </el-main>
         <el-main style="width: 50%; border-left: solid 1px #000">
-            <el-row style="margin: 20% 20px 20px 20px">
-                您也可以用以下方式登陆
+            <el-row class="login-method" style="margin-top: 20%">
+                您也可以用以下方式登陆 <i class="fa fa-weibo" aria-hidden="true"></i>
             </el-row>
-            <el-row style="margin: 20px 20px 20px 20px">
-                您也可以用以下方式登陆
+            <el-row class="login-method">
+                您也可以用以下方式登陆 <i class="fa fa-weixin" aria-hidden="true"></i>
             </el-row>
-            <el-row style="margin: 20px 20px 20px 20px">
-                您也可以用以下方式登陆
+            <el-row class="login-method">
+                您也可以用以下方式登陆 <i class="fa fa-qq" aria-hidden="true"></i>
             </el-row>
-            <el-row style="margin: 20px 20px 20px 20px">
-                您也可以用以下方式登陆
+            <el-row class="login-method">
+                您也可以用以下方式登陆 <i class="fa fa-tencent-weibo" aria-hidden="true"></i>
             </el-row>
         </el-main>
     </el-container>
@@ -120,5 +120,8 @@
 </script>
 
 <style scoped>
-
+    .login-method {
+        margin: 0 20px 20px 20px;
+        font-size: 1.1rem;
+    }
 </style>

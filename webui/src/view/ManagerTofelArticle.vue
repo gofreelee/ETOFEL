@@ -45,11 +45,11 @@
                 >
             </el-table-column>
         </el-table>
-        <div class="btn_group">
-            <el-button type="success" size="small" @click="_forbidden">禁读</el-button>
-            <el-button type="primary" size="small" @click="_liftTheBan">解禁</el-button>
-            <el-button type="danger" size="small" @click="_delete">删除</el-button>
-        </div>
+<!--        <div class="btn_group">-->
+<!--            <el-button type="success" size="small" @click="_forbidden">禁读</el-button>-->
+<!--            <el-button type="primary" size="small" @click="_liftTheBan">解禁</el-button>-->
+<!--            <el-button type="danger" size="small" @click="_delete">删除</el-button>-->
+<!--        </div>-->
     </div>
 </template>
 

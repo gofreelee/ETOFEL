@@ -2,7 +2,7 @@
     <el-container class="main">
         <el-main>
             <!--轮播台-->
-            <el-carousel arrow="always">
+            <el-carousel arrow="always" style="padding-left: 20px; padding-right: 20px">
                 <el-carousel-item v-for="item in imgUrls" :key="item + '_tag1'">
                     <el-image :src="item" fit="fill" style="width: 100%; height: 100%"/>
                 </el-carousel-item>
@@ -75,8 +75,8 @@
         },
         data() {
             return {
-                imgUrls: ["https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=3989732581,3676180283&fm=26&gp=0.jpg",
-                    "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1592474268779&di=8d0b3720b8f08cd47bfdde14db69eef0&imgtype=0&src=http%3A%2F%2Fphoto.16pic.com%2F00%2F11%2F93%2F16pic_1193108_b.jpg"],
+                imgUrls: ["https://i.loli.net/2020/06/21/o2ANWdelf6ZVGyj.jpg",
+                    "https://i.loli.net/2020/06/21/CLAry8G5NlsoqBm.jpg"],
                 articles: [],
                 groups: [],
                 courses: []

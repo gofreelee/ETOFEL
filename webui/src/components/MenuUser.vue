@@ -32,7 +32,7 @@
                     <el-submenu index="1">
                         <template slot="title"><span class="_text">用户管理</span></template>
                         <el-menu-item index="user_list">用户列表</el-menu-item>
-                        <el-menu-item index="teacher_list">讲师列表</el-menu-item>
+<!--                        <el-menu-item index="teacher_list">讲师列表</el-menu-item>-->
                     </el-submenu>
                 </el-menu>
             </el-col>
